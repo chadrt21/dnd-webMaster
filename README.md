@@ -9,7 +9,7 @@ Chad Ross: chad.geekrunner@gmail.com
 *Jillian McDaniel
 
 ## Slack Group Chat
-
+[dungeon-buddies.slack.com](dungeon-buddies.slack.com)
 
 ## Project Development Files
 [Google Doc Folder](https://drive.google.com/open?id=1OAeJDv-UKCkhTApC6I0JAv16NSvbTEsB)
