@@ -6,6 +6,8 @@ Chad Ross: chad.geekrunner@gmail.com
 * Project Master
 * Scrum Manager
 
+*JillianMcDaniel
+
 ## Project Development Files
 [Google Doc Folder](https://drive.google.com/open?id=1OAeJDv-UKCkhTApC6I0JAv16NSvbTEsB)
 
