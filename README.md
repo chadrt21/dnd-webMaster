@@ -1,12 +1,15 @@
 # dnd-webMaster
 Web Interface for D&amp;D resources and character management for dungen masters 
 
-## Colaborators
+## Colaborators **Add your name here**
 Chad Ross: chad.geekrunner@gmail.com
 * Project Master
 * Scrum Manager
 
-*JillianMcDaniel
+*Jillian McDaniel
+
+## Slack Group Chat
+
 
 ## Project Development Files
 [Google Doc Folder](https://drive.google.com/open?id=1OAeJDv-UKCkhTApC6I0JAv16NSvbTEsB)
@@ -17,6 +20,8 @@ Chad Ross: chad.geekrunner@gmail.com
 
 ## DnD Files & Resources
 * [Basic DnD Rule Book](http://media.wizards.com/2018/dnd/downloads/DnD_BasicRules_2018.pdf)
-
+* [Dnd Stat Math](http://monkeysushi.net/gaming/DnD/math.html)
+* [Player's Handbook](http://choisey.free.fr/3.5/Core/Indexed%20Player%20Handbook%20v3.5.pdf)
+* [Dnd Database](http://www.imarvintpa.com/DndLive/index.php)
 
 
