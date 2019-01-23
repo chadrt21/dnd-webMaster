@@ -24,4 +24,10 @@ Chad Ross: chad.geekrunner@gmail.com
 * [Player's Handbook](http://choisey.free.fr/3.5/Core/Indexed%20Player%20Handbook%20v3.5.pdf)
 * [Dnd Database](http://www.imarvintpa.com/DndLive/index.php)
 
+## How to build front-end
+* Install [Node](https://nodejs.org/en/) (if you haven't already)
+* Navigate to /front-end
+* Run `npm install`
+* Run `npm build`
+* To view in browser open /front-end/dist/main.html in browser
 
