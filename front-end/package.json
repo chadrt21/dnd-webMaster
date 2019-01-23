@@ -1,0 +1,39 @@
+{
+  "name": "campaign-buddy",
+  "version": "1.0.0",
+  "description": "A web based D&D campaign management tool",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "@material-ui/core": "^3.9.0",
+    "babel": "^6.23.0",
+    "babel-loader": "^8.0.5",
+    "babel-polyfill": "^6.26.0",
+    "css-loader": "^2.1.0",
+    "express": "^4.16.4",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "react": "^16.7.0",
+    "react-dnd": "^7.0.2",
+    "react-dnd-html5-backend": "^7.0.2",
+    "react-dom": "^16.7.0",
+    "react-panelgroup": "^1.0.7",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "\u0016https://github.com/cross21/dnd-webMaster"
+  },
+  "author": "Joseph Stewart",
+  "license": "ISC"
+}

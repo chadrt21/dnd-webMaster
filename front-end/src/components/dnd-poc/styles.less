@@ -1,0 +1,24 @@
+.root {
+	display: flex;
+	flex-direction: column;
+
+	.toolbar {
+		height: 40px;
+		display: flex;
+		align-items: center;
+	}
+
+	.grid {
+		width: 100%;
+		background-color: green;
+		flex-grow: 1;
+		height: calc(100% - 40px);
+
+		.content {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+		}
+	}
+}
