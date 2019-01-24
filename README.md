@@ -2,7 +2,7 @@
 Web Interface for D&amp;D resources and character management for dungen masters 
 
 ## Colaborators
-Chad Ross
+Chad Ross: chad.ross@biola.edu
 * Project Master
 * Scrum Manager
 
@@ -15,8 +15,9 @@ Joseph
 Zach
 * Database Developer
 
-Ashley
-* QA Manager
+Ashley Cheah: ashley.m.cheah@biola.edu
+* Posible Product Owner??
+* QA Manager??
 
 Roles: Scrum Product Owner, Developers, Testers, Stackholder, Subject Matter Expert, Software/UI Architect, Configuration Manager
 
