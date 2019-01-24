@@ -6,7 +6,13 @@ Chad Ross: chad.geekrunner@gmail.com
 * Project Master
 * Scrum Manager
 
-*Jillian McDaniel
+*Jillian McDaniel 
+
+Ashley Cheah: ashley.m.cheah@biola.edu
+* Posible Product Owner??
+* I'm good at UI/UX, drawing up sketches and prototyping
+* I mostly deal with front-end and 
+* I do have a bit of experience with database
 
 ## Slack Group Chat
 [dungeon-buddies.slack.com](dungeon-buddies.slack.com)
