@@ -1,18 +1,27 @@
 # dnd-webMaster
 Web Interface for D&amp;D resources and character management for dungen masters 
 
-## Colaborators **Add your name here**
-Chad Ross: chad.geekrunner@gmail.com
+## Colaborators
+Chad Ross
 * Project Master
 * Scrum Manager
 
-*Jillian McDaniel 
+Jillian McDaniel
 
-Ashley Cheah: ashley.m.cheah@biola.edu
-* Posible Product Owner??
-* I'm good at UI/UX, drawing up sketches and prototyping
-* I mostly deal with front-end and 
-* I do have a bit of experience with database
+
+Joseph
+
+
+Zach
+* Database Developer
+
+Ashley
+* QA Manager
+
+Roles: Scrum Product Owner, Developers, Testers, Stackholder, Subject Matter Expert, Software/UI Architect, Configuration Manager
+
+Tasks should map nicely to Product Backlog tasks
+
 
 ## Slack Group Chat
 [dungeon-buddies.slack.com](dungeon-buddies.slack.com)
@@ -28,7 +37,8 @@ Ashley Cheah: ashley.m.cheah@biola.edu
 * [Basic DnD Rule Book](http://media.wizards.com/2018/dnd/downloads/DnD_BasicRules_2018.pdf)
 * [Dnd Stat Math](http://monkeysushi.net/gaming/DnD/math.html)
 * [Player's Handbook](http://choisey.free.fr/3.5/Core/Indexed%20Player%20Handbook%20v3.5.pdf)
-* [Dnd Database](http://www.imarvintpa.com/DndLive/index.php)
+* [DnD Database](http://www.imarvintpa.com/DndLive/index.php)
+* [RESTful DnD Databse](http://www.dnd5eapi.co/)
 
 ## How to build front-end
 * Install [Node](https://nodejs.org/en/) (if you haven't already)
