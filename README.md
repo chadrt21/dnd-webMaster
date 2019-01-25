@@ -5,6 +5,7 @@ Web Interface for D&amp;D resources and character management for dungen masters
 Chad Ross: chad.ross@biola.edu
 * Project Master
 * Scrum Manager
+* Python Back End Developer
 
 Jillian McDaniel
 * Configuration Manager
@@ -13,6 +14,7 @@ Jillian McDaniel
 Joseph
 * Subject Matter Expert
 * Front End Developer
+* Back End Consultent
 
 Zach
 * Database Developer
