@@ -7,21 +7,23 @@ Chad Ross: chad.ross@biola.edu
 * Scrum Manager
 
 Jillian McDaniel
-
+* Configuration Manager
+* UI Architect
 
 Joseph
-
+* Subject Matter Expert
+* Front End Developer
 
 Zach
-* Database Developer??
+* Database Developer
+* QA Manager
 
 Ashley Cheah: ashley.m.cheah@biola.edu
-* Posible Product Owner??
-* QA Manager??
+* Product Owner
+* UI Architect
 
-Roles: Scrum Product Owner, Developers, Testers, Stackholder, Subject Matter Expert, Software/UI Architect, Configuration Manager
-
-Tasks should map nicely to Product Backlog tasks
+Shared Roles: Developers, Testers
+*Tasks should map nicely to Product Backlog tasks*
 
 
 ## Slack Group Chat
