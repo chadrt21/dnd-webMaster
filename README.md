@@ -23,6 +23,7 @@ Ashley Cheah: ashley.m.cheah@biola.edu
 * UI Architect
 
 Shared Roles: Developers, Testers
+
 *Tasks should map nicely to Product Backlog tasks*
 
 
