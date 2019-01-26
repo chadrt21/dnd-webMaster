@@ -45,6 +45,7 @@ Shared Roles: Developers, Testers
 * [Player's Handbook](http://choisey.free.fr/3.5/Core/Indexed%20Player%20Handbook%20v3.5.pdf)
 * [DnD Database](http://www.imarvintpa.com/DndLive/index.php)
 * [RESTful DnD Databse](http://www.dnd5eapi.co/)
+* [Setting Up DnD Gamemaster Screen video](https://www.youtube.com/watch?v=YRMVTmbe-Is&index=9&list=WL)
 
 ## How to build front-end
 * Install [Node](https://nodejs.org/en/) (if you haven't already)
