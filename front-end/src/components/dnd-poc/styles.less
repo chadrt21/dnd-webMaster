@@ -1,24 +1,89 @@
 .root {
-	display: flex;
-	flex-direction: column;
-
-	.toolbar {
-		height: 40px;
+	.root-flex {
 		display: flex;
-		align-items: center;
-	}
-
-	.grid {
-		width: 100%;
-		background-color: green;
-		flex-grow: 1;
-		height: calc(100% - 40px);
-
-		.content {
+		flex-direction: column;
+	
+		.toolbar {
+			height: 40px;
 			display: flex;
 			align-items: center;
-			justify-content: center;
+		}
+	
+		.grid {
 			width: 100%;
+			background-color: #EEE;
+			flex-grow: 1;
+			height: calc(100% - 40px);
+	
+			.pane {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+
+				&-header {
+					position: relative;
+					::-webkit-scrollbar {
+						display: none;
+					}
+				}
+
+				&-content {
+					position: relative;
+					width: 100%;
+					flex-grow: 1;
+				}
+			}
+		}
+	}
+
+	.drag-layer {
+		position: fixed;
+		pointer-events: none;
+		z-index: 100;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.tab-container {
+		display: flex;
+		background-color: #DDD;
+		overflow-x: auto;
+	}
+	
+	.tab {
+		padding: 5px;
+		color: black;
+		font-family: sans-serif;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-width: 90px;
+		text-overflow: ellipsis;
+		max-width: 150px;
+		text-align: center;
+		font-size: 12px;
+		border-right: 1px solid #555;
+		position: relative;
+
+		&-selected {
+			color: white;
+			background-color: #555;
+			padding-right: 18px;
+			width: 72px;
+		}
+
+		&-close {
+			font-size: 12px;
+			position: absolute;
+			right: 0;
+			margin-right: 4px;
+			cursor: pointer;
+
+			&:hover {
+				color: darken(white, 20%);
+			}
 		}
 	}
 }

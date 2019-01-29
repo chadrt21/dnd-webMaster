@@ -1,108 +1,136 @@
 import React from 'react';
 
 import PanelGroup from 'react-panelgroup';
-import Content from './Content';
+import ContentPanel from './ContentPanel';
+import CustomDragLayer from './CustomDragLayer';
 import styles from './styles.less';
+
+import { addPane, movePane } from './model/layout-manager';
+
+import Layout from './model/Layout';
+
+const defaultLayout = {
+	rows: [
+		{panels: [
+			{panes: [
+				{ type: 'map' }
+			]},
+			{rows: [
+				{panels: [
+					{panes: [
+						{ type: 'npc 1' }, { type: 'npc 2' }, { type: 'npc 3' }
+					]},
+				]},
+				{panels: [
+					{panes: [
+						{type: 'pc' }, { type: 'pc' }
+					]}
+				]}
+			]}
+		]}
+	]
+}
 
 export default class Grid extends React.Component {
 	state = {
-		layout: [
-			[ 1, 2 ],
-			[ [
-				[ 3 ],
-				[ 4, 5 ],
-				[ 6 ],
-			], 7 ]
-		]
+		layout: new Layout(defaultLayout),
+		reloading: false
+	}
+
+	renderLayout = layout => {
+		return (
+			<PanelGroup
+				borderColor="black"
+				direction="column"
+				panelWidths={layout.getPanelWidths()}
+				onUpdate={layout.monitorUpdates()}
+			>
+				{layout.getRows().map(this.mapLayoutRows)}
+			</PanelGroup>
+		)
 	}
 
 	mapLayoutRows = row => {
-		if (!Array.isArray(row)) {
-			return null;
-		}
 		return (
-			<PanelGroup borderColor="black">
-				{row.map(this.mapLayoutContentItems)}
+			<PanelGroup
+				borderColor="black"
+				panelWidths={row.getPanelWidths()}
+				onUpdate={row.monitorUpdates()}
+			>
+				{row.getPanels().map(this.mapLayoutPanels)}
 			</PanelGroup>
 		)
 	}
 
-	mapLayoutContentItems = contentItem => {
-		if (Array.isArray(contentItem)) {
-			return (
-				<PanelGroup borderColor="black" direction="column">
-					{contentItem.map(this.mapLayoutRows)}
-				</PanelGroup>
-			)
+	mapLayoutPanels = panel => {
+		if (panel.constructor === Layout) {
+			return this.renderLayout(panel);
 		}
 
 		return (
-			<Content id={contentItem} />
+			<ContentPanel
+				panes={panel.getPanes()}
+				removePane={pane => {
+					if (pane.remove()) {
+						// Reload rendered layout if the pane was removed
+						this.setLayout(this.state.layout);
+					}
+				}}
+				dropPaneIntoPanel={(pane, cb) => {
+					if (pane.getParent() !== panel && pane.remove()) {
+						panel.addPane(pane);
+						panel.focusPane(pane);
+						this.setLayout(this.state.layout, cb);
+					}
+				}}
+				movePane={(direction, variant, pane) => {
+					if (movePane(direction, variant, pane, panel)) {
+						this.setLayout(this.state.layout);
+					}
+				}}
+				onTabChanged={panel.monitorUpdates()}
+				defaultSelected={panel.getSelectedTab()}
+				panelId={panel.getId()}
+			/>
 		)
 	}
 
-	removePanel = pid => {
-		this.setState(({layout}) => ({
-			layout: layout.map(this.findAndRemoveItem(pid))
-		}));
+	setLayout = newLayout => {
+		this.setState(
+			{ reloading: true },
+			() => {
+				this.setState(
+					{ layout: newLayout },
+					() => this.setState({ reloading: false })
+				);
+			});
 	}
 
-	findAndRemoveItem = pid => item => {
-		let arr = [];
-		for (let i = 0; i < item.length; i++) {
-			if (Array.isArray(item[i])) {
-				arr.push(item[i].map(this.findAndRemoveItem(pid)));
-			} else if (pid !== item[i]) {
-				arr.push(item[i]);
-			}
-		}
-		return arr;
-	}
-
-	movePanel = (direction, pid, to) => {
-		/*this.setState(({ layout }) => ({
-			layout: layout.map(this.findAndMoveItem(direction, pid, to))
-		}));*/
-		const layout = this.state.layout.map(this.findAndMoveItem(direction, pid, to));
-		this.setState({ layout });
-	}
-
-	findAndMoveItem = (direction, pid, to) => item => {
-		let arr = [];
-		for (let i = 0; i < item.length; i++) {
-			if (Array.isArray(item[i])) {
-				arr.push(item[i].map(this.findAndMoveItem(direction, pid, to)));
-			} else if (to === item[i]) {
-				arr.push(direction === 'after' ? to : pid);
-				arr.push(direction === 'after' ? pid : to);
-			} else if (pid !== item[i]) {
-				arr.push(item[i]);
-			}
-		}
-		return arr;
-	}
-
-	renderLayout = () => {
+	addPane = type => {
 		const { layout } = this.state;
-		return (
-			<PanelGroup borderColor="black" direction="column">
-				{layout.map(this.mapLayoutRows)}
-			</PanelGroup>
-		)
+		this.setLayout(addPane(layout, type));
+	}
+
+	saveLayout = () => {
+		const { layout } = this.state;
+		console.log(layout.toJson());
 	}
 
 	render() {
+		const { reloading, layout } = this.state;
+
 		return (
 			<div className={styles.root}>
-				<div className={styles.toolbar}>
-					<button onClick={() => this.removePanel(2)}>Remove Pane 2</button>
-					<button onClick={() => this.removePanel(4)}>Remove Pane 4</button>
-					<button onClick={() => this.movePanel('before', 4, 1)}>Move pane 4 before pane 1</button>
-					<button onClick={() => this.movePanel('after', 6, 7)}>Move pane 6 before pane 7</button>
+				<div className={styles.rootFlex}>
+					<div className={styles.toolbar}>
+						<button onClick={this.saveLayout}>Save layout</button>
+						<button onClick={() => this.addPane('diceroller')}>Add dice roller!</button>
+					</div>
+					<div className={styles.grid}>
+						{!reloading ? this.renderLayout(layout) : null}
+					</div>
 				</div>
-				<div className={styles.grid}>
-					{this.renderLayout()}
-				</div>
+				<CustomDragLayer />
 			</div>
 		)
 	}
