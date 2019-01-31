@@ -58,7 +58,7 @@ const movePaneNextToSoft = (direction, pane, targetPanel) => {
 }
 
 const movePaneVerticallySoft = (direction, pane, targetPanel) => {
-	const paneJson = pane.toJson();
+	const paneJson = pane.toJson(true);
 	if (pane.remove()) {
 		const parentRow = targetPanel.getParent();
 		if (parentRow.getPanels().length === 1) {

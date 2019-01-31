@@ -34,6 +34,7 @@ export default class LayoutRow {
 	getParent = () => this.parent;
 	setParent = parent => (this.parent = parent);
 	monitorUpdates = () => widths => {this.widths = widths};
+	getId = () => this.rowId;
 
 	toJson = ignoreWidths => {
 		const obj = {

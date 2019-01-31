@@ -1,8 +1,9 @@
 import React from 'react';
 
-import PanelGroup from 'react-panelgroup';
+import PanelGroup from './PanelGroup';
 import ContentPanel from './ContentPanel';
 import CustomDragLayer from './CustomDragLayer';
+import Content from './Content';
 import styles from './styles.less';
 
 import { addPane, movePane } from './model/layout-manager';
@@ -44,6 +45,7 @@ export default class Grid extends React.Component {
 				direction="column"
 				panelWidths={layout.getPanelWidths()}
 				onUpdate={layout.monitorUpdates()}
+				key={`layout-${layout.getId()}`}
 			>
 				{layout.getRows().map(this.mapLayoutRows)}
 			</PanelGroup>
@@ -56,6 +58,7 @@ export default class Grid extends React.Component {
 				borderColor="black"
 				panelWidths={row.getPanelWidths()}
 				onUpdate={row.monitorUpdates()}
+				key={`row-${row.getId()}`}
 			>
 				{row.getPanels().map(this.mapLayoutPanels)}
 			</PanelGroup>
@@ -91,9 +94,24 @@ export default class Grid extends React.Component {
 				onTabChanged={panel.monitorUpdates()}
 				defaultSelected={panel.getSelectedTab()}
 				panelId={panel.getId()}
+				key={`panel-${panel.getId()}`}
+				renderContent={currentTab => (
+					<React.Fragment>
+						{panel.getPanes().map(this.mapContent(currentTab))}
+					</React.Fragment>
+				)}
 			/>
 		)
 	}
+
+	mapContent = currentTab => (pane, index) => (
+		<div style={{ display: currentTab !== index ? 'none' : undefined}}>
+			<Content
+				key={`pane-${pane.getId()}`}
+				pane={pane}
+			/>
+		</div>
+	)
 
 	setLayout = newLayout => {
 		this.setState(
@@ -127,7 +145,7 @@ export default class Grid extends React.Component {
 						<button onClick={() => this.addPane('diceroller')}>Add dice roller!</button>
 					</div>
 					<div className={styles.grid}>
-						{!reloading ? this.renderLayout(layout) : null}
+						{this.renderLayout(layout)}
 					</div>
 				</div>
 				<CustomDragLayer />

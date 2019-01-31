@@ -3,6 +3,7 @@ import React from 'react';
 import Tab from './DraggableTab';
 import DropTargetOverlay from './DropTargetOverlay';
 import TabContainer from './TabContainerDropTarget';
+import Content from './Content';
 
 import styles from './styles.less';
 
@@ -52,9 +53,16 @@ export default class ContentPanel extends React.Component {
 			/>
 		)
 	}
-	
+
+	componentWillReceiveProps(nextProps) {
+		const { currentTab } = this.state;
+		if (!nextProps.panes[currentTab]) {
+			this.setState({ currentTab: 0 });
+		}
+	}
+
 	render() {
-		const { panes, dropPaneIntoPanel, movePane } = this.props;
+		const { panes, dropPaneIntoPanel, movePane, renderContent } = this.props;
 		const { currentTab } = this.state;
 
 		return (
@@ -69,7 +77,7 @@ export default class ContentPanel extends React.Component {
 					</TabContainer>
 				</div>
 				<div className={styles.paneContent}>
-					This is content pane {panes && panes[currentTab] && panes[currentTab].type}
+					{renderContent(currentTab)}
 					<DropTargetOverlay
 						type="half"
 						direction="left"

@@ -28,6 +28,7 @@ export default class Layout {
 	getParent = () => this.parent;
 	setParent = parent => (this.parent = parent);
 	monitorUpdates = () => widths => {this.widths = widths}
+	getId = () => this.layoutId;
 
 	hasOnePanel = () => {
 		if (this.rows.length > 1) return null;
