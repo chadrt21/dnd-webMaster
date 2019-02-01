@@ -181,48 +181,63 @@ Data synchronization between client and database will be handled by the individu
 
 ## 2.2 Software Product Features [[Back to Top](#table-of-contents)]
 
-### Layout 
+### 2.2.1 Customizable Layout 
 
-#### Description and Priority
+#### 2.2.1.1 Description and Priority
 
-Layout framework is the building block of this product to allow the dynamic framework of panels that conatin tools and resorces that a DM could use to improve the ability to fasilite the story telling of D&D. The layout is a very high priority feature in the project.
+Priority: <span style="color:red">very high</span>
 
-#### Sitmulus/Response Sequences
+The customizable layout is what separates Campaign Buddy from any other campaign management tool conglomorate on the internet. It is the mechanism through which the DM can use many different tools at once in an convenient manner. Tools are organized on the screen in terms of tabbed panels (each tab containing a running tool). The user can organize and resize panels by dragging and dropping tabs. They can save/load certain configurations of panels/tools in order to get quick access to them when they need it. The layout feature is comprised of the actual Layout Rendering Component and the Toolbar Component and their documented interactions.
 
-* Display panels that contain tools and resources
-* Dynamically move tools and resources between panels
+#### 2.2.1.2 Sitmulus/Response Sequences
 
-#### Functional Requirements
+User interaction with this feature is as follows:
 
-TBD
+- User drags existing tool into existing panel
+   - Target panel inserts dragged tool at the end of it's tabs
+- User drags existing tool next to, above, or below existing panel
+   - Layout engine inserts tool in a new panel next to, above, or below target panel
+- User saves current layout
+   - System prompts user to name the layout configuration
+   - API request is made and relevant data is changed in the database
+   - Toolbar adds the new layout configuration to the database
+- User loads new layout
+   - Layout engine replaces existing layout with target layout
 
-### PC Sheet
+#### 2.2.1.3 Functional Requirements
 
-#### Description and Priority
+This feature needs to...
+- Communicate with the application server in order to save and retrieve layout configurations
+- Serialize/deserialize the layout configuration model into a data format suitable to be stored in the database.
+- Interpret and render layout data
+
+### 2.2.2 PC Sheet
+
+#### 2.2.2.1 Description and Priority
 
 The Player Character (PC) Sheets are esstental to D&D roleplaying and as such the DM has to reference them most of the time in order to ensure consitency in storytelling. The PC Sheet is a high priority feature in the project.
 
-#### Sitmulus/Response Sequences
+#### 2.2.2.1 Sitmulus/Response Sequences
 
 * Display chacter info and background
 * Edit Charcter info
 
-#### Functional Requirements
+#### 2.2.2.2 Functional Requirements
 
 TBD
 
-### NPC Sheet 
+### 2.2.3 NPC Sheet 
 
-#### Description and Priority
+#### 2.2.3.1 Description and Priority
 
 The Non-Player Character (NPC) Sheets are esstental to D&D roleplaying and as such the DM has to reference them most of the time in order to ensure consitency in storytelling. The NPC Sheet is a high priority feature in the project.
 
-#### Sitmulus/Response Sequences
+#### 2.2.3.2 Sitmulus/Response Sequences
 
 * Display chacter info and background
 * Edit Charcter info
 
-#### Functional Requirements
+#### 2.2.3.3 Functional Requirements
 
 TBD
 
