@@ -9,7 +9,7 @@
 
 # Overview
 
-Campaign Buddy is an online interactive toolbox to assist Dungeon Masters and players to run Dungeons and Dragons (D&D) campaigns (storytelling based, roleplaying adventures played on a tabletop run by a Dungeon Master, or DM). Campaign Buddy’s purpose is to make the process of setting up, planning, and executing these campaigns simple, painless, and efficient. It is a interface that uses a collection of tools that target different aspects of running a campaign such as creating and managing players, creating maps, planning stories, keeping track of spells, items, and lore, and so on. While different implementations of these tools exist individually in various places, this tool seeks to integrate them into one convenient and customizable panel-based layout. This is important because DMs are often using multiple tools at the same time and need to be able to reference resources .
+Campaign Buddy is an online interactive toolbox to assist Dungeon Masters and players to run Dungeons and Dragons (D&D) campaigns (storytelling based, roleplaying adventures played on a tabletop run by a Dungeon Master, or DM). Campaign Buddy’s purpose is to make the process of setting up, planning, and executing these campaigns simple, painless, and efficient. It is a interface that uses a collection of tools that target different aspects of running a campaign such as creating and managing players, creating maps, planning stories, keeping track of spells, items, and lore, and so on. While different implementations of these tools exist individually in various places, this tool seeks to integrate them into one convenient and customizable panel-based layout. This is important because DMs are often using multiple tools at the same time and need to be able to reference resources.
 
 # Target Audience
 
@@ -38,6 +38,41 @@ Our target audience are Dungeon Masters (DMs) and D&D players that vary from beg
 # Table of Contents
 
 <div style="page-break-after: always;"></div>
+1 INTRODUCTION
+
+  1.1 	Product Overview
+
+2 SPECIFIC REQUIREMENTS
+
+  2.1 	External Interface Requirements
+
+    2.1.1 User Interfaces
+
+    2.1.2 Hardware Interfaces
+
+    2.1.3 Software Interfaces
+
+    2.1.4 Communications Protocols
+
+  2.2 	Software Product Features
+
+  2.3 	Software System Attributes
+
+    2.3.1 Reliability
+
+    2.3.2 Availability
+
+    2.3.3 Security
+
+    2.3.4 Maintainability
+
+    2.3.5 Portability
+
+    2.3.6 Performance
+
+  2.4 	Database Requirements
+
+3 ADDITIONAL MATERIAL
 
 # 1. Specific Requirements
 
@@ -69,7 +104,8 @@ We have also discussed creating an entirely native mobile app that allows player
 
 ### 1.1.3 Software Interfaces
 
-**TBD**
+The project is mainly going to be using Javascript and Javascript APIs such as REACT.js, Node.js, and Quill.js as well as other APIs and engines such as opendnd and DnD 5e API. 
+
 
 ### 1.1.4 Communication Protocols
 
@@ -92,3 +128,91 @@ Data synchronization between client and database will be handled by the individu
 
 ![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1548986810/campaign-buddy/csrm.jpg "Component Server Relationship Model")
 *A model for data synchronization*
+
+# 2. Specific Requirements
+
+## 2.1 External Interface Requirements
+
+### 2.1.1 User Interfaces
+
+### 2.1.2 Hardware Interfaces
+
+Campaign Buddy should be suppored on almost all web based devices (at least all devices with the lasted web browser).
+
+### 2.1.3 Software Interfaces
+
+### 2.1.4 Communications Protocols
+
+## 2.2 Software Product Features
+
+### Layout 
+
+#### Description and Priority
+
+Layout framework is the building block of this product to allow the dynamic framework of panels that conatin tools and resorces that a DM could use to improve the ability to fasilite the story telling of D&D. The layout is a very high priority feature in the project.
+
+#### Sitmulus/Response Sequences
+
+* Display panels that contain tools and resources
+* Dynamically move tools and resources between panels
+
+#### Functional Requirements
+
+TBD
+
+### PC Sheet
+
+#### Description and Priority
+
+The Player Character (PC) Sheets are esstental to D&D roleplaying and as such the DM has to reference them most of the time in order to ensure consitency in storytelling. The PC Sheet is a high priority feature in the project.
+
+#### Sitmulus/Response Sequences
+
+* Display chacter info and background
+* Edit Charcter info
+
+#### Functional Requirements
+
+TBD
+
+### NPC Sheet 
+
+#### Description and Priority
+
+The Non-Player Character (NPC) Sheets are esstental to D&D roleplaying and as such the DM has to reference them most of the time in order to ensure consitency in storytelling. The NPC Sheet is a high priority feature in the project.
+
+#### Sitmulus/Response Sequences
+
+* Display chacter info and background
+* Edit Charcter info
+
+#### Functional Requirements
+
+TBD
+
+## 2.3 Software System Attributes
+
+### 2.3.1 Reliability 
+
+### 2.3.2 Availability
+
+### 2.3.3 Security
+
+TBD
+
+### 2.3.4 Maintainability
+
+Campaign Buddy should be maintainable as more spells, items, and functions of D&D are added or removed over time. 
+
+### 2.3.5 Portability
+
+
+### 2.3.6 Performance
+
+Performance is curital to this project or else it would defeat the purpose of using Campaign Buddy over paper. Since the DM needs to be able to retreave information as quickly as possible in order to be fluid in stroytelling the database calls should take less than half a second. 
+
+## 2.4 Database Requirements
+
+Most of the project info will be stored and managed in a SQL database that contains info such as character stats and descriptions, classes, races, spells, items, lore, sounds, plot points, locations, etc. 
+
+# 3. Additional Material
