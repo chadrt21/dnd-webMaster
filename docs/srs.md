@@ -1,17 +1,9 @@
-<style>
-	.title {
-		font-size: 22pt;
-		text-align: center;
-		margin: 0;
-	}
-</style>
-
-<p class="title">Software Requirements Specification</p>
-<p class="title">Campaign Buddy</p>
-<p class="title">Document Version: 1.0</p>
-<p class="title">Date: January 31, 2019</p>
-<p class="title">Location of File: docs/srs.md</p>
-<p class="title">CSCI Biola University</p>
+<p style="font-size: 22pt; text-align: center; margin: 0;">Software Requirements Specification</p>
+<p style="font-size: 22pt; text-align: center; margin: 0;">Campaign Buddy</p>
+<p style="font-size: 22pt; text-align: center; margin: 0;">Document Version: 1.0</p>
+<p style="font-size: 22pt; text-align: center; margin: 0;">Date: January 31, 2019</p>
+<p style="font-size: 22pt; text-align: center; margin: 0;">Location of File: docs/srs.md</p>
+<p style="font-size: 22pt; text-align: center; margin: 0;">CSCI Biola University</p>
 
 <div style="page-break-after: always;"></div>
 
