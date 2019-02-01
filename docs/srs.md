@@ -74,11 +74,15 @@ Our target audience are Dungeon Masters (DMs) and D&D players that vary from beg
 
 3 ADDITIONAL MATERIAL
 
-# 1. Specific Requirements
+# 1. Indroduction
 
-## 1.1 External Interface Requirements
+## 1.1 Product Overview
 
-### 1.1.1 User Interfaces
+# 2. Specific Requirements
+
+## 2.1 External Interface Requirements
+
+### 2.1.1 User Interfaces
 
 This project will utilize a web interface with a log-in screen, home screen, and the primary software interface. 
 
@@ -96,18 +100,18 @@ The implementation of the user interface will be component-based. Meaning each c
 ![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1548986809/campaign-buddy/home_page.png "Home Page Sketch")
 *Home Page Sketch*
 
-### 1.1.2 Hardware Interfaces
+### 2.1.2 Hardware Interfaces
 
 Campaign Buddy is going to be built and optimized for desktop. We do not anticipate that our users would consider a mobile view *essential*. However in our research, we discovered that our users do not see it as completely useless. While most DMs tend to use their laptops for campaign management, one DM we interviewed said that he uses his phone to quickly look up information. While he admitted that the aggregative nature of the multi-paneled primary application interface would fufill this need, he said that it would still be nice to retain that functionality. So a mobile interface is not out of the question, just not a big priority as it would require a redesign of our core functionality. Though Campaign Buddy is designed for desktop screens, it must be designed for both small and large desktop screens. In order to accomodate this, we will be testing the UI on smaller desktop screen.
 
 We have also discussed creating an entirely native mobile app that allows players to access and edit their character information but this would likely be in the product's distant future.
 
-### 1.1.3 Software Interfaces
+### 2.1.3 Software Interfaces
 
 The project is mainly going to be using Javascript and Javascript APIs such as REACT.js, Node.js, and Quill.js as well as other APIs and engines such as opendnd and DnD 5e API. 
 
 
-### 1.1.4 Communication Protocols
+### 2.1.4 Communication Protocols
 
 The project will have a three tier architecture. This means that there will be a database layer that stores and manages the data, a application layer that manages API calls and serves static content, and a client layer for the user-interface. The client layer will communicate with the application layer over HTTP for static web content, using the RESTful API pattern when needing dynamic content. When necessary, the application layer will communicate with the database layer over TCP using MySQL's own custom protocol.
 
@@ -128,20 +132,6 @@ Data synchronization between client and database will be handled by the individu
 
 ![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1548986810/campaign-buddy/csrm.jpg "Component Server Relationship Model")
 *A model for data synchronization*
-
-# 2. Specific Requirements
-
-## 2.1 External Interface Requirements
-
-### 2.1.1 User Interfaces
-
-### 2.1.2 Hardware Interfaces
-
-Campaign Buddy should be suppored on almost all web based devices (at least all devices with the lasted web browser).
-
-### 2.1.3 Software Interfaces
-
-### 2.1.4 Communications Protocols
 
 ## 2.2 Software Product Features
 
