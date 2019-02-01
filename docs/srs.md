@@ -38,41 +38,25 @@ Our target audience are Dungeon Masters (DMs) and D&D players that vary from beg
 # Table of Contents
 
 <div style="page-break-after: always;"></div>
-1 INTRODUCTION
 
-  1.1 	Product Overview
-
-2 SPECIFIC REQUIREMENTS
-
-  2.1 	External Interface Requirements
-
-    2.1.1 User Interfaces
-
-    2.1.2 Hardware Interfaces
-
-    2.1.3 Software Interfaces
-
-    2.1.4 Communications Protocols
-
-  2.2 	Software Product Features
-
-  2.3 	Software System Attributes
-
-    2.3.1 Reliability
-
-    2.3.2 Availability
-
-    2.3.3 Security
-
-    2.3.4 Maintainability
-
-    2.3.5 Portability
-
-    2.3.6 Performance
-
-  2.4 	Database Requirements
-
-3 ADDITIONAL MATERIAL
+1. INTRODUCTION
+    1. Product Overview
+2. SPECIFIC REQUIREMENTS
+    1. External Interface Requirements
+        1. User Interfaces
+    	2. Hardware Interfaces
+    	3. Software Interfaces
+    	4. Communications Protocols
+    3. Software Product Features
+    4. Software System Attributes
+    	1. Reliability
+    	2. Availability
+    	3. Security
+    	4. Maintainability
+    	5. Portability
+    6. Performance
+    5. Database Requirements
+3. ADDITIONAL MATERIAL
 
 # 1. Indroduction
 
