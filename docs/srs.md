@@ -37,36 +37,38 @@ Our target audience are Dungeon Masters (DMs) and D&D players that vary from beg
 
 # Table of Contents
 
+1. [Introduction](#1-introduction)
+   1. [Product Overview](#1-1-product-overview-back-to-top-)
+2. [Specific Requirements](#2-specific-requirements)
+   1. [External Interface Requirements](#2-1-external-interface-requirements-back-to-top-)
+      1. [User Interfaces](#2-1-1-user-interfaces-back-to-top-)
+      2. [Hardware Interfaces](#2-1-2-hardware-interfaces-back-to-top-)
+      3. [Software Interfaces](#2-1-3-software-interfaces-back-to-top-)
+      4. [Communication Protocols](#2-1-4-communication-protocols-back-to-top-)
+   2. [Software Product Features](#2-2-software-product-features-back-to-top-)
+   3. [Software System Attributes](#2-3-software-system-attributes-back-to-top-)
+      1. [Reliability](#2-3-1-reliability-back-to-top-)
+      2. [Availability](#2-3-2-availability-back-to-top-)
+      3. [Security](#2-3-3-security-back-to-top-)
+      4. [Maintainability](#2-3-4-maintainability-back-to-top-)
+      5. [Portability](#2-3-5-portability-back-to-top-)
+      6. [Performance](#2-3-6-performance-back-to-top-)
+   4. [Database Requirements](#2-4-database-requirements-back-to-top-)
+3. [Additional Material](#3-additional-material)
+
 <div style="page-break-after: always;"></div>
 
-1. INTRODUCTION
-    1. Product Overview
-2. SPECIFIC REQUIREMENTS
-    1. External Interface Requirements
-        1. User Interfaces
-    	2. Hardware Interfaces
-    	3. Software Interfaces
-    	4. Communications Protocols
-    3. Software Product Features
-    4. Software System Attributes
-    	1. Reliability
-    	2. Availability
-    	3. Security
-    	4. Maintainability
-    	5. Portability
-    6. Performance
-    5. Database Requirements
-3. ADDITIONAL MATERIAL
+# 1. Introduction
 
-# 1. Indroduction
+## 1.1 Product Overview [[Back to Top](#table-of-contents)]
 
-## 1.1 Product Overview
+Campaign Buddy is an online interactive toolbox to assist Dungeon Masters and players to run Dungeons and Dragons (D&D) campaigns (storytelling based, roleplaying adventures played on a tabletop run by a Dungeon Master, or DM). Campaign Buddy’s purpose is to make the process of setting up, planning, and executing these campaigns simple, painless, and efficient. It is a interface that uses a collection of tools that target different aspects of running a campaign such as creating and managing players, creating maps, planning stories, keeping track of spells, items, and lore, and so on. While different implementations of these tools exist individually in various places, this tool seeks to integrate them into one convenient and customizable panel-based layout. This is important because DMs are often using multiple tools at the same time and need to be able to reference resources.
 
 # 2. Specific Requirements
 
-## 2.1 External Interface Requirements
+## 2.1 External Interface Requirements [[Back to Top](#table-of-contents)]
 
-### 2.1.1 User Interfaces
+### 2.1.1 User Interfaces [[Back to Top](#table-of-contents)]
 
 This project will utilize a web interface with a log-in screen, home screen, and the primary software interface. 
 
@@ -84,18 +86,78 @@ The implementation of the user interface will be component-based. Meaning each c
 ![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1548986809/campaign-buddy/home_page.png "Home Page Sketch")
 *Home Page Sketch*
 
-### 2.1.2 Hardware Interfaces
+### 2.1.2 Hardware Interfaces [[Back to Top](#table-of-contents)]
 
 Campaign Buddy is going to be built and optimized for desktop. We do not anticipate that our users would consider a mobile view *essential*. However in our research, we discovered that our users do not see it as completely useless. While most DMs tend to use their laptops for campaign management, one DM we interviewed said that he uses his phone to quickly look up information. While he admitted that the aggregative nature of the multi-paneled primary application interface would fufill this need, he said that it would still be nice to retain that functionality. So a mobile interface is not out of the question, just not a big priority as it would require a redesign of our core functionality. Though Campaign Buddy is designed for desktop screens, it must be designed for both small and large desktop screens. In order to accomodate this, we will be testing the UI on smaller desktop screen.
 
 We have also discussed creating an entirely native mobile app that allows players to access and edit their character information but this would likely be in the product's distant future.
 
-### 2.1.3 Software Interfaces
+### 2.1.3 Software Interfaces [[Back to Top](#table-of-contents)]
 
-The project is mainly going to be using Javascript and Javascript APIs such as REACT.js, Node.js, and Quill.js as well as other APIs and engines such as opendnd and DnD 5e API. 
+As this is a component based system, we will be implementeng many encapsulated software interfaces as well as implementing many third party APIs. Below is a list of third party APIs that we will be using.
 
+- **ReactJS**: Used for defining declaritive, encapsulated components
+   - <https://reactjs.org>
+- **Quill**: A customizable rich text editor
+   - <https://quilljs.com/>
+- **MaterialUI**: A suite of UI components that follow Google's material design
+   - <https://material-ui.com/>
+- **opendnd**: A suite of D&D random generation tools
+   - <https://github.com/opendnd/opendnd>
+- **react-dnd**: A drag and drop React component system
+   - <http://react-dnd.github.io/react-dnd/about>
+- **react-panelgroups**: A responsive panel layout component system
+   - <https://www.npmjs.com/package/react-panelgroup>
 
-### 2.1.4 Communication Protocols
+We will also be implementing the following custom software interfaces. The UI for the specific tools are still in development
+
+- Layout Rendering Component
+   - **Description**: Responsible for managing the organizable, customizable layout state
+   - **Input**: Layout state
+   - **Output**: Rendered panes containing tools
+   - **User Actions**: Render layout, change layout organization
+   - **Uses**: ReactJS (for component definition), react-dnd (to handle drag and drop operations), react-panelgroups (to render the panels and handle resizing events)
+- Toolbar Component
+   - **Description**: Responsible for displaying and allowing access to global functions (settings, game timer, adding to the layout, saving/loading layouts)
+   - **Inputs**: Names of all tool types, saved/default layouts
+   - **Outputs**: Rendered toolbar
+   - **User Actions**: Add new tool to the layout, start/stop game timer, save/load layout
+   - **Uses**: ReactJS, react-dnd (to drag new tools onto the layout), MaterialUI
+- Start Menu Component
+   - **Description**: Responsible for handling the creation and loading of campaigns as well as providing the user access to inter-campaign assets such as Characters, custom Spells, and custom Items
+   - **Inputs**: Campaigns, inter-campaign assets
+   - **Outputs**: Rendered start-menu
+   - **User Actions**: Open campaign, create new campaign, import asset into existing campaign
+   - **Uses**: ReactJS, MaterialUI
+- Dice Roller Tool
+   - **Description**: Tool that allows user to roll D&D dice
+   - **Inputs**: *None*
+   - **Outputs**: Rendered dice rolling tool
+   - **User Actions**: Role dice, change dice type, change dice count
+   - **Uses**: ReactJS
+- Character Sheet Tool
+   - **Description**: Tool that allows user to track information about PCs and NPCs
+   - **Inputs**: Type (PC vs NPC), character id
+   - **Outputs**: Rendered character sheet
+   - **User Actions**: Change character information
+   - **Uses**: ReactJS, MaterialUI, opendnd (for random information generation)
+- Search Engine Tool
+   - **Description**: Tool that allows user to search different tables in the database
+   - **Inputs**: Type, search value
+   - **Outputs**: Rendered component with list of search results
+   - **User Actions**: Change search value, view search result details, add search result to new panel
+   - **Uses**: ReactJS, MaterialUI
+- Note taking Tool
+   - **Description**: Tool that allows user to take detailed notes about sessions
+   - **Inputs**: Note id
+   - **Output**: Note text
+   - **User Actions**: Edit notes, reference assets following mention pattern (<https://en.wikipedia.org/wiki/Mention_(blogging)>), save notes, load notes
+   - **Uses**: ReactJS, Quill (for rich text editing and asset mentions), MaterialUI
+
+![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1549045081/campaign-buddy/20190131_185929.jpg "Layout Component Diagram")
+*Layout Component Diagram*
+
+### 2.1.4 Communication Protocols [[Back to Top](#table-of-contents)]
 
 The project will have a three tier architecture. This means that there will be a database layer that stores and manages the data, a application layer that manages API calls and serves static content, and a client layer for the user-interface. The client layer will communicate with the application layer over HTTP for static web content, using the RESTful API pattern when needing dynamic content. When necessary, the application layer will communicate with the database layer over TCP using MySQL's own custom protocol.
 
@@ -117,7 +179,7 @@ Data synchronization between client and database will be handled by the individu
 ![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1548986810/campaign-buddy/csrm.jpg "Component Server Relationship Model")
 *A model for data synchronization*
 
-## 2.2 Software Product Features
+## 2.2 Software Product Features [[Back to Top](#table-of-contents)]
 
 ### Layout 
 
@@ -164,28 +226,28 @@ The Non-Player Character (NPC) Sheets are esstental to D&D roleplaying and as su
 
 TBD
 
-## 2.3 Software System Attributes
+## 2.3 Software System Attributes [[Back to Top](#table-of-contents)]
 
-### 2.3.1 Reliability 
+### 2.3.1 Reliability [[Back to Top](#table-of-contents)]
 
-### 2.3.2 Availability
+### 2.3.2 Availability [[Back to Top](#table-of-contents)]
 
-### 2.3.3 Security
+### 2.3.3 Security [[Back to Top](#table-of-contents)]
 
 TBD
 
-### 2.3.4 Maintainability
+### 2.3.4 Maintainability [[Back to Top](#table-of-contents)]
 
 Campaign Buddy should be maintainable as more spells, items, and functions of D&D are added or removed over time. 
 
-### 2.3.5 Portability
+### 2.3.5 Portability [[Back to Top](#table-of-contents)]
 
 
-### 2.3.6 Performance
+### 2.3.6 Performance [[Back to Top](#table-of-contents)]
 
 Performance is curital to this project or else it would defeat the purpose of using Campaign Buddy over paper. Since the DM needs to be able to retreave information as quickly as possible in order to be fluid in stroytelling the database calls should take less than half a second. 
 
-## 2.4 Database Requirements
+## 2.4 Database Requirements [[Back to Top](#table-of-contents)]
 
 Most of the project info will be stored and managed in a SQL database that contains info such as character stats and descriptions, classes, races, spells, items, lore, sounds, plot points, locations, etc. 
 
