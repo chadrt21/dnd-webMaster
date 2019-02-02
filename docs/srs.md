@@ -195,6 +195,8 @@ Data synchronization between client and database will be handled by the individu
 
 ## 2.2 Software Product Features [[Back to Top](#table-of-contents)]
 
+Product backlog: <https://docs.google.com/spreadsheets/d/1cAOoTEeiA5veIspgffNhoHeH7TcfESVLh8ZbSqb8ZbQ/edit?usp=sharing>
+
 ### 2.2.1 Customizable Layout [[Back to Top](#table-of-contents)]
 
 #### 2.2.1.1 Description and Priority
