@@ -59,7 +59,6 @@ Our target audience are Dungeon Masters (DMs) and D&D players that vary from beg
       5. [Portability](#2-3-5-portability-back-to-top-)
       6. [Performance](#2-3-6-performance-back-to-top-)
    4. [Database Requirements](#2-4-database-requirements-back-to-top-)
-3. [Additional Material](#3-additional-material)
 
 <div style="page-break-after: always;"></div>
 
@@ -451,5 +450,3 @@ Performance is crutial to this project or else it would defeat the purpose of us
 ## 2.4 Database Requirements [[Back to Top](#table-of-contents)]
 
 Most of the project info will be stored and managed in a SQL database that contains info such as character stats and descriptions, classes, races, spells, items, lore, sounds, plot points, locations, etc. 
-
-# 3. Additional Material
