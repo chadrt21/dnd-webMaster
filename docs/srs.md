@@ -1,7 +1,7 @@
 <p style="font-size: 22pt; text-align: center; margin: 0;">Software Requirements Specification</p>
 <p style="font-size: 22pt; text-align: center; margin: 0;">Campaign Buddy</p>
-<p style="font-size: 22pt; text-align: center; margin: 0;">Document Version: 1.0</p>
-<p style="font-size: 22pt; text-align: center; margin: 0;">Date: January 31, 2019</p>
+<p style="font-size: 22pt; text-align: center; margin: 0;">Document Version: 3.0</p>
+<p style="font-size: 22pt; text-align: center; margin: 0;">Date: February 1, 2019</p>
 <p style="font-size: 22pt; text-align: center; margin: 0;">Location of File: docs/srs.md</p>
 <p style="font-size: 22pt; text-align: center; margin: 0;">CSCI Biola University</p>
 
@@ -28,10 +28,18 @@ Our target audience are Dungeon Masters (DMs) and D&D players that vary from beg
 | Version | Primary Authors | Description of Version | Date Completed |
 | ------- | --------------- | ---------------------- | -------------- |
 | 1.0     | Joseph Stewart  | Initial version        | 2/1/2019       |
+| 2.0     | Joseph Stewart  | Software System Attributes | 2/1/2019   |
+| 3.0     | Joseph Stewart  | Database Requirements and ER Diagram | 2/1/2019 |
 
 <div style="page-break-after: always;"></div>
 
 # Signatures of Approval
+
+- Joseph Stewart
+- Ashley Cheah
+- Jillian McDaniel
+- Zachary Leonard
+- Chad Ross
 
 <div style="page-break-after: always;"></div>
 
@@ -58,6 +66,7 @@ Our target audience are Dungeon Masters (DMs) and D&D players that vary from beg
       4. [Maintainability](#2-3-4-maintainability-back-to-top-)
       5. [Portability](#2-3-5-portability-back-to-top-)
       6. [Performance](#2-3-6-performance-back-to-top-)
+	  7. [Supportability](#2-3-7-supportability-back-to-top-)
    4. [Database Requirements](#2-4-database-requirements-back-to-top-)
 
 <div style="page-break-after: always;"></div>
@@ -80,27 +89,27 @@ The primary software interface will be a grid of totally customizable, resizable
 
 The home page will be where the user can create new campaigns or open an existing one. In addition, they will also be able to see assets from all of their campaigns including but not limited to player characters, non-player characters, custom items, and custom spells. They can import these assets into other campaigns so they do not have to recreate them.
 
-In addition to the various tool-specfic functions, global functions will include a global search that will query every searchable table in the database, customizable hot-keys, and a play-time counter that lives in the toolbar. All visible global functions will take place in modals, including error messages. Error messages should be helpful, friendly, and descriptive. In general they should follow the guidlines laid out in this article: <https://medium.com/s/user-friendly/the-art-of-the-error-message-9f878d0bff80>.
+In addition to the various tool-specific functions, global functions will include a global search that will query every searchable table in the database, customizable hot-keys, and a play-time counter that lives in the toolbar. All visible global functions will take place in modals, including error messages. Error messages should be helpful, friendly, and descriptive. In general they should follow the guidelines laid out in this article: <https://medium.com/s/user-friendly/the-art-of-the-error-message-9f878d0bff80>.
 
 The implementation of the user interface will be component-based. Meaning each conceptual unit of the interface will me self-encapsulated and maintain it's own information and only be aware of what it needs to be aware of.
 
 ![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1548986809/campaign-buddy/primary_application_interface.png "Primary Application Interface Proof of Concept")
-*Primary Application Interace POC*
+*Primary Application Interface POC*
 
 ![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1548986809/campaign-buddy/home_page.png "Home Page Sketch")
 *Home Page Sketch*
 
 ### 2.1.2 Hardware Interfaces [[Back to Top](#table-of-contents)]
 
-Campaign Buddy is going to be built and optimized for desktop. We do not anticipate that our users would consider a mobile view *essential*. However in our research, we discovered that our users do not see it as completely useless. While most DMs tend to use their laptops for campaign management, one DM we interviewed said that he uses his phone to quickly look up information. While he admitted that the aggregative nature of the multi-paneled primary application interface would fufill this need, he said that it would still be nice to retain that functionality. So a mobile interface is not out of the question, just not a big priority as it would require a redesign of our core functionality. Though Campaign Buddy is designed for desktop screens, it must be designed for both small and large desktop screens. In order to accomodate this, we will be testing the UI on smaller desktop screen.
+Campaign Buddy is going to be built and optimized for desktop. We do not anticipate that our users would consider a mobile view *essential*. However in our research, we discovered that our users do not see it as completely useless. While most DMs tend to use their laptops for campaign management, one DM we interviewed said that he uses his phone to quickly look up information. While he admitted that the aggregative nature of the multi-paneled primary application interface would fulfill this need, he said that it would still be nice to retain that functionality. So a mobile interface is not out of the question, just not a big priority as it would require a redesign of our core functionality. Though Campaign Buddy is designed for desktop screens, it must be designed for both small and large desktop screens. In order to accommodate this, we will be testing the UI on smaller desktop screen.
 
 We have also discussed creating an entirely native mobile app that allows players to access and edit their character information but this would likely be in the product's distant future.
 
 ### 2.1.3 Software Interfaces [[Back to Top](#table-of-contents)]
 
-As this is a component based system, we will be implementeng many encapsulated software interfaces as well as implementing many third party APIs. Below is a list of third party APIs that we will be using.
+As this is a component based system, we will be implementing many encapsulated software interfaces as well as implementing many third party APIs. Below is a list of third party APIs that we will be using.
 
-- **ReactJS**: Used for defining declaritive, encapsulated components
+- **ReactJS**: Used for defining declarative, encapsulated components
    - <https://reactjs.org>
 - **Quill**: A customizable rich text editor
    - <https://quilljs.com/>
@@ -180,11 +189,11 @@ The project will have a three tier architecture. This means that there will be a
 Data synchronization between client and database will be handled by the individual components. The general pattern is as follows:
 
 1. The client will ask for the static page and associated scripts containing component definitions
-2. The applciation server sends the static content back to the client
+2. The application server sends the static content back to the client
 3. The client loads a component that requires synchronized data (i.e. a tool in a pane)
 4. The component asks the server for relevant data and renders a loading state in the meantime
 5. The application server queries the database and sends relevant data back to client
-6. The component re-renders with the data returned in the respones
+6. The component re-renders with the data returned in the response
 7. The user makes a change to synchronized data in the component
 8. The component sends the change to the application server which makes it in the database and returns the updated data
 9. If the change was made successfully, the component re-renders with the updated data, otherwise it dismisses the change
@@ -202,9 +211,9 @@ Product backlog: <https://docs.google.com/spreadsheets/d/1cAOoTEeiA5veIspgffNhoH
 
 Priority: *very high*
 
-The customizable layout is what separates Campaign Buddy from any other campaign management tool conglomorate on the internet. It is the mechanism through which the DM can use many different tools at once in an convenient manner. Tools are organized on the screen in terms of tabbed panels (each tab containing a running tool). The user can organize and resize panels by dragging and dropping tabs. They can save/load certain configurations of panels/tools in order to get quick access to them when they need it. The layout feature is comprised of the actual Layout Rendering Component and the Toolbar Component and their documented interactions.
+The customizable layout is what separates Campaign Buddy from any other campaign management tool conglomerate on the internet. It is the mechanism through which the DM can use many different tools at once in an convenient manner. Tools are organized on the screen in terms of tabbed panels (each tab containing a running tool). The user can organize and resize panels by dragging and dropping tabs. They can save/load certain configurations of panels/tools in order to get quick access to them when they need it. The layout feature is comprised of the actual Layout Rendering Component and the Toolbar Component and their documented interactions.
 
-#### 2.2.1.2 Sitmulus/Response Sequences
+#### 2.2.1.2 Stimulus/Response Sequences
 
 User interaction with this feature is as follows:
 
@@ -232,7 +241,7 @@ This feature needs to...
 
 Priority: *high*
 
-NPCs are the backbone of a good campign. It is the only tool that a DM has for interacting with the players in the game world and moving the story along. Therefore it is quintisential for the DM to be able to have constant access to NPC information such as stats, abilities, and notes. The DM also needs consistent access to player character information and it breaks the flow of the campaign if they are constantly asking their players for their stats. It is essential for the DM to keep accurate character information that is easily accessible and updatable on their end. DMs should be able to track every detail of a character. These character details are listed below. Information that can be derived from other information should not be explicitly stored in data, nor should it be explicitly editable. This feature is implemented as a tool that can be added or removed from the layout system.
+NPCs are the backbone of a good campaign. It is the only tool that a DM has for interacting with the players in the game world and moving the story along. Therefore it is quintessential for the DM to be able to have constant access to NPC information such as stats, abilities, and notes. The DM also needs consistent access to player character information and it breaks the flow of the campaign if they are constantly asking their players for their stats. It is essential for the DM to keep accurate character information that is easily accessible and updatable on their end. DMs should be able to track every detail of a character. These character details are listed below. Information that can be derived from other information should not be explicitly stored in data, nor should it be explicitly editable. This feature is implemented as a tool that can be added or removed from the layout system.
 
 - Six core stats (Str, Dex, Con, Int, Wis, Cha)
 - Level
@@ -264,7 +273,7 @@ Additionally, DMs will often need to create NPCs on the fly and having to come u
 ![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1549068893/campaign-buddy/character-tool.png "Character Tool UI Sketch")
 *Character tool UI sketch*
 
-#### 2.2.2.2 Sitmulus/Response Sequences
+#### 2.2.2.2 Stimulus/Response Sequences
 
 User interactions with this feature are as follows:
 
@@ -304,7 +313,7 @@ Because the DM needs constant and quick access to various datatypes, searching i
 
 However, sometimes even the switching between tabs or searching for different panes is not effecient enough for a DM. Sometimes they need to think of a name and immediately see results. This is why Campaign Buddy plans to implement a global search tool that can be accessed via a keyboard shortcut. When the user enters this shortcut, they will see a search input modal that dynamically searches all tables in the database as they type and displays the names of the results below. When the user clicks on a result, it is added to the layout and focused in it's panel.
 
-#### 2.2.3.2 Sitmulus/Response Sequences
+#### 2.2.3.2 Stimulus/Response Sequences
 
 User interactions with this feature are as follows:
 
@@ -362,7 +371,7 @@ The user interacts with this feature as follows
    - Note taking tool renders saved notes
 - User opens note
    - Note taking tool makes API request for note content
-   - Applications server queries note taking server and grabs informations for references from the note
+   - Applications server queries note taking server and grabs information for references from the note
    - Note taking tool renders the note and formats mentions with links
 - User clicks on mention
    - Note taking tool opens mentioned asset in new tab
@@ -428,25 +437,54 @@ This feature needs to...
 
 ### 2.3.1 Reliability [[Back to Top](#table-of-contents)]
 
+Campaign Buddy needs to function reliably in high stress environments. If Campaign Buddy is not reliable, our users will grow frustrated and loose the value that they find in the system. The ability to reliability edit and access everything in one place is the core reason why someone would use our tool. If data is lost or inaccurate, it forces the user to re-input the information lost and disrupt the flow of the session. It is important that our servers do not crash so that our users are not hindered. When an exception is thrown, a handler should be implemented at the highest level to catch that exception so it doesn’t crash the system. Once that exception is detected a notification should be sent to maintainers in the form of an email or github issue being created. 
+
 ### 2.3.2 Availability [[Back to Top](#table-of-contents)]
+
+Campaign Buddy should be available to those with previous DMing experience with the 5E system through web browser access.  We will include an HTML screen reading functionality through aria labels to accommodate those who use screen readers. To prevent eye strain and protect those with conditions such as epilepsy, we shall have color design choices that do not have extreme contrast and are easy to look at. Because D&D material is only published in English, it is doubtful we will have international users. Therefore, we will not implement solutions for varying currencies or date-time formats. This is a reference tool for DMs, meaning that it is not a tutorial in how to DM a game, so at least one game's worth of experience. It is recommended that the DM either have an experienced DM with them or have DMed one or more times before using this tool.
 
 ### 2.3.3 Security [[Back to Top](#table-of-contents)]
 
-Note taking and cross site scripting
-User stored data and SQL injection
-Application server and DoS
+Possible areas of weakness in our system is custom user content rendered on a page, our RestfulAPI and other publicly accessible network features, and SQL queries with user defined data. By displaying custom user content on a page in our notes tool and in other places, we open the user up to cross-site scripting attacks. In order to prevent this, the server will implement HTML sanitization so the user cannot upload malicious scripts into the database. Through SQL queries with user defined data, the system opens itself up to SQL injection attacks in which a hacker inserts SQL code into a normal database operation. This will be prevented by sanitizing user data through a reviewed third party API. Through any publicly accessible network features, the system is opened up to a denial of service attack in which the server is spammed with requests and shut down. This will be handled through user authentication. User authentication will be handled through Google so we do not have to store potentially sensitive user information on the servers. Any other information being sent would not be considered sensitive by our users.
 
 ### 2.3.4 Maintainability [[Back to Top](#table-of-contents)]
 
-Campaign Buddy should be maintainable as more spells, items, and functions of D&D are added or removed over time. 
+Campaign Buddy should be maintainable as more spells, items, and functions of D&D are added or removed over time. We should implement a strong database with a strong normalization to accommodate this scenario. Strong database design is the key to adding in new entities in the future. Software component documentation will allow maintainers in the future to understand what code is supposed to be doing in an easy and readable way without having to decipher the code itself.
 
 ### 2.3.5 Portability [[Back to Top](#table-of-contents)]
 
+This system is a website which can be accessed via a computer that can connect to the internet. They shall navigate our system using a combination of point and click, hot keys, drag and drop, and text entry. The material provided by our system is typically used for quick references and isn't required if a DM is pacing while managing their game. One DM is connected with one campaign and player view is yet to be an option, so one person can log in to view a given campaign at a given time. This is not available on mobile device.
 
 ### 2.3.6 Performance [[Back to Top](#table-of-contents)]
 
-Performance is crutial to this project or else it would defeat the purpose of using Campaign Buddy over paper. Since the DM needs to be able to retreave information as quickly as possible in order to be fluid in stroytelling the database calls should take less than half a second. 
+Performance is crucial to this project or else it would defeat the purpose of using Campaign Buddy over paper. Since the DM needs to be able to retrieve information as quickly as possible in order to be fluid in storytelling the database calls should take less than half a second.
+
+### 2.3.7 Supportability [[Back to Top](#table-of-contents)]
+
+For a connecting with our users and helping with the understandability of our product, we will provide a help page with details on how to use individual tools, the dynamic interface, the hot keys, as well as explain the full capabilities of the system. This will be located in a help page link placed on our home page. Error handling will come into place mainly via displaying appropriate error messages as detailed in the error handling link listed above.
 
 ## 2.4 Database Requirements [[Back to Top](#table-of-contents)]
 
-Most of the project info will be stored and managed in a SQL database that contains info such as character stats and descriptions, classes, races, spells, items, lore, sounds, plot points, locations, etc. 
+Data will be stored in a MySQL database system according to the following business rules
+
+- **Users** (DM) can create and open **Campaigns**
+- **Campaigns** include **Characters**
+- **Campaigns** include **Locations**
+- **Campaigns** include **Plot Points**
+- **Characters** can be **Playable** (PC) or **Non-Playable** (NPC)
+- **Characters** can equip **Items**
+- **Characters** can learn **Spells**
+- **Characters** can use **Spells**
+	- So long as they have enough available spell slots for that spell’s level
+- **Characters** must have one or more **Classes**
+- **Classes** have different **Features** depending on their class *type* and *level*
+	- I.e. Bard level 3 gives you Bard College
+- **Classes** have **Subclasses**
+	- I.e. College of Lore is a subclass
+- **Subclasses** also have different **Features** depending on their subclass *type* and *level*
+	- I.e. College of Lore gives you the Peerless Skill feature at level 14
+- **Plot Points** reference **Characters**
+- **Plot Points** reference **Locations**
+
+![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1549092187/campaign-buddy/conceptual_er_model.png "Logical ER model")
+*Logical ER model*
