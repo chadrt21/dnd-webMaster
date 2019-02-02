@@ -46,6 +46,11 @@ Our target audience are Dungeon Masters (DMs) and D&D players that vary from beg
       3. [Software Interfaces](#2-1-3-software-interfaces-back-to-top-)
       4. [Communication Protocols](#2-1-4-communication-protocols-back-to-top-)
    2. [Software Product Features](#2-2-software-product-features-back-to-top-)
+      1. [Customizable Layout](#2-2-1-customizable-layout-back-to-top-)
+      2. [Player/Non-Player Character Tracking](#2-2-2-player-non-player-character-tracking-back-to-top-)
+      3. [Local and Global Asset Searching](#2-2-3-local-and-global-asset-searching-back-to-top-)
+      4. [Note Taking and Story/Session Planning](#2-2-4-note-taking-and-story-session-planning-back-to-top-)
+      5. [Map Making and Location Tracking](#2-2-5-map-making-and-location-tracking-back-to-top-)
    3. [Software System Attributes](#2-3-software-system-attributes-back-to-top-)
       1. [Reliability](#2-3-1-reliability-back-to-top-)
       2. [Availability](#2-3-2-availability-back-to-top-)
@@ -129,6 +134,12 @@ We will also be implementing the following custom software interfaces. The UI fo
    - **Outputs**: Rendered start-menu
    - **User Actions**: Open campaign, create new campaign, import asset into existing campaign
    - **Uses**: ReactJS, MaterialUI
+- Global Search
+   - **Description**: Responsible for searching the entire database and returning results
+   - **Inputs**: Search value
+   - **Outputs**: Names of search results organized by asset type
+   - **User Actions**: Search, add result asset to layout
+   - **Uses**: ReactJS, MaterialUI
 - Dice Roller Tool
    - **Description**: Tool that allows user to roll D&D dice
    - **Inputs**: *None*
@@ -141,7 +152,7 @@ We will also be implementing the following custom software interfaces. The UI fo
    - **Outputs**: Rendered character sheet
    - **User Actions**: Change character information
    - **Uses**: ReactJS, MaterialUI, opendnd (for random information generation)
-- Search Engine Tool
+- Local Search Engine Tool
    - **Description**: Tool that allows user to search different tables in the database
    - **Inputs**: Type, search value
    - **Outputs**: Rendered component with list of search results
@@ -155,7 +166,10 @@ We will also be implementing the following custom software interfaces. The UI fo
    - **Uses**: ReactJS, Quill (for rich text editing and asset mentions), MaterialUI
 
 ![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1549045081/campaign-buddy/20190131_185929.jpg "Layout Component Diagram")
-*Layout Component Diagram*
+*Layout component diagram*
+
+![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1549068893/campaign-buddy/main-screen.png "Main Screen")
+*Main screen UI sketch*
 
 ### 2.1.4 Communication Protocols [[Back to Top](#table-of-contents)]
 
@@ -181,11 +195,11 @@ Data synchronization between client and database will be handled by the individu
 
 ## 2.2 Software Product Features [[Back to Top](#table-of-contents)]
 
-### 2.2.1 Customizable Layout 
+### 2.2.1 Customizable Layout [[Back to Top](#table-of-contents)]
 
 #### 2.2.1.1 Description and Priority
 
-Priority: <span style="color:red">very high</span>
+Priority: *very high*
 
 The customizable layout is what separates Campaign Buddy from any other campaign management tool conglomorate on the internet. It is the mechanism through which the DM can use many different tools at once in an convenient manner. Tools are organized on the screen in terms of tabbed panels (each tab containing a running tool). The user can organize and resize panels by dragging and dropping tabs. They can save/load certain configurations of panels/tools in order to get quick access to them when they need it. The layout feature is comprised of the actual Layout Rendering Component and the Toolbar Component and their documented interactions.
 
@@ -211,35 +225,203 @@ This feature needs to...
 - Serialize/deserialize the layout configuration model into a data format suitable to be stored in the database.
 - Interpret and render layout data
 
-### 2.2.2 PC Sheet
+### 2.2.2 Player/Non-Player Character Tracking [[Back to Top](#table-of-contents)]
 
 #### 2.2.2.1 Description and Priority
 
-The Player Character (PC) Sheets are esstental to D&D roleplaying and as such the DM has to reference them most of the time in order to ensure consitency in storytelling. The PC Sheet is a high priority feature in the project.
+Priority: *high*
 
-#### 2.2.2.1 Sitmulus/Response Sequences
+NPCs are the backbone of a good campign. It is the only tool that a DM has for interacting with the players in the game world and moving the story along. Therefore it is quintisential for the DM to be able to have constant access to NPC information such as stats, abilities, and notes. The DM also needs consistent access to player character information and it breaks the flow of the campaign if they are constantly asking their players for their stats. It is essential for the DM to keep accurate character information that is easily accessible and updatable on their end. DMs should be able to track every detail of a character. These character details are listed below. Information that can be derived from other information should not be explicitly stored in data, nor should it be explicitly editable. This feature is implemented as a tool that can be added or removed from the layout system.
 
-* Display chacter info and background
-* Edit Charcter info
+- Six core stats (Str, Dex, Con, Int, Wis, Cha)
+- Level
+- Class
+- Race
+- Current Health
+- Max Health
+- Speed
+- Proficiency bonus (Derived from class and level)
+- Features/Abilities
+- Inventory
+- Spells
+- Proficiencies
+- Languages
+- Backstory
+- Appearance (stored as an image perhaps, maybe rich text content)
+- Spell attack (Derived from class and skill points)
+- Spell save DC (Derived from class and skill points)
+- Class specific information
+   - Chi
+   - Sorcerer points
+   - Bardic inspiration die
+   - Etc.
+- Relationships
+- Money
 
-#### 2.2.2.2 Functional Requirements
+Additionally, DMs will often need to create NPCs on the fly and having to come up with random NPCs can disrupt the flow of the game. Because of this, the NPC tool will need to be able to randomly generate characters.
 
-TBD
+![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1549068893/campaign-buddy/character-tool.png "Character Tool UI Sketch")
+*Character tool UI sketch*
 
-### 2.2.3 NPC Sheet 
+#### 2.2.2.2 Sitmulus/Response Sequences
+
+User interactions with this feature are as follows:
+
+- User adds character tool to the layout
+   - Character tool makes an API request to get names and ids of all characters
+   - Application server queries database for all characters
+   - Character tool renders list of characters
+- User deletes a character
+   - Character tool makes an API request to delete target character
+   - Application server deletes character and returns result
+   - Character tool re-renders
+- User selects a character
+   - Character tool makes an API request for target characters information
+   - Application server returns data
+   - Character tool render character data
+- User edits a character
+   - Character tool makes an API request to change data
+   - Application server changes data and returns result
+   - Character tool re-renders view
+
+#### 2.2.2.3 Functional Requirements
+
+This feature needs to...
+- Communicate back and forth with application server to edit and retrieve character information
+- Render character information in an organized and readable fashion
+- Implement a system for editing information quickly and repeatedly
+- Implement a random generation solution for character data (opendnd)
+- Database implementations for storing character data and associated relationships
+
+### 2.2.3 Local and Global Asset Searching [[Back to Top](#table-of-contents)]
 
 #### 2.2.3.1 Description and Priority
 
-The Non-Player Character (NPC) Sheets are esstental to D&D roleplaying and as such the DM has to reference them most of the time in order to ensure consitency in storytelling. The NPC Sheet is a high priority feature in the project.
+Priority: *High*
+
+Because the DM needs constant and quick access to various datatypes, searching is a key feature of Campaign Buddy. DMs are often juggling many things at once and as a result need to know lot's of different information at once. They don't have the time or mental capacity to be constantly switching between interfaces and systems to be looking up information. To solve this problem, Campaign Buddy plans to implement a universal searching interface. This is implemented in various searching tools with similar UIs that are responsible for searching and displaying information about a particular asset. In this way, DMs can have open an items search tool, a spells search tool, and a features search tool all at the same time allowing quick access to multiple types of information. These specialized tools are referred to as local search tools.
+
+However, sometimes even the switching between tabs or searching for different panes is not effecient enough for a DM. Sometimes they need to think of a name and immediately see results. This is why Campaign Buddy plans to implement a global search tool that can be accessed via a keyboard shortcut. When the user enters this shortcut, they will see a search input modal that dynamically searches all tables in the database as they type and displays the names of the results below. When the user clicks on a result, it is added to the layout and focused in it's panel.
 
 #### 2.2.3.2 Sitmulus/Response Sequences
 
-* Display chacter info and background
-* Edit Charcter info
+User interactions with this feature are as follows:
+
+- User adds local search tool to the layout
+   - Empty search tool of that type is added to the layout
+- User types character into search
+   - Tool makes API request for search result containing search value in some field
+   - Application server queries database and returns results
+   - Results are rendered below the search input
+- User clicks on search result in local search
+   - API request is made for asset details
+   - Application server gets details for specific asset
+   - Tool renders details in pane with a button to go back to search
+- User enters keyboard shortcut
+   - Global search appears on screen
+- User clicks on search result from global search
+   - Local search of target asset type is added to layout
+   - Local search makes API request for asset details
+   - Application server gets details for specific asset
+   - Tool renders details in pane with a button to go back to search
 
 #### 2.2.3.3 Functional Requirements
 
-TBD
+This feature needs to...
+- Communicate with application server
+- Quickly query database
+- Render item data efficiently
+
+### 2.2.4 Note Taking and Story/Session Planning [[Back to Top](#table-of-contents)]
+
+#### 2.2.4.1 Description and Priority
+
+Priority: *Medium*
+
+It is important for DMs to be able keep track of where the story is going and how they are going to realize their abstract story points in each session. That is why Campaign Buddy will implement note taking and story planning systems that will aid the DM in documenting their ideas and plans for a narrative system in which player characters have autonomy of their own. This system will be realized by implementing a general note taking tool allowing the DM to make notes and mention different assets (e.g. "**@Trogdor** stole a diamond from **@Sir Bobbert**") and a story graph tool that allows the DM to plan their story in a abstracted sequence of connected events and locations.
+
+![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1549068893/campaign-buddy/story-planning-tool.png "Story planning tool UI sketch")
+*Story planning tool UI sketch*
+
+It would be cool if the notes tool used natural language parsing (or perhaps structured syntax) to make changes to the model.
+
+So if the user types
+> The party moved to Fandalin
+
+Then the system would set the location for all of the players to Fandalin
+
+#### 2.2.4.2 Stimulus/Response Sequences
+
+The user interacts with this feature as follows
+
+- User adds note taking tool
+   - Layout engine adds note taking tool to layout
+   - Note taking tool makes API request for saved notes
+   - Application server queries database for saved notes organized by session and returns results
+   - Note taking tool renders saved notes
+- User opens note
+   - Note taking tool makes API request for note content
+   - Applications server queries note taking server and grabs informations for references from the note
+   - Note taking tool renders the note and formats mentions with links
+- User clicks on mention
+   - Note taking tool opens mentioned asset in new tab
+- User saves note
+   - Tool makes request to edit note
+   - Application server updates note in database
+   - Application server updates note mentions in database
+   - Application server returns response
+   - Tool renders saved note
+- User adds story planning tool
+   - Layout engine adds story planning tool to layout
+   - Story tool makes API request for saved story plan
+   - Application server gets story plan for campaign from database
+   - Story tool renders result
+- User adds plot point to story graph
+   - Tool makes API request to add plot point
+   - Application server edits data in database
+   - Tool renders updated graph
+- User deletes note
+   - Tool makes API request to delete note
+   - App server deletes note from database
+   - Tool renders saved notes
+
+#### 2.2.4.3 Functional Requirements
+
+This feature needs to...
+- Communicate with the application server and database to save notes/story plans
+- Represent, serialize, and deserialize notes and story plans
+- Implement complex diagram builder
+
+Lower priority functional requirements
+- Natural language parsing
+- Structured command syntax
+
+### 2.2.5 Map Making and Location Tracking [[Back to Top](#table-of-contents)]
+
+#### 2.2.5.1 Description and Priority
+
+Priority: *Low*
+
+Locations and map design are essential to a campaign. After all, characters need to be somewhere in order to do something. However, keeping track of locations and maps is often a difficult process especially if you are using a digital system to keep information synchronized. For this reason, Campaign Buddy should implement a lightweight and simple map making and location tracking feature that allows DMs to track where the players are, where NPCs are, where important encounters are, and where treasure is.
+
+![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1549071327/campaign-buddy/map-tool.png "Map tool UI sketch")
+*Map tool UI sketch*
+
+#### 2.2.5.2 Stimulus/Response Sequences
+
+The use interacts with the feature as follows
+
+- User adds/edits location
+   - Tool makes API request
+   - App server changes data in database
+   - Tool renders content
+
+#### 2.2.5.3 Functional Requirements
+
+This feature needs to...
+- Communicate with application server
+- Represent, serialize, and display map/location data
+- Implement simple map/location editing interface
 
 ## 2.3 Software System Attributes [[Back to Top](#table-of-contents)]
 
@@ -249,7 +431,9 @@ TBD
 
 ### 2.3.3 Security [[Back to Top](#table-of-contents)]
 
-TBD
+Note taking and cross site scripting
+User stored data and SQL injection
+Application server and DoS
 
 ### 2.3.4 Maintainability [[Back to Top](#table-of-contents)]
 
@@ -260,7 +444,7 @@ Campaign Buddy should be maintainable as more spells, items, and functions of D&
 
 ### 2.3.6 Performance [[Back to Top](#table-of-contents)]
 
-Performance is curital to this project or else it would defeat the purpose of using Campaign Buddy over paper. Since the DM needs to be able to retreave information as quickly as possible in order to be fluid in stroytelling the database calls should take less than half a second. 
+Performance is crutial to this project or else it would defeat the purpose of using Campaign Buddy over paper. Since the DM needs to be able to retreave information as quickly as possible in order to be fluid in stroytelling the database calls should take less than half a second. 
 
 ## 2.4 Database Requirements [[Back to Top](#table-of-contents)]
 
