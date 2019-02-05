@@ -8,6 +8,7 @@ Web Interface for D&amp;D resources and character management for dungen masters
   - [X] Software System Requirements document
   - [ ] Product Backlog (In progress: Everyone)
   - [ ] Software Design Description
+  - [ ] Add programming standards document (for commenting, naming, misc syntax perferences)
 - **Prototyping/Modeling**
   - [X] Initial rough paper prototypes
   - [X] Initial database conceptual ER model
@@ -16,6 +17,7 @@ Web Interface for D&amp;D resources and character management for dungen masters
 - **Programming**
   - [X] Layout manager proof of concept
   - [ ] Implement BlueprintJS in Layout PoC (In progress: Joseph)
+  - [ ] Set up ESLint to enforce programming standard
 
 ## Colaborators
 Chad Ross: chad.ross@biola.edu
