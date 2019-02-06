@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Icon from '@material-ui/core/Icon';
+import { Icon } from '@blueprintjs/core';
 import styles from './styles.less';
 
 export default class Tab extends React.Component {
@@ -11,7 +11,7 @@ export default class Tab extends React.Component {
 			<div className={`${styles.tab} ${selected ? styles.tabSelected : ''}`} onClick={onClick}>
 				{label}
 				{selected ?
-					<Icon className={styles.tabClose} onClick={onClose}>close</Icon>
+					<Icon iconSize={12} icon="cross" onClick={onClose} className={styles.tabClose} />
 				: null}
 			</div>
 		)

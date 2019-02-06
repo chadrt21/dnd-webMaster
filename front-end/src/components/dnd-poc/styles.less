@@ -67,11 +67,19 @@
 		border-right: 1px solid #555;
 		position: relative;
 
+		&:hover {
+			background-color: rgba(85, 85, 85, 0.3);
+		}
+
 		&-selected {
 			color: white;
 			background-color: #555;
 			padding-right: 18px;
 			width: 72px;
+
+			&:hover {
+				background-color: #555
+			}
 		}
 
 		&-close {
@@ -80,9 +88,10 @@
 			right: 0;
 			margin-right: 4px;
 			cursor: pointer;
+			fill: #DDD;
 
 			&:hover {
-				color: darken(white, 20%);
+				fill: darken(#DDD, 20%);
 			}
 		}
 	}
