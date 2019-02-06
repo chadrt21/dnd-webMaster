@@ -1,6 +1,24 @@
 # dnd-webMaster
 Web Interface for D&amp;D resources and character management for dungen masters 
 
+## To-Do
+
+- **Documentation**
+  - [X] Project Management Plan
+  - [X] Software System Requirements document
+  - [ ] Product Backlog (In progress: Everyone)
+  - [ ] Software Design Description
+  - [ ] Add programming standards document (for commenting, naming, misc syntax perferences)
+- **Prototyping/Modeling**
+  - [X] Initial rough paper prototypes
+  - [X] Initial database conceptual ER model
+  - [ ] Digital prototypes of Software Product Features detailed in SRS (In progress: Jill & Ashley)
+  - [ ] Full physical ER database model (In progress: Zach & Chad)
+- **Programming**
+  - [X] Layout manager proof of concept
+  - [ ] Implement BlueprintJS in Layout PoC (In progress: Joseph)
+  - [ ] Set up ESLint to enforce programming standard
+
 ## Colaborators
 Chad Ross: chad.ross@biola.edu
 * Project Master
