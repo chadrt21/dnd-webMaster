@@ -71,6 +71,7 @@ Shared Roles: Developers, Testers
 * Clone project
 * Navigate to root project folder
 * Run `npm install`
+  * This step needs to be done any time new dependencies are added
 
 ## How to build the front-end
 * Navigate to root project folder
