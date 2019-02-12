@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Tab from './Tab';
 
@@ -20,6 +21,13 @@ const collect = (connect, monitor) => ({
 })
 
 class DraggableTab extends React.Component {	
+	static propTypes = {
+		label: PropTypes.string.isRequired,
+		connectDragSource: PropTypes.func.isRequired,
+		pane: PropTypes.object.isRequired,
+		connectDragPreview: PropTypes.func.isRequired,
+		isDragging: PropTypes.bool,
+	}
 
 	componentDidMount() {
 		const { connectDragPreview } = this.props;
@@ -29,7 +37,15 @@ class DraggableTab extends React.Component {
 	}
 
 	render() {
-		const { label, connectDragSource, isDragging, pane, connectDragPreview, ...rest } = this.props;
+		const {
+			label,
+			connectDragSource,
+			isDragging,
+			pane,
+			connectDragPreview,
+			...rest
+		} = this.props;
+
 		return connectDragSource(
 			<div>
 				<Tab

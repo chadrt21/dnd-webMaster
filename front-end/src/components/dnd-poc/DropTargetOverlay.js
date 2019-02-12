@@ -1,5 +1,7 @@
 import React from 'react';
 import { DropTarget } from 'react-dnd';
+import PropTypes from 'prop-types';
+
 import styles from './styles.less';
 
 const target = {
@@ -14,6 +16,16 @@ const target = {
 }
 
 class DropTargetOverlay extends React.Component {
+	static propTypes = {
+		type: PropTypes.string.isRequired,
+		direction: PropTypes.string.isRequired,
+		connectDropTarget: PropTypes.func.isRequired,
+		isDragging: PropTypes.bool,
+		itemType: PropTypes.string,
+		isOver: PropTypes.bool,
+		children: PropTypes.node,
+	}
+	
 	render() {
 		const {
 			type,

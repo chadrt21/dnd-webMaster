@@ -31,7 +31,6 @@ export default class ContentPanel extends React.Component {
 		event.stopPropagation()
 		const { removePane } = this.props;
 		const { currentTab } = this.state;
-		console.log('currentTab', currentTab);
 		if (currentTab > 0) {
 			this.handleTabChanged(0, () => removePane(pane) );
 		} else {

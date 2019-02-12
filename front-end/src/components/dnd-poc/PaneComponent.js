@@ -1,6 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class PaneComponent extends React.Component {
+	static propTypes = {
+		pane: PropTypes.object.isRequired
+	}
+	
 	state = {}
 
 	componentDidMount() {

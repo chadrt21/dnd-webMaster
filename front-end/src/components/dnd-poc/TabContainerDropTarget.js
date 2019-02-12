@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import styles from './styles.less';
 
@@ -14,6 +15,12 @@ const target = {
 }
 
 class TabContainerDropTarget extends React.Component {
+	static propTypes = {
+		connectDropTarget: PropTypes.func.isRequired,
+		children: PropTypes.node,
+		isOver: PropTypes.bool,
+	}
+	
 	render() {
 		const { children, connectDropTarget, isOver } = this.props;
 

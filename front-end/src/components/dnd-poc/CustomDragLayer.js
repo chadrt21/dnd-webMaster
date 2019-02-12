@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DragLayer } from 'react-dnd';
 
 import Tab from './Tab';
@@ -31,6 +32,13 @@ const CustomDragLayer = ({ item, itemType, currentOffset, isDragging }) => {
 		)
 	}
 	return null;
+}
+
+CustomDragLayer.propTypes = {
+	item: PropTypes.object,
+	itemType: PropTypes.string,
+	currentOffset: PropTypes.object,
+	isDragging: PropTypes.bool,
 }
 
 export default DragLayer(monitor => ({
