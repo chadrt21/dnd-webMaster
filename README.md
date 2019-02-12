@@ -16,7 +16,7 @@ Web Interface for D&amp;D resources and character management for dungen masters
   - [ ] Full physical ER database model (In progress: Zach & Chad)
 - **Programming**
   - [X] Layout manager proof of concept
-  - [ ] Implement BlueprintJS in Layout PoC (In progress: Joseph)
+  - [X] Implement BlueprintJS in Layout PoC
   - [ ] Set up ESLint to enforce programming standard
 
 ## Colaborators
