@@ -4,6 +4,7 @@ import PanelGroup from './PanelGroup';
 import ContentPanel from './ContentPanel';
 import CustomDragLayer from './CustomDragLayer';
 import Content from './Content';
+
 import styles from './styles.less';
 
 import { addPane, movePane } from './model/layout-manager';
