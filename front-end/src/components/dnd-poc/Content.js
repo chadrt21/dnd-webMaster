@@ -1,5 +1,6 @@
 import React from 'react';
 import PaneComponent from './PaneComponent';
+import { EditableText, H3 } from '@blueprintjs/core';
 
 const TextEditor = props => {
 	return (
@@ -19,6 +20,11 @@ export default class Content extends PaneComponent {
 	render() {
 		return (
 			<div>
+				<H3>
+					<EditableText
+						placeholder="Edit me"
+					/>
+				</H3>
 				<p>I am pane type {this.props.pane.getType()} with an id of {this.props.pane.getId()}</p>
 				<p>The number in my state {this.state.value}</p>
 				<button onClick={() => this.setState(({ value }) => ({ value: value + 1 }))}>++!</button>
