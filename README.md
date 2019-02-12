@@ -66,10 +66,17 @@ Shared Roles: Developers, Testers
 * [Setting Up DnD Gamemaster Screen video](https://www.youtube.com/watch?v=YRMVTmbe-Is&index=9&list=WL)
 * [Orc Pub](http://www.orcpub.com/)
 
-## How to build front-end
-* Install [Node](https://nodejs.org/en/) (if you haven't already)
-* Navigate to /front-end
+## How to set up project (Only needs to be done once)
+* Install [NodeJS](https://nodejs.org/en/)
+* Clone project
+* Navigate to root project folder
 * Run `npm install`
-* Run `npm build`
-* To view in browser open /front-end/dist/main.html in browser
 
+## How to build the front-end
+* Navigate to root project folder
+* Run `npm run build`
+
+## How to start the server
+* Navigate to root project folder
+* Run `npm run server`
+  * Be sure to stop (`ctrl-c`) the server when you are done
