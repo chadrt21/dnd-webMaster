@@ -6,9 +6,9 @@ Web Interface for D&amp;D resources and character management for dungen masters
 - **Documentation**
   - [X] Project Management Plan
   - [X] Software System Requirements document
-  - [ ] Product Backlog (In progress: Everyone)
+  - [X] Product Backlog
   - [ ] Software Design Description
-  - [ ] Add programming standards document (for commenting, naming, misc syntax perferences)
+  - [ ] Add programming standards document (for commenting, naming, misc syntax perferences, In Progress: Joseph)
 - **Prototyping/Modeling**
   - [X] Initial rough paper prototypes
   - [X] Initial database conceptual ER model
@@ -17,7 +17,7 @@ Web Interface for D&amp;D resources and character management for dungen masters
 - **Programming**
   - [X] Layout manager proof of concept
   - [X] Implement BlueprintJS in Layout PoC
-  - [ ] Set up ESLint to enforce programming standard
+  - [X] Set up ESLint to enforce programming standards
 
 ## Colaborators
 Chad Ross: chad.ross@biola.edu
@@ -81,3 +81,4 @@ Shared Roles: Developers, Testers
 * Navigate to root project folder
 * Run `npm run server`
   * Be sure to stop (`ctrl-c`) the server when you are done
+* Go to `http://localhost:8085` in your browser
