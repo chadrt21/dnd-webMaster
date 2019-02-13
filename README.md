@@ -81,3 +81,4 @@ Shared Roles: Developers, Testers
 * Navigate to root project folder
 * Run `npm run server`
   * Be sure to stop (`ctrl-c`) the server when you are done
+* Go to `http://localhost:8085` in your browser
