@@ -14,7 +14,7 @@ This project uses all of the default style rules included in `eslint:recommended
 
 When strings are used in this project (with the exception of JS template strings), they shall use single quotation marks. Template strings should only be used when embedding a variable's value into a string.
 
-*Good*
+*Good* :+1:
 ```js
 const str = 'This is a good string';
 
@@ -22,7 +22,7 @@ const status = 'okay';
 const templateString = `This is ${status} if you need to embed a variable's value in a string`;
 ```
 
-*Bad*
+*Bad* :-1:
 ```js
 const str = "This is a bad string";
 
@@ -33,12 +33,12 @@ const templateString = `This is not okay because no variable is being embedded`;
 
 While semicolons are technically optional in JavaScript, to promote readability, they will be required in this project.
 
-*Good*
+*Good* :+1:
 ```js
 someFunc();
 ```
 
-*Bad*
+*Bad* :-1:
 ```js
 someFunc()
 ```
@@ -47,7 +47,7 @@ someFunc()
 
 When writing multi-lined object or array literals, a trailing comma shall be placed at the end. This is so that if you need to add a line below it in the future, you only need to change one line instead of two (it is easier for git).
 
-*Good*
+*Good* :+1:
 ```js
 const someObjectLiteral = {
 	a: 'foo',
@@ -66,7 +66,7 @@ const someArrayLiteral = [
 const someArrayLiteralOneLine = [ 1, 2, 3, 4 ];
 ```
 
-*Bad*
+*Bad* :-1:
 ```js
 const someObjectLiteral = {
 	a: 'foo',
@@ -85,12 +85,12 @@ const someArrayLiteral = [
 
 When using [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) that *only* return a value, arrow function return shorthand shall be used instead of an explicit return statement.
 
-*Good*
+*Good* :+1:
 ```js
 const someArrowFunc = () => 'String returned by someArrowFunc';
 ```
 
-*Bad*
+*Bad* :-1:
 ```js
 const someArrowFunc = () => {
 	return 'String returned by someArrowFunc';
@@ -101,7 +101,7 @@ const someArrowFunc = () => {
 
 Variables that never change their value should be declared using the `const` keyword.
 
-*Good*
+*Good* :+1:
 ```js
 const a = 'I am never going to change my value';
 
@@ -111,7 +111,7 @@ if (someBool) {
 }
 ```
 
-*Bad*
+*Bad* :-1:
 ```js
 let a = 'I am never going to change my value';
 ```
@@ -120,7 +120,7 @@ let a = 'I am never going to change my value';
 
 When declaring variables in this project, the keyword `var` should never be used. Instead, use `let` or `const`.
 
-*Good*
+*Good* :+1:
 ```js
 const a = 'I am never going to change my value';
 
@@ -130,7 +130,7 @@ if (someBool) {
 }
 ```
 
-*Bad*
+*Bad* :-1:
 ```js
 var a = 'I am never going to change my value';
 
@@ -144,7 +144,7 @@ if (someBool) {
 
 When writing object literals where the name of the object property is the same as the variable, [object property shorthand](https://ariya.io/2013/02/es6-and-object-literal-property-value-shorthand) shall be used.
 
-*Good*
+*Good* :+1:
 ```js
 const a = 'Some string';
 
@@ -154,7 +154,7 @@ const obj = {
 };
 ```
 
-*Bad*
+*Bad* :-1:
 ```js
 const a = 'Some string';
 
@@ -176,7 +176,7 @@ This coding standard is enforced by the following rules:
 
 Spacing should be consistent across array literals, object literals, key/value assignment, function calls, and arrow function declarations.
 
-*Good*
+*Good* :+1:
 ```js
 // Array literals
 const arr = [ 1, 2, 3, 4 ];
@@ -198,7 +198,7 @@ someFunc();
 const someArrowFunc = () => 'The value returned by someArrowFunc';
 ```
 
-*Bad*
+*Bad* :-1:
 ```js
 // Array literals
 const arr1 = [1, 2, 3, 4 ];
