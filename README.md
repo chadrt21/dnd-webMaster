@@ -52,6 +52,7 @@ Shared Roles: Developers, Testers
 
 ## Project Development Files
 [Google Doc Folder](https://drive.google.com/open?id=1OAeJDv-UKCkhTApC6I0JAv16NSvbTEsB)
+[Coding Standards](./docs/coding-standards.md)
 
 ## Github Resources
 * [Github Guide](https://guides.github.com/)
