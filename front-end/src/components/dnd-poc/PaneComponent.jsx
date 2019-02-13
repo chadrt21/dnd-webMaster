@@ -19,7 +19,7 @@ export default class PaneComponent extends React.Component {
 
 	componentWillUnmount() {
 		const { pane } = this.props;
-		if (!pane) return
+		if (!pane) return;
 		pane.setState(this.state);
 	}
 
@@ -42,6 +42,6 @@ export default class PaneComponent extends React.Component {
 			}
 			if (!pane) return;
 			pane.setState(this.state);
-		})
+		});
 	}
 }

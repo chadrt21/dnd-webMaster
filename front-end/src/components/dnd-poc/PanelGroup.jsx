@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
 	Original author is Dan Fessler
 	View the original project at: https://github.com/DanFessler/react-panelgroup

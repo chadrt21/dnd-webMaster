@@ -17,7 +17,7 @@ const getStyles = currentOffset => {
 		transform,
 		WebkitTransform: transform
 	};
-}
+};
 
 const CustomDragLayer = ({ item, itemType, currentOffset, isDragging }) => {
 	if (!isDragging) return null;
@@ -29,17 +29,17 @@ const CustomDragLayer = ({ item, itemType, currentOffset, isDragging }) => {
 					<Tab label={item.label} selected/>
 				</div>
 			</div>
-		)
+		);
 	}
 	return null;
-}
+};
 
 CustomDragLayer.propTypes = {
 	item: PropTypes.object,
 	itemType: PropTypes.string,
 	currentOffset: PropTypes.object,
 	isDragging: PropTypes.bool,
-}
+};
 
 export default DragLayer(monitor => ({
 	item: monitor.getItem(),

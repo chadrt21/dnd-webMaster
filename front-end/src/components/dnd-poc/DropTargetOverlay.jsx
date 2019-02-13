@@ -13,7 +13,7 @@ const target = {
 		const { onDrop } = props;
 		onDrop(monitor.getItem());
 	}
-}
+};
 
 class DropTargetOverlay extends React.Component {
 	static propTypes = {
@@ -80,15 +80,15 @@ class DropTargetOverlay extends React.Component {
 			inlineStyle.backgroundColor = `rgba(83, 83, 83, ${
 				type === 'full' || type === 'top-half' || type === 'bottom-half' || type === 'half' ?
 					'0.308'
-				: '0.5'
-			})`
+					: '0.5'
+			})`;
 		}
 
 		return connectDropTarget(
 			<div className={styles.dragTargetOverlay} style={inlineStyle}>
 				{children}
 			</div>
-		)
+		);
 	}
 }
 

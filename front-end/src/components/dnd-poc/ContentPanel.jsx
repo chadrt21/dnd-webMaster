@@ -1,13 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Tab from './DraggableTab';
 import DropTargetOverlay from './DropTargetOverlay';
 import TabContainer from './TabContainerDropTarget';
-import Content from './Content';
 
 import styles from './styles.less';
 
 export default class ContentPanel extends React.Component {
+	static propTypes = {
+		onTabChanged: PropTypes.func.isRequired,
+		defaultSelected: PropTypes.number,
+		removePane: PropTypes.func.isRequired,
+		panes: PropTypes.array,
+		dropPaneIntoPanel: PropTypes.func,
+		movePane: PropTypes.func,
+		renderContent: PropTypes.func,
+	}
+	
 	state = {
 		currentTab: 0
 	}
@@ -28,7 +38,7 @@ export default class ContentPanel extends React.Component {
 	}
 
 	handleRemovePane = (index, pane) => event => {
-		event.stopPropagation()
+		event.stopPropagation();
 		const { removePane } = this.props;
 		const { currentTab } = this.state;
 		if (currentTab > 0) {
@@ -50,7 +60,7 @@ export default class ContentPanel extends React.Component {
 				onClose={this.handleRemovePane(index, pane)}
 				key={index}
 			/>
-		)
+		);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -70,7 +80,7 @@ export default class ContentPanel extends React.Component {
 					<TabContainer onDrop={item => {
 						dropPaneIntoPanel(item.pane, () => {
 							this.focusPane(item.pane);
-						})
+						});
 					}}>
 						{panes && panes.map(this.mapTabs)}
 					</TabContainer>
@@ -82,35 +92,23 @@ export default class ContentPanel extends React.Component {
 						direction="left"
 						onDrop={item => movePane('before', 'soft', item.pane)}
 					/>
-					<DropTargetOverlay
-						type="quarter"
-						direction="left"
-						onDrop={item => console.log(item)}
-					/>
+					
 					<DropTargetOverlay
 						type="half"
 						onDrop={item => movePane('after', 'soft', item.pane)}
 					/>
-					<DropTargetOverlay
-						type="quarter" onDrop={item => console.log(item)} />
+					
 					<DropTargetOverlay
 						type="top-half"
 						onDrop={item => movePane('above', 'soft', item.pane)}
 					/>
-					<DropTargetOverlay
-						type="top-quarter"
-						onDrop={item => console.log(item)}
-					/>
+					
 					<DropTargetOverlay
 						type="bottom-half"
 						onDrop={item => movePane('below', 'soft', item.pane)}
 					/>
-					<DropTargetOverlay
-						type="bottom-quarter"
-						onDrop={item => console.log(item)}
-					/>
 				</div>
 			</div>
-		)
+		);
 	}
 }

@@ -12,7 +12,7 @@ const target = {
 		const { onDrop } = props;
 		onDrop(monitor.getItem());
 	}
-}
+};
 
 class TabContainerDropTarget extends React.Component {
 	static propTypes = {
@@ -26,13 +26,13 @@ class TabContainerDropTarget extends React.Component {
 
 		const style = {
 			backgroundColor: isOver ? '#AAA' : '#DDD'
-		}
+		};
 
 		return connectDropTarget(
 			<div className={styles.tabContainer} style={style}>
 				{children}
 			</div>
-		)
+		);
 	}
 }
 

@@ -48,19 +48,19 @@ module.exports = {
 				test: /\.less$/,
 				use: [
 					{
-						loader: "style-loader"
+						loader: 'style-loader'
 					},
 					{
-						loader: "css-loader",
+						loader: 'css-loader',
 						options: {
 							sourceMap: true,
 							modules: true,
 							camelCase: true,
-							localIdentName: "[local]___[hash:base64:5]"
+							localIdentName: '[local]___[hash:base64:5]'
 						}
 					},
 					{
-						loader: "less-loader"
+						loader: 'less-loader'
 					}
 				]
 			}
@@ -69,4 +69,4 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.jsx', '.less', '.css'],
 	}
-}
+};

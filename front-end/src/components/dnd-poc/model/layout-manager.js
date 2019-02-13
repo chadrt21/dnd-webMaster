@@ -1,7 +1,6 @@
 import Layout from './Layout';
 import LayoutRow from './LayoutRow';
 import LayoutPanel from './LayoutPanel';
-import LayoutPane from './LayoutPane';
 
 export const addPane = (layout, type) => {
 	const jsonModel = layout.toJson();
@@ -14,7 +13,7 @@ export const addPane = (layout, type) => {
 					{ type }
 				]}
 			]}
-		]}
+		]};
 	} else if (jsonModel.rows.length === 1) {
 		newModel = {rows: [
 			{panels: [
@@ -23,7 +22,7 @@ export const addPane = (layout, type) => {
 					{ type }
 				]}
 			]}
-		]}
+		]};
 	} else {
 		newModel = {rows: [
 			{panels: [
@@ -31,10 +30,10 @@ export const addPane = (layout, type) => {
 					{ type }
 				]}
 			]}
-		]}
+		]};
 	}
 	return new Layout(newModel);
-}
+};
 
 export const movePane = (direction, variant, pane, targetPanel) => {
 	if ((direction === 'before' || direction === 'after') && variant === 'soft') {
@@ -43,7 +42,7 @@ export const movePane = (direction, variant, pane, targetPanel) => {
 		return movePaneVerticallySoft(direction, pane, targetPanel);
 	}
 	return false;
-}
+};
 
 const movePaneNextToSoft = (direction, pane, targetPanel) => {
 	const paneJson = pane.toJson();
@@ -55,7 +54,7 @@ const movePaneNextToSoft = (direction, pane, targetPanel) => {
 		return true;
 	}
 	return false;
-}
+};
 
 const movePaneVerticallySoft = (direction, pane, targetPanel) => {
 	const paneJson = pane.toJson(true);
@@ -73,9 +72,9 @@ const movePaneVerticallySoft = (direction, pane, targetPanel) => {
 				{panels: [
 					{panes: [paneJson]}
 				]}
-			]}))
+			]}));
 		}
 		return true;
 	}
 	return false;
-}
+};

@@ -17,7 +17,7 @@ export default class LayoutRow {
 			if (panel.rows && Array.isArray(panel.rows)) {
 				return new Layout(panel, this);
 			}
-			return new LayoutPanel(panel, this)
+			return new LayoutPanel(panel, this);
 		});
 
 		if (jsonModel.widths) {
@@ -33,13 +33,13 @@ export default class LayoutRow {
 	getPanels = () => this.panels;
 	getParent = () => this.parent;
 	setParent = parent => (this.parent = parent);
-	monitorUpdates = () => widths => {this.widths = widths};
+	monitorUpdates = () => widths => {this.widths = widths;};
 	getId = () => this.rowId;
 
 	toJson = ignoreWidths => {
 		const obj = {
 			panels: this.panels.map(panel => panel.toJson(ignoreWidths))
-		}
+		};
 
 		if (!ignoreWidths) {
 			obj.widths = this.widths;

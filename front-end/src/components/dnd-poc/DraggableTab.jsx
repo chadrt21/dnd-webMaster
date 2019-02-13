@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -12,13 +14,13 @@ const tabSource = {
 	beginDrag: ({ label, pane }) => {
 		return { label, pane };
 	}
-}
+};
 
 const collect = (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
 	isDragging: monitor.isDragging(),
 	connectDragPreview: connect.dragPreview(),
-})
+});
 
 class DraggableTab extends React.Component {	
 	static propTypes = {

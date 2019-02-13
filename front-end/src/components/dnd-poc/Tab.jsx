@@ -20,8 +20,9 @@ export default class Tab extends React.Component {
 				{label}
 				{selected ?
 					<Icon iconSize={12} icon="cross" onClick={onClose} className={styles.tabClose} />
-				: null}
+					: null
+				}
 			</div>
-		)
+		);
 	}
 }

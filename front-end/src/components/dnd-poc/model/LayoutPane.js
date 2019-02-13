@@ -25,7 +25,7 @@ export default class LayoutPane {
 		this.state = {
 			...this.state,
 			...state,
-		}
+		};
 	}
 	getState = () => this.state;
 

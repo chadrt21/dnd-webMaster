@@ -31,7 +31,7 @@ const defaultLayout = {
 			]}
 		]}
 	]
-}
+};
 
 export default class Grid extends React.Component {
 	state = {
@@ -50,7 +50,7 @@ export default class Grid extends React.Component {
 			>
 				{layout.getRows().map(this.mapLayoutRows)}
 			</PanelGroup>
-		)
+		);
 	}
 
 	mapLayoutRows = row => {
@@ -63,7 +63,7 @@ export default class Grid extends React.Component {
 			>
 				{row.getPanels().map(this.mapLayoutPanels)}
 			</PanelGroup>
-		)
+		);
 	}
 
 	mapLayoutPanels = panel => {
@@ -102,7 +102,7 @@ export default class Grid extends React.Component {
 					</React.Fragment>
 				)}
 			/>
-		)
+		);
 	}
 
 	mapContent = currentTab => (pane, index) => (
@@ -132,11 +132,12 @@ export default class Grid extends React.Component {
 
 	saveLayout = () => {
 		const { layout } = this.state;
+		/* eslint-disable-next-line */
 		console.log(layout.toJson());
 	}
 
 	render() {
-		const { reloading, layout } = this.state;
+		const { layout } = this.state;
 
 		return (
 			<div className={styles.root}>
@@ -151,6 +152,6 @@ export default class Grid extends React.Component {
 				</div>
 				<CustomDragLayer />
 			</div>
-		)
+		);
 	}
 }

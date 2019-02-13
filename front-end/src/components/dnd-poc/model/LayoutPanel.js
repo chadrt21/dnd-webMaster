@@ -12,7 +12,6 @@ export default class LayoutPanel {
 			this.parent = parent;
 		}
 		if (jsonModel.selectedPane) {
-			console.log('Selected pane', jsonModel.selectedPane)
 			this.selectedPane = jsonModel.selectedPane;
 		}
 		this.panes = jsonModel.panes.map(pane => new LayoutPane(pane, this));

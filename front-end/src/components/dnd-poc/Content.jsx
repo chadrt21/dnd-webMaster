@@ -2,14 +2,14 @@ import React from 'react';
 import PaneComponent from './PaneComponent';
 import { EditableText, H3 } from '@blueprintjs/core';
 
-const TextEditor = props => {
+const TextEditor = () => {
 	return (
 		<div>
 			<p>Controlled by child state (i.e. third party library)</p>
 			<input type="text" />
 		</div>
-	)
-}
+	);
+};
 
 export default class Content extends PaneComponent {
 	state = {
@@ -30,7 +30,7 @@ export default class Content extends PaneComponent {
 				<button onClick={() => this.setState(({ value }) => ({ value: value + 1 }))}>++!</button>
 				<TextEditor value={this.state.text} onChange={event => this.setState({ text: event.target.value })} />
 			</div>
-		)
+		);
 	}
 }
 

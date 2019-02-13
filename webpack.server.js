@@ -1,5 +1,5 @@
-var fs = require('fs')
-var path = require('path')
+var fs = require('fs');
+var path = require('path');
 
 module.exports = {
 	entry: path.resolve(__dirname, 'back-end/server.js'),
@@ -15,8 +15,8 @@ module.exports = {
 	externals: fs.readdirSync(path.resolve(__dirname, 'node_modules')).concat([
 		'react-dom/server'
 	]).reduce(function (ext, mod) {
-		ext[mod] = 'commonjs ' + mod
-		return ext
+		ext[mod] = 'commonjs ' + mod;
+		return ext;
 	}, {}),
 
 	node: {
@@ -40,4 +40,4 @@ module.exports = {
 		]
 	}
 
-}
+};
