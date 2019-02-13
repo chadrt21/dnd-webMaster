@@ -1,19 +1,19 @@
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
 	entry: path.resolve(__dirname, 'back-end/server.js'),
 
 	output: {
 		path: __dirname,
-		filename: './server.bundle.js'
+		filename: './server.bundle.js',
 	},
 
 	target: 'node',
 
 	// keep node_module paths out of the bundle
 	externals: fs.readdirSync(path.resolve(__dirname, 'node_modules')).concat([
-		'react-dom/server'
+		'react-dom/server',
 	]).reduce(function (ext, mod) {
 		ext[mod] = 'commonjs ' + mod;
 		return ext;
@@ -21,7 +21,7 @@ module.exports = {
 
 	node: {
 		__filename: false,
-		__dirname: false
+		__dirname: false,
 	},
 
 	module: {
@@ -31,13 +31,13 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: 'babel-loader',
 				query: {
-					presets: ['@babel/preset-env', '@babel/preset-react'],
+					presets: [ '@babel/preset-env', '@babel/preset-react' ],
 					plugins: [
-						'@babel/plugin-proposal-class-properties'
-					]
-				}
+						'@babel/plugin-proposal-class-properties',
+					],
+				},
 			},
-		]
-	}
+		],
+	},
 
 };

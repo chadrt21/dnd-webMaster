@@ -32,7 +32,7 @@ export default class LayoutPane {
 	toJson = () => ({
 		type: this.type,
 		id: this.paneId,
-		state: this.state
+		state: this.state,
 	});
 
 	remove = () => {

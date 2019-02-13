@@ -40,6 +40,57 @@ module.exports = {
             "error",
             "always"
 		],
+		"comma-style": [
+			"error",
+			"last"
+		],
+		"comma-dangle": [
+			"error",
+			"always-multiline"
+		],
+		"no-lonely-if": "error",
+		"arrow-body-style": [
+			"error",
+			"as-needed"
+		],
+		"prefer-const": "error",
+		"array-bracket-spacing": [
+			"error",
+			"always"
+		],
+		"block-spacing": [
+			"error",
+			"always"
+		],
+		"func-call-spacing": [
+			"error",
+			"never"
+		],
+		"key-spacing": [
+			"error",
+			{
+				"beforeColon": false,
+				"afterColon": true,
+				"mode": "strict"
+			}
+		],
+		"object-curly-spacing": [
+			"error",
+			"always"
+		],
 		"react/no-deprecated": 0,
+		"arrow-spacing": [
+			"error",
+			{
+				"before": true,
+				"after": true,
+			}
+		],
+		"no-var": "error",
+		"new-parens": "error",
+		"object-shorthand": [
+			"error",
+			"properties"
+		]
     }
 };

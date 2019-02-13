@@ -33,12 +33,12 @@ export default class LayoutRow {
 	getPanels = () => this.panels;
 	getParent = () => this.parent;
 	setParent = parent => (this.parent = parent);
-	monitorUpdates = () => widths => {this.widths = widths;};
+	monitorUpdates = () => widths => { this.widths = widths; };
 	getId = () => this.rowId;
 
 	toJson = ignoreWidths => {
 		const obj = {
-			panels: this.panels.map(panel => panel.toJson(ignoreWidths))
+			panels: this.panels.map(panel => panel.toJson(ignoreWidths)),
 		};
 
 		if (!ignoreWidths) {

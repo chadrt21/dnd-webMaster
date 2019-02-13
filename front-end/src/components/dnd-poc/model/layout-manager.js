@@ -6,31 +6,31 @@ export const addPane = (layout, type) => {
 	const jsonModel = layout.toJson();
 	let newModel = {};
 	if (jsonModel.rows.length > 1) {
-		newModel = {rows: [
-			{panels: [
+		newModel = { rows: [
+			{ panels: [
 				jsonModel,
-				{panes: [
-					{ type }
-				]}
-			]}
-		]};
+				{ panes: [
+					{ type },
+				] },
+			] },
+		] };
 	} else if (jsonModel.rows.length === 1) {
-		newModel = {rows: [
-			{panels: [
+		newModel = { rows: [
+			{ panels: [
 				...jsonModel.rows[0].panels,
-				{panes: [
-					{ type }
-				]}
-			]}
-		]};
+				{ panes: [
+					{ type },
+				] },
+			] },
+		] };
 	} else {
-		newModel = {rows: [
-			{panels: [
-				{panes: [
-					{ type }
-				]}
-			]}
-		]};
+		newModel = { rows: [
+			{ panels: [
+				{ panes: [
+					{ type },
+				] },
+			] },
+		] };
 	}
 	return new Layout(newModel);
 };
@@ -48,9 +48,11 @@ const movePaneNextToSoft = (direction, pane, targetPanel) => {
 	const paneJson = pane.toJson();
 	if (pane.remove()) {
 		const parentRow = targetPanel.getParent();
-		parentRow.addPanel(new LayoutPanel({panes: [
-			paneJson
-		]}), direction, targetPanel);
+		parentRow.addPanel(new LayoutPanel({
+			panes: [
+				paneJson,
+			],
+		}), direction, targetPanel);
 		return true;
 	}
 	return false;
@@ -62,17 +64,17 @@ const movePaneVerticallySoft = (direction, pane, targetPanel) => {
 		const parentRow = targetPanel.getParent();
 		if (parentRow.getPanels().length === 1) {
 			const parentLayout = parentRow.getParent();
-			parentLayout.addRow(new LayoutRow({panels: [
-				{panes: [paneJson]}
-			]}), direction, parentRow);
+			parentLayout.addRow(new LayoutRow({ panels: [
+				{ panes: [ paneJson ] },
+			] }), direction, parentRow);
 		} else {
 			const targetPanelJson = targetPanel.toJson();
-			parentRow.replace(targetPanel, new Layout({rows: [
-				{panels: [targetPanelJson]},
-				{panels: [
-					{panes: [paneJson]}
-				]}
-			]}));
+			parentRow.replace(targetPanel, new Layout({ rows: [
+				{ panels: [ targetPanelJson ] },
+				{ panels: [
+					{ panes: [ paneJson ] },
+				] },
+			] }));
 		}
 		return true;
 	}

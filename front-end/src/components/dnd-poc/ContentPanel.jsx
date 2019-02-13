@@ -19,7 +19,7 @@ export default class ContentPanel extends React.Component {
 	}
 	
 	state = {
-		currentTab: 0
+		currentTab: 0,
 	}
 
 	handleTabChanged = (currentTab, cb) => {

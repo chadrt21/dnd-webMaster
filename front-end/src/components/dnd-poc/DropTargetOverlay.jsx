@@ -12,7 +12,7 @@ const target = {
 
 		const { onDrop } = props;
 		onDrop(monitor.getItem());
-	}
+	},
 };
 
 class DropTargetOverlay extends React.Component {
@@ -34,7 +34,7 @@ class DropTargetOverlay extends React.Component {
 			itemType,
 			isOver,
 			children,
-			connectDropTarget
+			connectDropTarget,
 		} = this.props;
 
 		if (!isDragging || itemType !== 'TAB') {
@@ -47,7 +47,7 @@ class DropTargetOverlay extends React.Component {
 			width: '100%',
 			top: 0,
 			zIndex: 50,
-			display: !isDragging ? 'none' : undefined
+			display: !isDragging ? 'none' : undefined,
 		};
 
 		if (type === 'full') {

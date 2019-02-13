@@ -11,7 +11,7 @@ const target = {
 
 		const { onDrop } = props;
 		onDrop(monitor.getItem());
-	}
+	},
 };
 
 class TabContainerDropTarget extends React.Component {
@@ -25,7 +25,7 @@ class TabContainerDropTarget extends React.Component {
 		const { children, connectDropTarget, isOver } = this.props;
 
 		const style = {
-			backgroundColor: isOver ? '#AAA' : '#DDD'
+			backgroundColor: isOver ? '#AAA' : '#DDD',
 		};
 
 		return connectDropTarget(
@@ -38,5 +38,5 @@ class TabContainerDropTarget extends React.Component {
 
 export default DropTarget('TAB', target, (connect, monitor) => ({
 	isOver: monitor.isOver(),
-	connectDropTarget: connect.dropTarget()
+	connectDropTarget: connect.dropTarget(),
 }))(TabContainerDropTarget);

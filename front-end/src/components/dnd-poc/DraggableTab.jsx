@@ -11,9 +11,7 @@ import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
 const tabSource = {
-	beginDrag: ({ label, pane }) => {
-		return { label, pane };
-	}
+	beginDrag: ({ label, pane }) => ({ label, pane }),
 };
 
 const collect = (connect, monitor) => ({
@@ -52,7 +50,7 @@ class DraggableTab extends React.Component {
 			<div>
 				<Tab
 					classes={{
-						root: styles.tab
+						root: styles.tab,
 					}}
 					label={label}
 					{...rest} />

@@ -27,7 +27,7 @@ export default class Layout {
 	getRows = () => this.rows;
 	getParent = () => this.parent;
 	setParent = parent => (this.parent = parent);
-	monitorUpdates = () => widths => {this.widths = widths;}
+	monitorUpdates = () => widths => { this.widths = widths; }
 	getId = () => this.layoutId;
 
 	hasOnePanel = () => {
@@ -38,7 +38,7 @@ export default class Layout {
 
 	toJson = ignoreWidths => {
 		const obj = {
-			rows: this.rows.map(row => row.toJson(ignoreWidths))
+			rows: this.rows.map(row => row.toJson(ignoreWidths)),
 		};
 
 		if (!ignoreWidths) {

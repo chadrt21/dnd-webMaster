@@ -13,58 +13,54 @@ import Layout from './model/Layout';
 
 const defaultLayout = {
 	rows: [
-		{panels: [
-			{panes: [
-				{ type: 'map' }
-			]},
-			{rows: [
-				{panels: [
-					{panes: [
-						{ type: 'npc 1' }, { type: 'npc 2' }, { type: 'npc 3' }
-					]},
-				]},
-				{panels: [
-					{panes: [
-						{type: 'pc' }, { type: 'pc' }
-					]}
-				]}
-			]}
-		]}
-	]
+		{ panels: [
+			{ panes: [
+				{ type: 'map' },
+			] },
+			{ rows: [
+				{ panels: [
+					{ panes: [
+						{ type: 'npc 1' }, { type: 'npc 2' }, { type: 'npc 3' },
+					] },
+				] },
+				{ panels: [
+					{ panes: [
+						{ type: 'pc' }, { type: 'pc' },
+					] },
+				] },
+			] },
+		] },
+	],
 };
 
 export default class Grid extends React.Component {
 	state = {
 		layout: new Layout(defaultLayout),
-		reloading: false
+		reloading: false,
 	}
 
-	renderLayout = layout => {
-		return (
-			<PanelGroup
-				borderColor="black"
-				direction="column"
-				panelWidths={layout.getPanelWidths()}
-				onUpdate={layout.monitorUpdates()}
-				key={`layout-${layout.getId()}`}
-			>
-				{layout.getRows().map(this.mapLayoutRows)}
-			</PanelGroup>
-		);
-	}
+	renderLayout = layout => (
+		<PanelGroup
+			borderColor="black"
+			direction="column"
+			panelWidths={layout.getPanelWidths()}
+			onUpdate={layout.monitorUpdates()}
+			key={`layout-${layout.getId()}`}
+		>
+			{layout.getRows().map(this.mapLayoutRows)}
+		</PanelGroup>
+	)
 
-	mapLayoutRows = row => {
-		return (
-			<PanelGroup
-				borderColor="black"
-				panelWidths={row.getPanelWidths()}
-				onUpdate={row.monitorUpdates()}
-				key={`row-${row.getId()}`}
-			>
-				{row.getPanels().map(this.mapLayoutPanels)}
-			</PanelGroup>
-		);
-	}
+	mapLayoutRows = row => (
+		<PanelGroup
+			borderColor="black"
+			panelWidths={row.getPanelWidths()}
+			onUpdate={row.monitorUpdates()}
+			key={`row-${row.getId()}`}
+		>
+			{row.getPanels().map(this.mapLayoutPanels)}
+		</PanelGroup>
+	)
 
 	mapLayoutPanels = panel => {
 		if (panel.constructor === Layout) {
@@ -106,7 +102,7 @@ export default class Grid extends React.Component {
 	}
 
 	mapContent = currentTab => (pane, index) => (
-		<div style={{ display: currentTab !== index ? 'none' : undefined}}>
+		<div style={{ display: currentTab !== index ? 'none' : undefined }}>
 			<Content
 				key={`pane-${pane.getId()}`}
 				pane={pane}

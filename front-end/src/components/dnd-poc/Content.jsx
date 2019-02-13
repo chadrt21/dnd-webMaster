@@ -2,14 +2,12 @@ import React from 'react';
 import PaneComponent from './PaneComponent';
 import { EditableText, H3 } from '@blueprintjs/core';
 
-const TextEditor = () => {
-	return (
-		<div>
-			<p>Controlled by child state (i.e. third party library)</p>
-			<input type="text" />
-		</div>
-	);
-};
+const TextEditor = () => (
+	<div>
+		<p>Controlled by child state (i.e. third party library)</p>
+		<input type="text" />
+	</div>
+);
 
 export default class Content extends PaneComponent {
 	state = {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class PaneComponent extends React.Component {
 	static propTypes = {
-		pane: PropTypes.object.isRequired
+		pane: PropTypes.object.isRequired,
 	}
 	
 	state = {}
@@ -13,7 +13,7 @@ export default class PaneComponent extends React.Component {
 		if (!pane) return;
 		this.setState((state) => ({
 			...state,
-			...pane.getState()
+			...pane.getState(),
 		}));
 	}
 

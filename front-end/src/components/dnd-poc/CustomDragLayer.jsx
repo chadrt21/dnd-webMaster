@@ -11,11 +11,11 @@ const getStyles = currentOffset => {
 		return { display: 'none' };
 	}
 
-	let { x, y } = currentOffset;
+	const { x, y } = currentOffset;
 	const transform = `translate(${x}px, ${y}px)`;
 	return {
 		transform,
-		WebkitTransform: transform
+		WebkitTransform: transform,
 	};
 };
 
