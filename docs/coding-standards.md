@@ -294,7 +294,7 @@ const SomeOtherComponent = props => (<p>{props.myProp}</p>);
 
 The purpose of each component should be documented briefly and concisely at the top of each component file so that someone could open the file and know why it exists. It is not necessary to list all of the component props in the comment as they can be plainly seen in the propTypes. Aside from that, code should be readable enough to understand without comments. Comments should be used to clarify particularly confusing code segments.
 
-*Good* :+1:
+*Good* :+1: :+1:
 ```js
 /*
 This component is the search input used in any search engine. Do not
@@ -314,7 +314,7 @@ React component class (and any other classes) should use [upper camel case](http
 
 React classes should have the `.jsx` file extension while all other javascript files should end with `.js`.
 
-*Good* :+1:
+*Good* :+1: :+1:
 ```
 + ContentPanel.jsx       -> A React component file
 + LayoutRow.js           -> A plain javascript class
@@ -325,7 +325,7 @@ React classes should have the `.jsx` file extension while all other javascript f
 
 All variable names should use [lower camel case](http://wiki.c2.com/?LowerCamelCase) when possible. If we do not have control over the variable name (i.e. the data came from an API request), then it is okay to use that variables name.
 
-*Good* :+1:
+*Good* :+1: :+1:
 ```js
 const someVariable = 'This is a string';
 
@@ -333,7 +333,7 @@ const apiRequest = await fetch.get('/api/some/endpoint');
 console.log(apiRequest.some_data_from_server);
 ```
 
-*Bad :-1:
+*Bad* :-1:
 ```js
 const some_variable = 'This is a string';
 ````
