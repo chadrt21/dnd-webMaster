@@ -1,5 +1,21 @@
 # Coding Standards
 
+* [Description](#description)
+* [Standards in this Project](#standards-in-this-project)
+	* [Quotes for Strings](#quotes-for-strings)
+	* [Semicolons](#semicolons)
+	* [Comma Dangle](#comma-dangle)
+	* [Arrow Body Style](#arrow-body-style)
+	* [Prefer Const](#prefer-const)
+	* [No Var](#no-var)
+	* [Object Properties Shorthand](#object-properties-shorthand)
+	* [Spacing](#spacing)
+	* [Prop Types](#prop-types)
+* [Standards not Enforced by ESLint](#standards-not-enforced-by-eslint)
+	* [Commenting](#commenting)
+	* [File Naming](#file-naming)
+	* [Variable Naming](#variable-naming)
+
 ## Description
 
 This document provides coding standards that we should all adhere to to promote consistent readability throughout our codebase. These standards shall be enforced by [eslint](https://eslint.org/), a code checker that will stop the build if various style rules are violated. On top of enforcing various best practice rules, eslint will also check for various potential runtime errors (such as infinite for loops, undeclared variables, etc). To check the code for lint errors using the command line without building, run the command `npm run lint`. Linting is also done when attempting to build the project. Some lint errors can be fixed automatically. To fix all auto-fixable errors, run the command `npm run lint:autofix`. Below is a list of some of the style rules we will be using.
