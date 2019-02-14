@@ -8,7 +8,7 @@ Web Interface for D&amp;D resources and character management for dungen masters
   - [X] Software System Requirements document
   - [X] Product Backlog
   - [ ] Software Design Description
-  - [ ] Add programming standards document (for commenting, naming, misc syntax perferences, In Progress: Joseph)
+  - [X] Add programming standards document (for commenting, naming, misc syntax perferences)
 - **Prototyping/Modeling**
   - [X] Initial rough paper prototypes
   - [X] Initial database conceptual ER model
