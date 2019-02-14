@@ -317,7 +317,7 @@ const apiRequest = await fetch.get('/api/some/endpoint');
 console.log(apiRequest.some_data_from_server);
 ```
 
-*Bad :-1:
+*Bad* :-1:
 ```js
 const some_variable = 'This is a string';
 ````
