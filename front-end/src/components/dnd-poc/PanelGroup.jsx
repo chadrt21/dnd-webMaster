@@ -3,6 +3,8 @@
 	Original author is Dan Fessler
 	View the original project at: https://github.com/DanFessler/react-panelgroup
 	The project was cloned so as to fix the rerendering bug
+
+	This project allows for resizable components
 */
 
 import React from "react";

@@ -1,3 +1,6 @@
+/* This component is the root layout component, it manages which tools are on the screen
+and where they go. It also handles rearranging of tools through drag and drop. */
+
 import React from 'react';
 
 import PanelGroup from './PanelGroup';

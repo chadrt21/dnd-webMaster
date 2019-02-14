@@ -1,3 +1,6 @@
+/* This is the Tab UI component to indicate which panel is being displayed.
+It handles the click event but does not implement click logic. That is passed through props */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 

@@ -1,3 +1,5 @@
+/* Demo Component to show how Pane Content state is managed */
+
 import React from 'react';
 import PaneComponent from './PaneComponent';
 import { EditableText, H3 } from '@blueprintjs/core';

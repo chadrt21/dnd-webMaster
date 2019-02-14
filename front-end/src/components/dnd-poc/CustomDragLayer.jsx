@@ -1,3 +1,6 @@
+/*A React-DnD component that provides the drag preview so the user can
+see our Tab component as they are dragging*/
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DragLayer } from 'react-dnd';

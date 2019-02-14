@@ -7,6 +7,8 @@ import Tab from './Tab';
 
 import styles from './styles.less';
 
+/* Our Tab component wrapped in the react-dnd DragSource HOC */
+
 import { DragSource } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 

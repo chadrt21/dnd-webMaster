@@ -1,3 +1,6 @@
+/* This is the overlay that the user can drop a tag into. It's the
+little grey box that you see when you hover a tab over a panel. */
+
 import React from 'react';
 import { DropTarget } from 'react-dnd';
 import PropTypes from 'prop-types';

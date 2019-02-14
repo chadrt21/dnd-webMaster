@@ -1,3 +1,5 @@
+/* This is the root container for the project */
+
 import React from 'react';
 import Grid from './dnd-poc';
 import { DragDropContextProvider } from 'react-dnd';

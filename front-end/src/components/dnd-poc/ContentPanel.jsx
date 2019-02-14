@@ -1,3 +1,6 @@
+/* A layout component that manages panes, 
+displaying the active tab and allowing user to switch between tabs */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 

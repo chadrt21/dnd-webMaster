@@ -1,3 +1,6 @@
+/* This is the base class for the tool components. Use this instead of React.Component
+in order to preserve state when the layout re-renders */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 

@@ -1,3 +1,6 @@
+/* This component renders a row of tabs for a panel and handles when the user drops
+a Tab into an existing panel */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
