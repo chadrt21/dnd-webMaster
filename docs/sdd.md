@@ -28,6 +28,7 @@ Our target audience are Dungeon Masters (DMs) and D&D players that vary from beg
 | Version | Primary Authors | Description of Version | Date Completed |
 | ------- | --------------- | ---------------------- | -------------- |
 | 1.0     | Joseph Stewart  | Initial version        | 2/13/2019       |
+| 1.1     | Joseph Stewart  | Clean up wording, add pictures | 2/15/2019 |
 
 <div style="page-break-after: always;"></div>
 
