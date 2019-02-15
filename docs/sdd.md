@@ -80,4 +80,4 @@ Conceptually, we break down each layer of our three tier architecture into diffe
 
 ![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1550186478/campaign-buddy/SDD/System_Architecture.png)
 
-*Architecture Diagram*
+*Software Interface Diagram*
