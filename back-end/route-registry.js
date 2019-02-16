@@ -8,8 +8,8 @@
  * @author Joseph Stewart
  */
 
-import registerTestRoutes from './test';
+import registerExampleRoutes from './example';
 
 export default app => {
-	registerTestRoutes(app);
+	registerExampleRoutes(app);
 };
