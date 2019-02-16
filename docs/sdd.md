@@ -145,6 +145,25 @@ This is a generic layout for a search engine. We hope to have several different 
 
 ## 3.7 Campaign Controller [[Back to Top]](#table-of-contents)
 
+Campaign Controller is the hub controller that connects majority of the front-end with the back-end. It connects the authorization and re-direction to certain pages as well as to the database. The Campaign Controller is used to create and update the database (e.g. create/save notes, campaigns, and characters) for characters and notes.
+
+It exposes the following API routes
+
+- Campaigns
+	- `GET /api/campaigns`
+	- `POST /api/campaigns`
+	- `GET /api/campaigns/:id`
+- Notes
+	- `GET /api/campaigns/:id/notes`
+	- `POST /api/campaigns/:id/notes`
+	- `GET /api/campaigns/:id/notes/:noteId`
+	- `POST /api/campaigns/:id/notes/:noteId`
+- Characters
+	- `GET /api/campaigns/:id/characters`
+	- `POST /api/campaigns/:id/characters`
+	- `GET /api/campaigns/:id/characters/:characterId`
+	- `POST /api/campaigns/:id/characters/:characterId`
+
 ## 3.8 Searching Controller [[Back to Top]](#table-of-contents)
 
 ## 3.9 Authentication Controller [[Back to Top]](#table-of-contents)
