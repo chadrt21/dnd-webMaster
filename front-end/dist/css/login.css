@@ -30,13 +30,12 @@ body {
 .login-button {
 	background-color: #5E170C;
 	color: #EFE1C6;
-	border: none;
-	outline: none;
 	font-size: 36px;
 	padding: 12px 36px;
 	border-radius: 22px;
 	font-family: 'Quattrocento Sans';
 	cursor: pointer;
+	text-decoration: none;
 }
 
 .login-button:hover {
