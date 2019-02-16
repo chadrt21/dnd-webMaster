@@ -44,20 +44,29 @@ Our target audience are Dungeon Masters (DMs) and D&D players that vary from beg
 
 # Table of Contents
 
-1. Introduction
-	1. Design Overview
-	2. Requirements Traceability Matrix
-2. System Architectural Design
-	1. Chosen System Architecture
-	2. Discussion of Alternative Designs
-	3. System Interface Description
-3. Detailed Descriptions of Components 
-	1. Component-n
-4. User Interface Design
-	1. Description of the User Interface
-	2. Screen Images
-	3. Objects and Actions
-5. Additional Material
+1. [Introduction](#1-introduction)
+	1. [Design Overview](#1-1-design-overview-back-to-top-)
+	2. [Requirements Traceability Matrix](#1-2-requirements-traceability-matrix-back-to-top-)
+2. [System Architectural Design](#2-system-architectural-design)
+	1. [Chosen System Architecture](#2-1-chosen-system-architecture-back-to-top-)
+	2. [Discussion of Alternative Designs](#2-2-discussion-of-alternative-designs-back-to-top-)
+	3. [System Interface Description](#2-3-system-interface-description-back-to-top-)
+3. [Detailed Descriptions of Components](#3-detailed-descriptions-of-components)
+	1. [Home Page](#3-1-home-page-back-to-top-)
+	2. [Campaign Layout](#3-2-campaign-layout-back-to-top-)
+	3. [Dice Roll](#3-3-dice-roll-back-to-top-)
+	4. [PC/NPC Character Sheet](#3-4-pc-npc-character-sheet-back-to-top-)
+	5. [Notes](#3-5-notes-back-to-top-)
+	6. [Search Engine](#3-6-search-engine-back-to-top-)
+	7. [Campaign Controller](#3-7-campaign-controller-back-to-top-)
+	8. [Searching Controller](#3-8-searching-controller-back-to-top-)
+	9. [Authentication Controller](#3-9-authentication-controller-back-to-top-)
+	10. [Database Component](#3-10-database-component-back-to-top-)
+4. [User Interface Design](#4-user-interface-design)
+	1. [Description of the User Interface](#4-1-description-of-the-user-interface)
+		1. [Screen Images](#4-1-1-screen-images)
+		2. [Objects and Actions](#4-1-2-objects-and-actions)
+5. [Additional Material](#5-additional-material-back-to-top-)
 
 # 1. Introduction
 
@@ -166,11 +175,31 @@ It exposes the following API routes
 
 ## 3.8 Searching Controller [[Back to Top]](#table-of-contents)
 
+The searching controller connects to the database to send queries that are sent from the front-end search engine component. The Searching Controller connects to the database that returns the desired information from the appropriate sub-database or searches all databases for instance of keyword from the query. Direct access to the database is private and not available to the public in order to protect the database and all content is sanitized. 
+
+It exposes the following API routes
+
+- `GET /api/search/items`
+- `GET /api/search/spells`
+- `GET /api/search/features`
+
 ## 3.9 Authentication Controller [[Back to Top]](#table-of-contents)
+
+The authentication controllers manages user identification via Google OAuth 2 authentication. This controller's logic is implemented by the [passportjs](http://www.passportjs.org/) node module and authentication is verified with every request.
+
+It exposes the following API routes
+
+- `GET /api/auth/login`
+- `GET /api/auth/login/callback`
+- `GET /api/auth/logout`
 
 ## 3.10 Database Component [[Back to Top]](#table-of-contents)
 
 The database component of the application is designed and implemented using MySQL. It stores the bulk of the data used to maintain and run user campaigns. This data stored includes the user details, campaign details, individual character attributes, storage for plot points and locations, spells data, equipment data, character classes, subclasses, feats, and all the respective data related to maintaining the character class information, as well as user-created notes created using the interface. Also included are user preferences and layout information.
+
+![img](https://res.cloudinary.com/josephdangerstewart/image/upload/v1550298597/campaign-buddy/SDD/CB_DBConceptual.png "Database ER Model")
+
+*Database ER Model*
 
 # 4. User Interface Design
 
@@ -224,6 +253,8 @@ We made the note color a little darker than the background color to allow some c
 
 *NPC Screen*
 
+As mentioned before, we use a color scheme very similar to the D&D Player’s Handbook to remain familiar with our users. We used a light green color and a light beige color for the row colors. We alternated the colors to help distinguish rows. These colors are used for tables inside the handbook to it creates familiarity for our Users. As we prototyped this section, we had to determine what information is crucial to DMs while running the campaign. Shown in our smallest panel, the six stats, health, speed and armor class were the most important quick stats that DM utilize. We decided to use a heart symbol for health, a circle for speed, and a shield for armor class. These icons bring familiarity to our DMs. We determined the ordering for the drop down buttons (proficiencies, class information, spells, items, personal info, notes) with what information characters have. However, we allow the user to change the ordering or hide certain dropdowns not needed. For the settings we used a cog icon for familiarity. For the categories of proficiencies, class information, spells, items, personal info, notes, there are often times DMs will not immediately need to access the information. Because of this, the categories can collapse allowing the DMs to have an uncluttered view. For smaller panels, the panels can scroll through and hide dropdowns if the user does not want to scroll. We anticipate the bottom right panel to be one most used by DMs for the NPCs/PC stats viewing. We used this as a basis for created the other panels. 
+
 ### 4.1.2 Objects and Actions
 
 #### 4.1.2.1 Layout Model [[Back to Top]](#table-of-contents)
@@ -261,6 +292,6 @@ Through dragging and dropping tabs, users can alter the structure of the layout,
 ```
 *Sample plain JSON layout object*
 
-# 5. Additional Material
+# 5. Additional Material [[Back to Top]](#table-of-contents)
 
 Our coding standards doc: [https://github.com/cross21/dnd-webMaster/blob/master/docs/coding-standards.md](https://github.com/cross21/dnd-webMaster/blob/master/docs/coding-standards.md)
