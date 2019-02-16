@@ -1,0 +1,15 @@
+/**
+ * @description This file registers all of the controllers with express. Note that
+ * individual controller routes should not be defined here. They should be defined
+ * in they're index.js file. They should export an function that takes an express
+ * app as a parameter and register their individual routes in that function. That
+ * function should be imported and called here for each controller.
+ * 
+ * @author Joseph Stewart
+ */
+
+import registerTestRoutes from './test';
+
+export default app => {
+	registerTestRoutes(app);
+};

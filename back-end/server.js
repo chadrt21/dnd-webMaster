@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
+import 'babel-polyfill';
 import express from 'express';
 import path from 'path';
 import configureAuthentication from './authentication';
+import registerRoutes from './route-registry';
 
 // Declare our server object
 const app = express();
@@ -32,7 +34,7 @@ app.use(express.static(path.resolve(__dirname, 'front-end/dist/')));
 
 
 // REGISTER API ROUTES HERE (PREFERABLY IN A FUNCTION EXPORTED FROM ANOTHER FILE)
-
+registerRoutes(app);
 
 // Tell the app that all other requests not defined by our restful API should send the user the main.html file
 app.route('*').get((request, response) => {
