@@ -68,8 +68,5 @@ module.exports = {
 	},
 	resolve: {
 		extensions: [ '.js', '.jsx', '.less', '.css' ],
-		alias: {
-			blueprint: path.resolve(__dirname, 'front-end/src/components/blueprint'),
-		},
 	},
 };
