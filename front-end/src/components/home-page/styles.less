@@ -1,0 +1,57 @@
+@import '../../styles/colors.less';
+
+.root {
+	height: 100%;
+	background-color: @background-color;
+	display: flex;
+
+	.sidebar {
+		width: 250px;
+		border-right: solid 1px grey;
+		height: 100%;
+		max-width: 25%;
+		
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		.logo {
+			width: 160px;
+			margin-bottom: 42px;
+		}
+
+		.spacing {
+			height: 120px;
+		}
+
+		.button {
+			margin-bottom: 5px;
+			width: 80%;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	.content {
+		flex-grow: 1;
+		height: 100%;
+		position: relative;
+		overflow: auto;
+		padding-bottom: 20px;
+
+		.header-row {
+			margin-top: 12px;
+			margin-bottom: 36px;
+			display: flex;
+			padding: 0 20px;
+			width: 100%;
+
+			.spacing {
+				flex-grow: 1;
+			}
+		}
+	}
+}

@@ -1,0 +1,97 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+	InputGroup,
+	Button,
+	Intent,
+	Icon,
+} from '@blueprintjs/core';
+
+import Carousel from './carousel';
+
+import { bindKeys, unbindKeys } from '../../utility/keyboard';
+
+import styles from './styles.less';
+
+import campaigns from '../../dummy-data/campaigns';
+import characters from '../../dummy-data/characters';
+
+export default class Content extends React.Component { 
+	static propTypes = {
+		navigateToCampaign: PropTypes.func.isRequired,
+		navigateToCharacter: PropTypes.func.isRequired,
+	}
+	
+	bindings = {
+		'ctrl + s': event => {
+			event.stopPropagation();
+			event.preventDefault();
+			if (this.searchInput) {
+				this.searchInput.focus();
+			}
+		},
+	}
+
+	componentWillMount() {
+		bindKeys(this.bindings);
+	}
+
+	componentWillUnmount() {
+		unbindKeys(this.bindings);
+	}
+	
+	render() {
+		const {
+			navigateToCampaign,
+			navigateToCharacter,
+		} = this.props;
+
+		return (
+			<div className={styles.content}>
+				<div className={styles.headerRow}>
+					<InputGroup
+						large
+						leftIcon="search"
+						placeholder="Ctrl-S..."
+						inputRef={ref => this.searchInput = ref}
+					/>
+					<div className={styles.spacing}></div>
+					<Button
+						minimal
+						icon={
+							<Icon
+								icon="cog"
+								iconSize={24}
+							/>
+						}
+						large
+						intent={Intent.PRIMARY}
+					/>
+					<Button
+						minimal
+						icon={
+							<Icon
+								icon="user"
+								iconSize={24}
+							/>
+						}
+						large
+						intent={Intent.PRIMARY}
+					/>
+				</div>
+				<Carousel
+					title="Campaigns"
+					items={campaigns}
+					defaultImage="/svg/d20.svg"
+					onItemSelected={navigateToCampaign}
+				/>
+				<Carousel
+					title="Characters"
+					items={characters}
+					defaultImage="/svg/item.svg"
+					onItemSelected={navigateToCharacter}
+				/>
+			</div>
+		);
+	}
+}
