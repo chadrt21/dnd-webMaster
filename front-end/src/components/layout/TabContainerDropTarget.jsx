@@ -28,7 +28,7 @@ class TabContainerDropTarget extends React.Component {
 		const { children, connectDropTarget, isOver } = this.props;
 
 		const style = {
-			backgroundColor: isOver ? '#AAA' : '#DDD',
+			backgroundColor: isOver ? '#DACAAE' : undefined,
 		};
 
 		return connectDropTarget(

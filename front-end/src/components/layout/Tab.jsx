@@ -20,7 +20,7 @@ export default class Tab extends React.Component {
 
 		return (
 			<div className={`${styles.tab} ${selected ? styles.tabSelected : ''}`} onClick={onClick}>
-				{label}
+				<span className={styles.text}>{label}</span>
 				{selected ?
 					<Icon iconSize={12} icon="cross" onClick={onClose} className={styles.tabClose} />
 					: null

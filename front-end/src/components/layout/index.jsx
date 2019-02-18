@@ -7,6 +7,7 @@ import PanelGroup from './PanelGroup';
 import ContentPanel from './ContentPanel';
 import CustomDragLayer from './CustomDragLayer';
 import Content from './Content';
+import Toolbar from './toolbar';
 
 import styles from './styles.less';
 
@@ -135,16 +136,21 @@ export default class Grid extends React.Component {
 		console.log(layout.toJson());
 	}
 
+	goHome = () => {
+		window.location.href = '/';
+	}
+
 	render() {
 		const { layout } = this.state;
 
 		return (
 			<div className={styles.root}>
 				<div className={styles.rootFlex}>
-					<div className={styles.toolbar}>
-						<button onClick={this.saveLayout}>Save layout</button>
-						<button onClick={() => this.addPane('diceroller')}>Add dice roller!</button>
-					</div>
+					<Toolbar
+						saveLayout={this.saveLayout}
+						addTool={this.addPane}
+						goHome={this.goHome}
+					/>
 					<div className={styles.grid}>
 						{this.renderLayout(layout)}
 					</div>
