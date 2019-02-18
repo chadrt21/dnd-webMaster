@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Inknut+Antiqua|Quattrocento+Sans');
+
+html, body {
+	height: 100%;
+}
+
+body {
+	background-color: #EFE1C6;
+	padding: 0;
+	margin: 0;
+}
+
+.title {
+	font-family: 'Inknut Antiqua';
+	font-size: 92px;
+	margin: 0 0 40px;
+	padding: 0;
+	text-align: center;
+	line-height: 1.4em;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+.login-button {
+	background-color: #5E170C;
+	color: #EFE1C6;
+	font-size: 36px;
+	padding: 12px 36px;
+	border-radius: 22px;
+	font-family: 'Quattrocento Sans';
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.login-button:hover {
+	background-color: rgb(70, 22, 15);
+}
