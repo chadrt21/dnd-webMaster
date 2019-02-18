@@ -90,6 +90,23 @@
 					}
 				}
 			}
+
+			&-no-items {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: @background-color-dark;
+
+				&-text {
+					max-width: 300px;
+					padding: 0 10px;
+					font-size: 30px;
+					font-family: @body-font;
+					margin: 0;
+					color: darken(@background-color-dark, 15%);
+				}
+			}
 		}
 	}
 }

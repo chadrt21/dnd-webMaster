@@ -89,12 +89,14 @@ export default class Content extends React.Component {
 					items={campaigns}
 					defaultImage="/svg/d20.svg"
 					onItemSelected={navigateToCampaign}
+					noItemsText="No Campaigns"
 				/>
 				<Carousel
 					title="Characters"
 					items={characters}
 					defaultImage="/svg/item.svg"
 					onItemSelected={navigateToCharacter}
+					noItemsText="No Characters"
 				/>
 			</div>
 		);

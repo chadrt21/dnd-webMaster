@@ -21,6 +21,7 @@ export default class Carousel extends React.Component {
 		items: PropTypes.array.isRequired,
 		defaultImage: PropTypes.string.isRequired,
 		onItemSelected: PropTypes.func.isRequired,
+		noItemsText: PropTypes.string,
 	}
 
 	mapItem = item => {
@@ -64,6 +65,7 @@ export default class Carousel extends React.Component {
 		const {
 			title,
 			items,
+			noItemsText,
 		} = this.props;
 
 		return (
@@ -76,12 +78,21 @@ export default class Carousel extends React.Component {
 						className={styles.button}
 						onClick={this.scrollLeft}
 					/>
-					<div
-						className={styles.carouselContent}
-						ref={ref => this.content = ref}
-					>
-						{items.map(this.mapItem)}
-					</div>
+					{
+						items.length > 0 ?
+							<div
+								className={styles.carouselContent}
+								ref={ref => this.content = ref}
+							>
+								{items.map(this.mapItem)}
+							</div>
+							:
+							<div
+								className={styles.carouselContentNoItems}
+							>
+								<p className={styles.carouselContentNoItemsText}>{noItemsText}</p>
+							</div>
+					}
 					<Button
 						icon="chevron-right"
 						minimal
