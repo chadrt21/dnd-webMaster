@@ -91,6 +91,7 @@ module.exports = {
 		"object-shorthand": [
 			"error",
 			"properties"
-		]
+		],
+		"react/display-name": 0,
     }
 };

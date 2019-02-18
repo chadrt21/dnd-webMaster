@@ -1,0 +1,28 @@
+@import './colors.less';
+
+.bp3-button.bp3-intent-primary {
+	background-color: @primary-color;
+
+	&:hover {
+		background-color: darken(@primary-color, 4%);
+	}
+
+	&:active {
+		background-color: darken(@primary-color, 8%);
+	}
+}
+
+.bp3-button.bp3-minimal.bp3-intent-primary {
+	color: @primary-color;
+	background-color: rgba(0, 0, 0, 0);
+
+	&:hover {
+		background-color: fadeout(@primary-color, 90%);
+		color: @primary-color;
+	}
+
+	&:active {
+		background-color: fadeout(@primary-color, 85%);
+		color: @primary-color;
+	}
+}

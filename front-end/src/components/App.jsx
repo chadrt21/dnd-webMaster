@@ -1,15 +1,26 @@
 /* This is the root container for the project */
 
 import React from 'react';
-import Grid from './dnd-poc';
+import Grid from './layout';
+import Home from './home-page';
 import { DragDropContextProvider } from 'react-dnd';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import HTML5Backend from 'react-dnd-html5-backend';
+
+import { FocusStyleManager } from '@blueprintjs/core';
+
+FocusStyleManager.onlyShowFocusOnTabs();
 
 export default class App extends React.Component {
 	render() {
 		return (
 			<DragDropContextProvider backend={HTML5Backend}>
-				<Grid />
+				<BrowserRouter>
+					<Switch>
+						<Route path="/app/:id?" component={Grid} />
+						<Route default component={Home} />
+					</Switch>
+				</BrowserRouter>
 			</DragDropContextProvider>
 		);
 	}
