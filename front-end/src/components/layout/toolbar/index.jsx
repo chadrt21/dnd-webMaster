@@ -1,3 +1,10 @@
+/**
+ * @description This is the layout toolbar component from which users can add tools to the layout,
+ * save/load custom layout configurations, and navigate to the settings and home pages.
+ * 
+ * @author Joseph Stewart
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
