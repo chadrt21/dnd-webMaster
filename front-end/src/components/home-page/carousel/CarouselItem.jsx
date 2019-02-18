@@ -1,3 +1,9 @@
+/**
+ * @description This item renders the title and image (or default image) for an item in a carousel
+ * 
+ * @author Joseph Stewart
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';

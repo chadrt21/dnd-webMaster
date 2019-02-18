@@ -1,3 +1,8 @@
+/**
+ * @description This component is responsible for rendering everything on the right hand of the homepage
+ * @author Joseph Stewart
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import {

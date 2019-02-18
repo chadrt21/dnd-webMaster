@@ -1,3 +1,9 @@
+/**
+ * @description This component allows the user to pick an item from a horizontally scrollable list
+ * 
+ * @author Joseph Stewart
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import {

@@ -1,3 +1,11 @@
+/**
+ * @description This is the first page that the user sees when they log-in. Here they can see
+ * all of the campaigns, characters, and locations that they have created and make new ones
+ * or navigate to them.
+ * 
+ * @author Joseph Stewart
+ */
+
 import React from 'react';
 
 import Sidebar from './Sidebar';

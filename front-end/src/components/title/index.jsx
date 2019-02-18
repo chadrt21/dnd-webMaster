@@ -1,3 +1,8 @@
+/**
+ * @description This component renders title text using our style
+ * @author Joseph Stewart
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 

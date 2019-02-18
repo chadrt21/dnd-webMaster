@@ -1,3 +1,10 @@
+/**
+ * @description This component is responsible for rendering everthing on the left sidebar of the home
+ * page. This means the logo and three create buttons.
+ * 
+ * @author Joseph Stewart
+ */
+
 import React from 'react';
 import SVG from 'react-inlinesvg';
 import {
