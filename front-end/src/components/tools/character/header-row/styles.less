@@ -1,0 +1,70 @@
+@import '../../../../styles/mixins.less';
+@import '../../../../styles/colors.less';
+@import '../../../../styles/fonts.less';
+
+.root {
+	.row {
+		margin-bottom: 12px;
+		padding-left: 20px;
+		flex-wrap: wrap;
+		
+		span {
+			color: @text-color;
+			font-family: @body-font;
+		}
+	}
+
+	.row, .top-row {
+		display: flex;
+
+		.title {
+			margin: 8px;
+		}
+
+		.spacer {
+			flex-grow: 1;
+		}
+
+		.flex-sizing {
+			overflow: hidden;
+			padding: 0 10px;
+		}
+	
+		.button {
+			margin-right: 8px;
+			.with-button-styles(@text-color);
+		}
+
+		.level, .class, .race {
+			margin-right: 16px;
+			font-size: 14pt;
+		}
+
+		.stat-label {
+			font-size: 12pt;
+			margin-right: 4px;
+			text-transform: uppercase;
+			font-weight: bold;
+		}
+
+		.stat-value {
+			font-size: 14pt;
+			margin-right: 16px;
+		}
+
+		.svg {
+			width: 60px;
+			fill: @text-color;
+			margin-right: 16px;
+			position: relative;
+
+			.svg-label {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				font-size: 14pt;
+			}
+		}
+	}
+}

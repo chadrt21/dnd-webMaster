@@ -51,7 +51,7 @@
 	
 	.tab {
 		padding: 5px;
-		color: #71421D;
+		color: @text-color;
 		font-family: sans-serif;
 		display: flex;
 		justify-content: center;
@@ -61,7 +61,7 @@
 		max-width: 150px;
 		text-align: center;
 		font-size: 12px;
-		border-right: 1px solid #71421D;
+		border-right: 1px solid @text-color;
 		position: relative;
 		font-family: @subheader-font;
 
@@ -70,7 +70,7 @@
 		}
 
 		&-selected {
-			color: #71421D;
+			color: @text-color;
 			background-color: #DACAAE;
 			padding-right: 18px;
 			width: 72px;
@@ -86,10 +86,10 @@
 			right: 0;
 			margin-right: 4px;
 			cursor: pointer;
-			fill: #71421D;
+			fill: @text-color;
 
 			&:hover {
-				fill: darken(#71421D, 20%);
+				fill: darken(@text-color, 20%);
 			}
 		}
 

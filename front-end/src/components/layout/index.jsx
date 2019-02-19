@@ -22,7 +22,7 @@ const defaultLayout = {
 	rows: [
 		{ panels: [
 			{ panes: [
-				{ type: 'map' },
+				{ type: 'character' },
 			] },
 			{ rows: [
 				{ panels: [

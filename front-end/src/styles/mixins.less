@@ -1,0 +1,18 @@
+.with-button-styles(@color) {
+	color: @color;
+	background-color: rgba(0, 0, 0, 0);
+
+	&:hover {
+		background-color: fadeout(@color, 90%);
+		color: @color;
+	}
+
+	&:active {
+		background-color: fadeout(@color, 85%);
+		color: @color;
+	}
+
+	.icon {
+		color: @color !important;
+	}
+}
