@@ -24,12 +24,21 @@ export default class Toolbar extends React.Component {
 		saveLayout: PropTypes.func.isRequired,
 		addTool: PropTypes.func.isRequired,
 		goHome: PropTypes.func.isRequired,
+		tools: PropTypes.array.isRequired,
+	}
+
+	mapTool = tool => {
+		const { addTool } = this.props;
+
+		return (
+			<MenuItem text={tool.displayName} onClick={() => addTool(tool.name)} />
+		);
 	}
 	
 	render() {
 		const {
 			saveLayout,
-			addTool,
+			tools,
 			goHome,
 		} = this.props;
 
@@ -53,7 +62,7 @@ export default class Toolbar extends React.Component {
 						Tools
 					</Button>
 					<Menu className={styles.toolbarMenu}>
-						<MenuItem text="Dice Roller" onClick={() => addTool('diceroller')} />
+						{tools.map(this.mapTool)}
 					</Menu>
 				</Popover>
 				<Button

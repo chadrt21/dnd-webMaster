@@ -15,6 +15,7 @@ export default class ContentPanel extends React.Component {
 		onTabChanged: PropTypes.func.isRequired,
 		defaultSelected: PropTypes.number,
 		removePane: PropTypes.func.isRequired,
+		tools: PropTypes.array.isRequired,
 		panes: PropTypes.array,
 		dropPaneIntoPanel: PropTypes.func,
 		movePane: PropTypes.func,
@@ -53,10 +54,20 @@ export default class ContentPanel extends React.Component {
 
 	mapTabs = (pane, index) => {
 		const { currentTab } = this.state;
+		const { tools } = this.props;
+
+		const tool = tools.find(tool => tool.name === pane.getType());
+		let label;
+
+		if (tool && tool.defaultLabel) {
+			label = tool.defaultLabel;
+		} else {
+			label = 'Not Found';
+		}
 
 		return (
 			<Tab
-				label={`Pane ${pane.getType()}`}
+				label={label}
 				pane={pane}
 				selected={currentTab === index}
 				onClick={() => this.handleTabChanged(index)}
