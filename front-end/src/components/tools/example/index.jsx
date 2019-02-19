@@ -18,6 +18,8 @@ export default class Content extends PaneComponent {
 	}
 
 	render() {
+		const { width, height } = this.props;
+
 		return (
 			<div>
 				<H3>
@@ -29,6 +31,8 @@ export default class Content extends PaneComponent {
 				<p>The number in my state {this.state.value}</p>
 				<button onClick={() => this.setState(({ value }) => ({ value: value + 1 }))}>++!</button>
 				<TextEditor value={this.state.text} onChange={event => this.setState({ text: event.target.value })} />
+				<p>Width: {width}</p>
+				<p>Height: {height}</p>
 			</div>
 		);
 	}

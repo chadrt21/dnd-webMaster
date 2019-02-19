@@ -3,6 +3,7 @@ displaying the active tab and allowing user to switch between tabs */
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ResizeSensor } from '@blueprintjs/core';
 
 import Tab from './DraggableTab';
 import DropTargetOverlay from './DropTargetOverlay';
@@ -24,6 +25,8 @@ export default class ContentPanel extends React.Component {
 	
 	state = {
 		currentTab: 0,
+		width: 0,
+		height: 0,
 	}
 
 	handleTabChanged = (currentTab, cb) => {
@@ -84,45 +87,54 @@ export default class ContentPanel extends React.Component {
 		}
 	}
 
+	componentResized = entries => {
+		this.setState({
+			width: entries[0].contentRect.width,
+			height: entries[0].contentRect.height,
+		});
+	}
+
 	render() {
 		const { panes, dropPaneIntoPanel, movePane, renderContent } = this.props;
-		const { currentTab } = this.state;
+		const { currentTab, width, height } = this.state;
 
 		return (
-			<div className={styles.pane}>
-				<div className={styles.paneHeader}>
-					<TabContainer onDrop={item => {
-						dropPaneIntoPanel(item.pane, () => {
-							this.focusPane(item.pane);
-						});
-					}}>
-						{panes && panes.map(this.mapTabs)}
-					</TabContainer>
+			<ResizeSensor onResize={this.componentResized}>
+				<div className={styles.pane}>
+					<div className={styles.paneHeader}>
+						<TabContainer onDrop={item => {
+							dropPaneIntoPanel(item.pane, () => {
+								this.focusPane(item.pane);
+							});
+						}}>
+							{panes && panes.map(this.mapTabs)}
+						</TabContainer>
+					</div>
+					<div className={styles.paneContent}>
+						{renderContent(currentTab, width, height)}
+						<DropTargetOverlay
+							type="half"
+							direction="left"
+							onDrop={item => movePane('before', 'soft', item.pane)}
+						/>
+						
+						<DropTargetOverlay
+							type="half"
+							onDrop={item => movePane('after', 'soft', item.pane)}
+						/>
+						
+						<DropTargetOverlay
+							type="top-half"
+							onDrop={item => movePane('above', 'soft', item.pane)}
+						/>
+						
+						<DropTargetOverlay
+							type="bottom-half"
+							onDrop={item => movePane('below', 'soft', item.pane)}
+						/>
+					</div>
 				</div>
-				<div className={styles.paneContent}>
-					{renderContent(currentTab)}
-					<DropTargetOverlay
-						type="half"
-						direction="left"
-						onDrop={item => movePane('before', 'soft', item.pane)}
-					/>
-					
-					<DropTargetOverlay
-						type="half"
-						onDrop={item => movePane('after', 'soft', item.pane)}
-					/>
-					
-					<DropTargetOverlay
-						type="top-half"
-						onDrop={item => movePane('above', 'soft', item.pane)}
-					/>
-					
-					<DropTargetOverlay
-						type="bottom-half"
-						onDrop={item => movePane('below', 'soft', item.pane)}
-					/>
-				</div>
-			</div>
+			</ResizeSensor>
 		);
 	}
 }

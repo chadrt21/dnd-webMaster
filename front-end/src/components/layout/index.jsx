@@ -99,9 +99,9 @@ export default class Grid extends React.Component {
 				defaultSelected={panel.getSelectedTab()}
 				panelId={panel.getId()}
 				key={`panel-${panel.getId()}`}
-				renderContent={currentTab => (
+				renderContent={(currentTab, width, height) => (
 					<React.Fragment>
-						{panel.getPanes().map(this.mapContent(currentTab))}
+						{panel.getPanes().map(this.mapContent(currentTab, width, height))}
 					</React.Fragment>
 				)}
 				tools={tools}
@@ -109,7 +109,7 @@ export default class Grid extends React.Component {
 		);
 	}
 
-	mapContent = currentTab => (pane, index) => {
+	mapContent = (currentTab, width, height) => (pane, index) => {
 		const tool = tools.find(tool => tool.name === pane.getType());
 		let Content;
 
@@ -134,6 +134,8 @@ export default class Grid extends React.Component {
 				<Content
 					key={`pane-${pane.getId()}`}
 					pane={pane}
+					width={width}
+					height={height}
 				/>
 			</div>
 		);
