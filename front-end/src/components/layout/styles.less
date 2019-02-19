@@ -1,17 +1,15 @@
+@import '../../styles/colors.less';
+@import '../../styles/fonts.less';
+
 .root {
 	.root-flex {
 		display: flex;
 		flex-direction: column;
-	
-		.toolbar {
-			height: 40px;
-			display: flex;
-			align-items: center;
-		}
+		justify-items: stretch;
 	
 		.grid {
 			width: 100%;
-			background-color: #EEE;
+			background-color: @background-color;
 			flex-grow: 1;
 			height: calc(100% - 40px);
 	
@@ -48,13 +46,12 @@
 
 	.tab-container {
 		display: flex;
-		background-color: #DDD;
 		overflow-x: auto;
 	}
 	
 	.tab {
 		padding: 5px;
-		color: black;
+		color: #71421D;
 		font-family: sans-serif;
 		display: flex;
 		justify-content: center;
@@ -64,21 +61,22 @@
 		max-width: 150px;
 		text-align: center;
 		font-size: 12px;
-		border-right: 1px solid #555;
+		border-right: 1px solid #71421D;
 		position: relative;
+		font-family: @subheader-font;
 
 		&:hover {
-			background-color: rgba(85, 85, 85, 0.3);
+			background-color: fadeout(#DACAAE, 60%);
 		}
 
 		&-selected {
-			color: white;
-			background-color: #555;
+			color: #71421D;
+			background-color: #DACAAE;
 			padding-right: 18px;
 			width: 72px;
 
 			&:hover {
-				background-color: #555
+				background-color: #DACAAE;
 			}
 		}
 
@@ -88,11 +86,18 @@
 			right: 0;
 			margin-right: 4px;
 			cursor: pointer;
-			fill: #DDD;
+			fill: #71421D;
 
 			&:hover {
-				fill: darken(#DDD, 20%);
+				fill: darken(#71421D, 20%);
 			}
+		}
+
+		.text {
+			text-overflow: ellipsis;
+			max-width: 100%;
+			white-space: nowrap;
+			overflow: hidden;
 		}
 	}
 }
