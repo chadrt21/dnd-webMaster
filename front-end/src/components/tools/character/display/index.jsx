@@ -32,6 +32,7 @@ export default class CharacterDisplay extends React.Component {
 					stats={character.stats}
 					ac={character.baseAc}
 					hp={character.currentHp}
+					maxHp={character.maxHp}
 					speed={character.speed}
 					onPropertyChanged={onPropertyChanged}
 					mediaQuery={mediaQuery}

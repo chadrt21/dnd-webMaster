@@ -26,6 +26,7 @@ export default class HeaderRow extends React.Component {
 		hp: PropTypes.number,
 		ac: PropTypes.number,
 		speed: PropTypes.number,
+		maxHp: PropTypes.number,
 	}
 
 	mapStats = stats => stat => (
@@ -46,6 +47,7 @@ export default class HeaderRow extends React.Component {
 			race,
 			stats,
 			hp,
+			maxHp,
 			ac,
 			speed,
 		} = this.props;
@@ -106,7 +108,7 @@ export default class HeaderRow extends React.Component {
 					}}
 				>
 					<Tooltip
-						content="HP"
+						content={`HP - Max: ${maxHp}`}
 						hoverOpenDelay={750}
 					>
 						<div className={styles.svg}>
