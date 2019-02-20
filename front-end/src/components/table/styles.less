@@ -1,0 +1,63 @@
+@import '../../styles/fonts.less';
+@import '../../styles/colors.less';
+@import '../../styles/mixins.less';
+
+.root {
+	color: @text-color;
+	font-family: @body-font;
+	border-spacing: 0;
+
+	&.full-width {
+		width: 100%;
+	}
+
+	&.sortable thead tr th {
+		cursor: pointer;
+	}
+
+	thead {
+		tr {
+			background-color: @table-green;
+
+			th {
+				font-weight: bold;
+				color: @text-color;
+				font-family: @body-font;
+				padding: 4px 8px;
+				text-align: left;
+
+				.button {
+					.with-button-styles(@text-color);
+					margin-left: 3px;
+				}
+			}
+		}
+	}
+
+	tbody {
+		tr:nth-child(even) {
+			background-color: @table-green;
+		}
+	
+		tr:nth-child(odd) {
+			background-color: @table-white;
+		}
+
+		tr td {
+			font-family: @body-font;
+			color: @text-color;
+			padding: 4px 8px;
+		}
+
+		&.selectable {
+			tr:nth-child(even):hover {
+				background-color: darken(@table-green, 5%);
+			}
+		
+			tr:nth-child(odd):hover {
+				background-color: darken(@table-white, 5%);
+			}
+		}
+	}
+	
+}

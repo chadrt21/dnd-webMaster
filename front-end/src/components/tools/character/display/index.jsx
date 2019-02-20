@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import CollapsibleSection from '../../../collapsible-section';
 import HeaderRow from '../header-row';
 import Proficiencies from '../proficiencies';
+import Spells from '../spells';
 
 import styles from './styles.less';
 
@@ -15,7 +16,10 @@ export default class CharacterDisplay extends React.Component {
 		mediaQuery: PropTypes.func.isRequired,
 
 		sections: PropTypes.object.isRequired,
+		sortings: PropTypes.object.isRequired,
+		
 		handleSectionExpandedChange: PropTypes.func.isRequired,
+		handleSortingChange: PropTypes.func.isRequired,
 	}
 
 	handleProficiencyRemove = prof => {
@@ -47,6 +51,8 @@ export default class CharacterDisplay extends React.Component {
 			mediaQuery,
 			sections,
 			handleSectionExpandedChange,
+			sortings,
+			handleSortingChange,
 		} = this.props;
 
 		return (
@@ -84,6 +90,19 @@ export default class CharacterDisplay extends React.Component {
 					className={styles.section}
 				>
 					<span>What is supposed to go here again?</span>
+				</CollapsibleSection>
+				<CollapsibleSection
+					title="Spells"
+					expanded={sections.spells}
+					changeExpanded={handleSectionExpandedChange('spells')}
+					className={styles.section}
+				>
+					<Spells
+						spells={character.spells}
+						sortingColumn={sortings.spells.column}
+						sortingDirection={sortings.spells.direction}
+						handleSortingChange={handleSortingChange('spells')}
+					/>
 				</CollapsibleSection>
 			</div>
 		);

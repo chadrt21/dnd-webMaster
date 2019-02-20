@@ -32,6 +32,11 @@ export default [
 				skill: 'INT',
 			},
 		],
+		spells: [
+			1,
+			4,
+			6,
+		],
 	},
 	{
 		id: 1,
@@ -64,6 +69,11 @@ export default [
 				name: 'History',
 				skill: 'INT',
 			},
+		],
+		spells: [
+			1,
+			4,
+			6,
 		],
 	},
 	{
@@ -98,6 +108,11 @@ export default [
 				skill: 'INT',
 			},
 		],
+		spells: [
+			1,
+			4,
+			6,
+		],
 	},
 	{
 		id: 3,
@@ -131,6 +146,11 @@ export default [
 				name: 'History',
 				skill: 'INT',
 			},
+		],
+		spells: [
+			1,
+			4,
+			6,
 		],
 	},
 ];

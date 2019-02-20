@@ -13,6 +13,13 @@ export default class CharacterTool extends ToolBase {
 		sections: {
 			proficiencies: false,
 			classInfo: false,
+			spells: false,
+		},
+		sortings: {
+			spells: {
+				direction: 'asc',
+				column: '',
+			},
 		},
 	}
 
@@ -71,8 +78,20 @@ export default class CharacterTool extends ToolBase {
 		}));
 	}
 
+	handleSortingChange = section => (column, direction) => {
+		this.setState(({ sortings }) => ({
+			sortings: {
+				...sortings,
+				[section]: {
+					column,
+					direction,
+				},
+			},
+		}));
+	}
+
 	render() {
-		const { view, character, sections } = this.state;
+		const { view, character, sections, sortings } = this.state;
 
 		if (view === 'list') {
 			return (
@@ -93,6 +112,8 @@ export default class CharacterTool extends ToolBase {
 					mediaQuery={this.mediaQuery}
 					handleSectionExpandedChange={this.handleSectionExpandedChange}
 					sections={sections}
+					sortings={sortings}
+					handleSortingChange={this.handleSortingChange}
 				/>
 			</div>
 		);
