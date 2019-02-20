@@ -8,12 +8,13 @@ import PropTypes from 'prop-types';
 
 import styles from './styles.less';
 
-const Title = ({ children, color, fontSize, rightComponent, className }) => (
+const Title = ({ children, color, fontSize, rightComponent, className, ...props }) => (
 	<h1
 		className={[ styles.title, styles[color], className ].join(' ')}
 		style={{
 			fontSize,
 		}}
+		{...props}
 	>
 		{children}
 		{rightComponent || null}

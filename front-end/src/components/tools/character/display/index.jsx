@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import CollapsibleSection from '../../../collapsible-section';
 import HeaderRow from '../header-row';
 
 import styles from './styles.less';
@@ -11,6 +12,9 @@ export default class CharacterDisplay extends React.Component {
 		character: PropTypes.object.isRequired,
 		onPropertyChanged: PropTypes.func.isRequired,
 		mediaQuery: PropTypes.func.isRequired,
+
+		exampleSectionExpanded: PropTypes.bool.isRequired,
+		handleSectionExpandedChange: PropTypes.func.isRequired,
 	}
 	
 	render() {
@@ -19,6 +23,8 @@ export default class CharacterDisplay extends React.Component {
 			character,
 			onPropertyChanged,
 			mediaQuery,
+			exampleSectionExpanded,
+			handleSectionExpandedChange,
 		} = this.props;
 
 		return (
@@ -37,6 +43,14 @@ export default class CharacterDisplay extends React.Component {
 					onPropertyChanged={onPropertyChanged}
 					mediaQuery={mediaQuery}
 				/>
+				<CollapsibleSection
+					title="Example Section"
+					expanded={exampleSectionExpanded}
+					changeExpanded={handleSectionExpandedChange('example')}
+					className={styles.section}
+				>
+					<span>Here is some content</span>
+				</CollapsibleSection>
 			</div>
 		);
 	}

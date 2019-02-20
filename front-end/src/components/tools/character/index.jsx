@@ -10,6 +10,9 @@ export default class CharacterTool extends ToolBase {
 	state = {
 		view: 'list',
 		character: {},
+		sections: {
+			example: false,
+		},
 	}
 
 	navigateToCharacter = item => {
@@ -58,8 +61,17 @@ export default class CharacterTool extends ToolBase {
 		}
 	}
 
+	handleSectionExpandedChange = section => change => {
+		this.setState(({ sections }) => ({
+			sections: {
+				...sections,
+				[section]: change,
+			},
+		}));
+	}
+
 	render() {
-		const { view, character } = this.state;
+		const { view, character, sections } = this.state;
 
 		if (view === 'list') {
 			return (
@@ -78,6 +90,8 @@ export default class CharacterTool extends ToolBase {
 					navigateBack={this.navigateToList}
 					onPropertyChanged={this.onPropertyChanged}
 					mediaQuery={this.mediaQuery}
+					handleSectionExpandedChange={this.handleSectionExpandedChange}
+					exampleSectionExpanded={sections.example}
 				/>
 			</div>
 		);
