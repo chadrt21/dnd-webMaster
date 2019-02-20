@@ -11,7 +11,8 @@ export default class CharacterTool extends ToolBase {
 		view: 'list',
 		character: {},
 		sections: {
-			example: false,
+			proficiencies: false,
+			classInfo: false,
 		},
 	}
 
@@ -91,7 +92,7 @@ export default class CharacterTool extends ToolBase {
 					onPropertyChanged={this.onPropertyChanged}
 					mediaQuery={this.mediaQuery}
 					handleSectionExpandedChange={this.handleSectionExpandedChange}
-					exampleSectionExpanded={sections.example}
+					sections={sections}
 				/>
 			</div>
 		);

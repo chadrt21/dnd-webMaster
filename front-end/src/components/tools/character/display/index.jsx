@@ -14,7 +14,7 @@ export default class CharacterDisplay extends React.Component {
 		onPropertyChanged: PropTypes.func.isRequired,
 		mediaQuery: PropTypes.func.isRequired,
 
-		exampleSectionExpanded: PropTypes.bool.isRequired,
+		sections: PropTypes.object.isRequired,
 		handleSectionExpandedChange: PropTypes.func.isRequired,
 	}
 
@@ -45,7 +45,7 @@ export default class CharacterDisplay extends React.Component {
 			character,
 			onPropertyChanged,
 			mediaQuery,
-			exampleSectionExpanded,
+			sections,
 			handleSectionExpandedChange,
 		} = this.props;
 
@@ -67,8 +67,8 @@ export default class CharacterDisplay extends React.Component {
 				/>
 				<CollapsibleSection
 					title="Proficiencies"
-					expanded={exampleSectionExpanded}
-					changeExpanded={handleSectionExpandedChange('example')}
+					expanded={sections.proficiencies}
+					changeExpanded={handleSectionExpandedChange('proficiencies')}
 					className={styles.section}
 				>
 					<Proficiencies
@@ -76,6 +76,14 @@ export default class CharacterDisplay extends React.Component {
 						onRemove={this.handleProficiencyRemove}
 						onNew={this.handleProficiencyNew}
 					/>
+				</CollapsibleSection>
+				<CollapsibleSection
+					title="Class Information"
+					expanded={sections.classInfo}
+					changeExpanded={handleSectionExpandedChange('classInfo')}
+					className={styles.section}
+				>
+					<span>What is supposed to go here again?</span>
 				</CollapsibleSection>
 			</div>
 		);
