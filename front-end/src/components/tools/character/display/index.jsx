@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import CollapsibleSection from '../../../collapsible-section';
 import HeaderRow from '../header-row';
+import Proficiencies from '../proficiencies';
 
 import styles from './styles.less';
 
@@ -15,6 +16,27 @@ export default class CharacterDisplay extends React.Component {
 
 		exampleSectionExpanded: PropTypes.bool.isRequired,
 		handleSectionExpandedChange: PropTypes.func.isRequired,
+	}
+
+	handleProficiencyRemove = prof => {
+		const {
+			character,
+			onPropertyChanged,
+		} = this.props;
+
+		onPropertyChanged('proficiencies')(character.proficiencies.filter(item => item !== prof));
+	}
+
+	handleProficiencyNew = prof => {
+		const {
+			character,
+			onPropertyChanged,
+		} = this.props;
+
+		onPropertyChanged('proficiencies')([
+			...character.proficiencies,
+			prof,
+		]);
 	}
 	
 	render() {
@@ -44,12 +66,16 @@ export default class CharacterDisplay extends React.Component {
 					mediaQuery={mediaQuery}
 				/>
 				<CollapsibleSection
-					title="Example Section"
+					title="Proficiencies"
 					expanded={exampleSectionExpanded}
 					changeExpanded={handleSectionExpandedChange('example')}
 					className={styles.section}
 				>
-					<span>Here is some content</span>
+					<Proficiencies
+						proficiencies={character.proficiencies}
+						onRemove={this.handleProficiencyRemove}
+						onNew={this.handleProficiencyNew}
+					/>
 				</CollapsibleSection>
 			</div>
 		);

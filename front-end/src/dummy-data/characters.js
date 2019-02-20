@@ -18,6 +18,20 @@ export default [
 		maxHp: 32,
 		speed: 13,
 		baseAc: 13,
+		proficiencies: [
+			{
+				name: 'Deception',
+				skill: 'STR',
+			},
+			{
+				name: 'Acrobatics',
+				skill: 'DEX',
+			},
+			{
+				name: 'History',
+				skill: 'INT',
+			},
+		],
 	},
 	{
 		id: 1,
@@ -37,6 +51,20 @@ export default [
 		maxHp: 32,
 		speed: 13,
 		baseAc: 13,
+		proficiencies: [
+			{
+				name: 'Deception',
+				skill: 'STR',
+			},
+			{
+				name: 'Acrobatics',
+				skill: 'DEX',
+			},
+			{
+				name: 'History',
+				skill: 'INT',
+			},
+		],
 	},
 	{
 		id: 2,
@@ -56,6 +84,20 @@ export default [
 		maxHp: 32,
 		speed: 13,
 		baseAc: 13,
+		proficiencies: [
+			{
+				name: 'Deception',
+				skill: 'STR',
+			},
+			{
+				name: 'Acrobatics',
+				skill: 'DEX',
+			},
+			{
+				name: 'History',
+				skill: 'INT',
+			},
+		],
 	},
 	{
 		id: 3,
@@ -76,5 +118,19 @@ export default [
 		speed: 13,
 		baseAc: 13,
 		isNpc: true,
+		proficiencies: [
+			{
+				name: 'Deception',
+				skill: 'STR',
+			},
+			{
+				name: 'Acrobatics',
+				skill: 'DEX',
+			},
+			{
+				name: 'History',
+				skill: 'INT',
+			},
+		],
 	},
 ];
