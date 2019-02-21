@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'Utility/classNames';
 
 import {
 	Button,
 	Icon,
 	EditableText,
 	Tooltip,
+	Popover,
 } from '@blueprintjs/core';
 import SVG from 'react-inlinesvg';
 
 import Title from '../../../title';
+import NumericInput from '../../../calculator-input';
 
 import styles from './styles.less';
 
@@ -29,12 +32,26 @@ export default class HeaderRow extends React.Component {
 		maxHp: PropTypes.number,
 	}
 
-	mapStats = stats => stat => (
-		<span>
-			<span className={styles.statLabel}>{stat}</span>
-			<span className={styles.statValue}>{stats[stat]}</span>
-		</span>
-	);
+	mapStats = stats => stat => {
+		const { onPropertyChanged } = this.props;
+		return (
+			<Popover
+				modifiers={{ arrow: false }}
+				content={
+					<NumericInput
+						onChange={onPropertyChanged(`stats.${stat}`)}
+						value={stats[stat]}
+						autoFocus
+					/>
+				}
+			>
+				<span>
+					<span className={styles.statLabel}>{stat}</span>
+					<span className={classNames(styles.statValue, styles.editable)}>{stats[stat]}</span>
+				</span>
+			</Popover>
+		);
+	};
 
 	render() {
 		const {
@@ -89,7 +106,18 @@ export default class HeaderRow extends React.Component {
 					/>
 				</div>
 				<div className={styles.row}>
-					<span className={styles.level}>Level: {level}</span>
+					<Popover
+						content={
+							<NumericInput
+								onChange={onPropertyChanged('level')}
+								value={level}
+								autoFocus
+							/>
+						}
+						modifiers={{ arrow: false }}
+					>
+						<span className={classNames(styles.level, styles.editable)}>Level: {level}</span>
+					</Popover>
 					<span className={styles.class}>{className}</span>
 					<span className={styles.race}>{race}</span>
 				</div>
@@ -107,39 +135,72 @@ export default class HeaderRow extends React.Component {
 						justifyContent: mediaQuery('max-width', 900) ? 'space-evenly' : null, 
 					}}
 				>
-					<Tooltip
-						content={`HP - Max: ${maxHp}`}
-						hoverOpenDelay={750}
-					>
-						<div className={styles.svg}>
-							<SVG
-								src="/svg/heart.svg"
+					<Popover
+						content={
+							<NumericInput
+								onChange={onPropertyChanged('currentHp')}
+								autoFocus
+								value={hp}
 							/>
-							<span className={styles.svgLabel}>{hp}</span>
-						</div>
-					</Tooltip>
-					<Tooltip
-						content="Speed"
-						hoverOpenDelay={750}
+						}
+						modifiers={{ arrow: false }}
 					>
-						<div className={styles.svg}>
-							<SVG
-								src="/svg/circle.svg"
+						<Tooltip
+							content={`HP - Max: ${maxHp}`}
+							hoverOpenDelay={750}
+						>
+							<div className={styles.svg}>
+								<SVG
+									src="/svg/heart.svg"
+								/>
+								<span className={classNames(styles.svgLabel, styles.editable)}>{hp}</span>
+							</div>
+						</Tooltip>
+					</Popover>
+					<Popover
+						content={
+							<NumericInput
+								value={speed}
+								onChange={onPropertyChanged('speed')}
+								autoFocus
 							/>
-							<span className={styles.svgLabel}>{speed}</span>
-						</div>
-					</Tooltip>
-					<Tooltip
-						content="AC"
-						hoverOpenDelay={750}
+						}
+						modifiers={{ arrow: false }}
 					>
-						<div className={styles.svg}>
-							<SVG
-								src="/svg/shield.svg"
+						<Tooltip
+							content="Speed"
+							hoverOpenDelay={750}
+						>
+							<div className={styles.svg}>
+								<SVG
+									src="/svg/circle.svg"
+								/>
+								<span className={classNames(styles.svgLabel, styles.editable)}>{speed}</span>
+							</div>
+						</Tooltip>
+					</Popover>
+					<Popover
+						content={
+							<NumericInput
+								value={ac}
+								onChange={onPropertyChanged('baseAc')}
+								autoFocus
 							/>
-							<span className={styles.svgLabel}>{ac}</span>
-						</div>
-					</Tooltip>
+						}
+						modifiers={{ arrow: false }}
+					>
+						<Tooltip
+							content="AC"
+							hoverOpenDelay={750}
+						>
+							<div className={styles.svg}>
+								<SVG
+									src="/svg/shield.svg"
+								/>
+								<span className={classNames(styles.svgLabel, styles.editable)}>{ac}</span>
+							</div>
+						</Tooltip>
+					</Popover>
 				</div>
 			</div>
 		);
