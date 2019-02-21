@@ -76,6 +76,7 @@ export default class Proficiencies extends React.Component {
 							arrow: false,
 						},
 					}}
+					resetOnClose
 				>
 					<Button
 						className={styles.button}

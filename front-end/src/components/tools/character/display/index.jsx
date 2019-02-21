@@ -102,6 +102,7 @@ export default class CharacterDisplay extends React.Component {
 						sortingColumn={sortings.spells.column}
 						sortingDirection={sortings.spells.direction}
 						handleSortingChange={handleSortingChange('spells')}
+						onPropertyChanged={onPropertyChanged}
 					/>
 				</CollapsibleSection>
 			</div>

@@ -78,9 +78,14 @@ export default class Table extends React.Component {
 		const col = head[key];
 
 		return (
-			<th onClick={sortable ? () => this.handleSortChange(key) : undefined}>
+			<th
+				onClick={sortable ? () => this.handleSortChange(key) : undefined}
+				style={{
+					textAlign: col.textAlign,
+				}}
+			>
 				{col.name}
-				{sortable && sortingColumn === key ?
+				{sortable && sortingColumn === key && head[key].sortable !== false ?
 					<Button
 						minimal
 						className={styles.button}
@@ -101,9 +106,10 @@ export default class Table extends React.Component {
 	}
 
 	mapRows = head => row => {
+		const { onItemSelect } = this.props;
 		const headKeys = Object.keys(head);
 		return (
-			<tr>
+			<tr onClick={onItemSelect ? () => onItemSelect(row) : undefined}>
 				{headKeys.map(this.mapColumns(row, head))}
 			</tr>
 		);
@@ -114,7 +120,7 @@ export default class Table extends React.Component {
 
 		if (typeof headObj.renderCol === 'function') {
 			return (
-				<td>
+				<td style={{ textAlign: headObj.textAlign }}>
 					{headObj.renderCol(row[headKey], row)}
 				</td>
 			);

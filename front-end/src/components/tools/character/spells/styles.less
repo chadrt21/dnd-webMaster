@@ -1,0 +1,29 @@
+@import '../../../../styles/mixins.less';
+@import '../../../../styles/colors.less';
+
+.root {
+	margin-top: 10px;
+
+	.search-container {
+		display: flex;
+		margin-bottom: 3px;
+
+		.spacer {
+			flex-grow: 1;
+		}
+	}
+
+	.button {
+		.with-button-styles(@text-color);
+	}
+
+}
+
+.menu-item {
+	color: @text-color !important;
+
+	&.active {
+		background-color: @primary-color;
+		color: @background-color !important;
+	}
+}

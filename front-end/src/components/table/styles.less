@@ -48,15 +48,20 @@
 			color: @text-color;
 			padding: 4px 8px;
 		}
+	}
 
-		&.selectable {
-			tr:nth-child(even):hover {
-				background-color: darken(@table-green, 5%);
-			}
-		
-			tr:nth-child(odd):hover {
-				background-color: darken(@table-white, 5%);
-			}
+	&.selectable {
+		tbody tr {
+			cursor: pointer;
+			transition: background-color .3s;
+		}
+
+		tbody tr:nth-child(even):hover {
+			background-color: darken(@table-green, 5%);
+		}
+	
+		tbody tr:nth-child(odd):hover {
+			background-color: darken(@table-white, 5%);
 		}
 	}
 	
