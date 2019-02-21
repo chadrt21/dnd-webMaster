@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -9,19 +7,17 @@ import {
 	Icon,
 	MenuItem,
 } from '@blueprintjs/core';
-import {
-	Select,
-} from '@blueprintjs/select';
+import { Select } from '@blueprintjs/select';
 
 import Table from '../../../table';
 
-import allSpells from '../../../../dummy-data/spells';
-
 import styles from './styles.less';
 
-export default class Spells extends React.Component {
+import allEquipment from '../../../../dummy-data/equipment';
+
+export default class Equipment extends React.Component {
 	static propTypes = {
-		spells: PropTypes.array,
+		equipment: PropTypes.array,
 		sortingDirection: PropTypes.string,
 		sortingColumn: PropTypes.string,
 		handleSortingChange: PropTypes.func,
@@ -39,13 +35,13 @@ export default class Spells extends React.Component {
 			key={item.index}
 		/>
 	)
-	
+
 	render() {
 		const {
-			spells,
-			handleSortingChange,
-			sortingColumn,
+			equipment,
 			sortingDirection,
+			sortingColumn,
+			handleSortingChange,
 			onPropertyChanged,
 		} = this.props;
 
@@ -57,7 +53,7 @@ export default class Spells extends React.Component {
 					/>
 					<div className={styles.spacer} />
 					<Select
-						items={allSpells.filter(spell => !spells.find(spellId => spellId === spell.index))}
+						items={allEquipment.filter(item => !equipment.find(itemId => itemId === item.index))}
 						itemRenderer={this.renderItem}
 						itemPredicate={(query, item) => item.name.includes(query)}
 						popoverProps={{
@@ -65,7 +61,7 @@ export default class Spells extends React.Component {
 								arrow: false,
 							},
 						}}
-						onItemSelect={spell => onPropertyChanged('spells')([ ...spells, spell.index ])}
+						onItemSelect={item => onPropertyChanged('equipment')([ ...equipment, item.index ])}
 						resetOnClose
 					>
 						<Button
@@ -87,8 +83,8 @@ export default class Spells extends React.Component {
 						name: {
 							name: 'Name',
 						},
-						level: {
-							name: 'Level',
+						equipment_category: {
+							name: 'Type',
 						},
 						removeButton: {
 							name: '',
@@ -103,7 +99,7 @@ export default class Spells extends React.Component {
 											className={styles.icon}
 										/>
 									}
-									onClick={() => onPropertyChanged('spells')(spells.filter(spell => spell !== row.index))}
+									onClick={() => onPropertyChanged('equipment')(equipment.filter(item => item !== row.index))}
 								/>
 							),
 							textAlign: 'right',
@@ -112,7 +108,7 @@ export default class Spells extends React.Component {
 					sortingColumn={sortingColumn}
 					sortingDirection={sortingDirection}
 					handleSortChange={handleSortingChange}
-					items={spells.map(spellId => allSpells.find(spell => spell.index === spellId)).filter(spell => spell)}
+					items={equipment.map(itemId => allEquipment.find(item => item.index === itemId)).filter(item => item)}
 				/>
 			</div>
 		);

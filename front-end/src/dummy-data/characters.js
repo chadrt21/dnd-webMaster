@@ -37,6 +37,11 @@ export default [
 			4,
 			6,
 		],
+		equipment: [
+			1,
+			2,
+			3,
+		],
 	},
 	{
 		id: 1,
@@ -74,6 +79,11 @@ export default [
 			1,
 			4,
 			6,
+		],
+		equipment: [
+			1,
+			2,
+			3,
 		],
 	},
 	{
@@ -113,6 +123,11 @@ export default [
 			4,
 			6,
 		],
+		equipment: [
+			1,
+			2,
+			3,
+		],
 	},
 	{
 		id: 3,
@@ -151,6 +166,11 @@ export default [
 			1,
 			4,
 			6,
+		],
+		equipment: [
+			1,
+			2,
+			3,
 		],
 	},
 ];

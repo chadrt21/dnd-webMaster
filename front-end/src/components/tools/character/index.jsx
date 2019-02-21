@@ -14,9 +14,14 @@ export default class CharacterTool extends ToolBase {
 			proficiencies: false,
 			classInfo: false,
 			spells: false,
+			equipment: false,
 		},
 		sortings: {
 			spells: {
+				direction: 'asc',
+				column: '',
+			},
+			equipment: {
 				direction: 'asc',
 				column: '',
 			},

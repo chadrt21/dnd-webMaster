@@ -5,6 +5,7 @@ import CollapsibleSection from '../../../collapsible-section';
 import HeaderRow from '../header-row';
 import Proficiencies from '../proficiencies';
 import Spells from '../spells';
+import Equipment from '../equipment';
 
 import styles from './styles.less';
 
@@ -102,6 +103,20 @@ export default class CharacterDisplay extends React.Component {
 						sortingColumn={sortings.spells.column}
 						sortingDirection={sortings.spells.direction}
 						handleSortingChange={handleSortingChange('spells')}
+						onPropertyChanged={onPropertyChanged}
+					/>
+				</CollapsibleSection>
+				<CollapsibleSection
+					title="Equipment"
+					expanded={sections.equipment}
+					changeExpanded={handleSectionExpandedChange('equipment')}
+					className={styles.section}
+				>
+					<Equipment
+						equipment={character.equipment}
+						sortingColumn={sortings.equipment.column}
+						sortingDirection={sortings.equipment.direction}
+						handleSortingChange={handleSortingChange('equipment')}
 						onPropertyChanged={onPropertyChanged}
 					/>
 				</CollapsibleSection>
