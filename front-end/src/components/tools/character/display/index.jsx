@@ -6,6 +6,7 @@ import HeaderRow from '../header-row';
 import Proficiencies from '../proficiencies';
 import Spells from '../spells';
 import Equipment from '../equipment';
+import Appearance from '../appearance';
 
 import styles from './styles.less';
 
@@ -118,6 +119,23 @@ export default class CharacterDisplay extends React.Component {
 						sortingDirection={sortings.equipment.direction}
 						handleSortingChange={handleSortingChange('equipment')}
 						onPropertyChanged={onPropertyChanged}
+					/>
+				</CollapsibleSection>
+				<CollapsibleSection
+					title="Appearance"
+					expanded={sections.appearance}
+					changeExpanded={handleSectionExpandedChange('appearance')}
+					className={styles.section}
+				>
+					<Appearance
+						imageUrl={character.avatarUrl}
+						onPropertyChanged={onPropertyChanged}
+						age={character.age}
+						skinDesc={character.skinDesc}
+						hairDesc={character.hairDesc}
+						weight={character.weight}
+						height={character.height}
+						mediaQuery={mediaQuery}
 					/>
 				</CollapsibleSection>
 			</div>

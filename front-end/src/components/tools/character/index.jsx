@@ -15,6 +15,7 @@ export default class CharacterTool extends ToolBase {
 			classInfo: false,
 			spells: false,
 			equipment: false,
+			appearance: false,
 		},
 		sortings: {
 			spells: {
