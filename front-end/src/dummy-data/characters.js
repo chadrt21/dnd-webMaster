@@ -48,6 +48,7 @@ export default [
 		age: 20,
 		weight: 20,
 		height: '6\'6',
+		backstory: '',
 	},
 	{
 		id: 1,
@@ -97,6 +98,7 @@ export default [
 		age: 20,
 		weight: 20,
 		height: '6\'6',
+		backstory: '',
 	},
 	{
 		id: 2,
@@ -146,6 +148,7 @@ export default [
 		age: 20,
 		weight: 20,
 		height: '6\'6',
+		backstory: '',
 	},
 	{
 		id: 3,
@@ -196,5 +199,6 @@ export default [
 		age: 20,
 		weight: 20,
 		height: '6\'6',
+		backstory: '',
 	},
 ];

@@ -7,6 +7,7 @@ import Proficiencies from '../proficiencies';
 import Spells from '../spells';
 import Equipment from '../equipment';
 import Appearance from '../appearance';
+import Backstory from '../backstory';
 
 import styles from './styles.less';
 
@@ -136,6 +137,17 @@ export default class CharacterDisplay extends React.Component {
 						weight={character.weight}
 						height={character.height}
 						mediaQuery={mediaQuery}
+					/>
+				</CollapsibleSection>
+				<CollapsibleSection
+					title="Backstory/Other Notes"
+					expanded={sections.backstory}
+					changeExpanded={handleSectionExpandedChange('backstory')}
+					className={styles.section}
+				>
+					<Backstory
+						value={character.backstory}
+						onPropertyChanged={onPropertyChanged}
 					/>
 				</CollapsibleSection>
 			</div>
