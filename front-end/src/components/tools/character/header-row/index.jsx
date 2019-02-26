@@ -19,6 +19,7 @@ import styles from './styles.less';
 export default class HeaderRow extends React.Component {
 	static propTypes = {
 		navigateBack: PropTypes.func.isRequired,
+		navigateToSettings: PropTypes.func.isRequired,
 		onPropertyChanged: PropTypes.func.isRequired,
 		mediaQuery: PropTypes.func.isRequired,
 		name: PropTypes.string,
@@ -32,7 +33,7 @@ export default class HeaderRow extends React.Component {
 		maxHp: PropTypes.number,
 	}
 
-	mapStats = stats => stat => {
+	mapStats = stats => (stat, index) => {
 		const { onPropertyChanged } = this.props;
 		return (
 			<Popover
@@ -44,6 +45,7 @@ export default class HeaderRow extends React.Component {
 						autoFocus
 					/>
 				}
+				key={index}
 			>
 				<span>
 					<span className={styles.statLabel}>{stat}</span>
@@ -56,6 +58,7 @@ export default class HeaderRow extends React.Component {
 	render() {
 		const {
 			navigateBack,
+			navigateToSettings,
 			onPropertyChanged,
 			mediaQuery,
 			name,
@@ -102,6 +105,7 @@ export default class HeaderRow extends React.Component {
 							/>
 						}
 						minimal
+						onClick={navigateToSettings}
 						className={styles.button}
 					/>
 				</div>

@@ -3,10 +3,12 @@ import ToolBase from '../ToolBase';
 
 import CharacterList from './character-list';
 import Display from './display';
+import Settings from './tool-settings';
 
 import characters from '../../../dummy-data/characters';
 
 export default class CharacterTool extends ToolBase {
+	// Character list will not be stored in state
 	state = {
 		view: 'list',
 		character: {},
@@ -28,6 +30,40 @@ export default class CharacterTool extends ToolBase {
 				column: '',
 			},
 		},
+		toolSettings: {
+			orderings: [
+				{
+					name: 'proficiencies',
+					visible: true,
+					displayName: 'Proficiencies',
+				},
+				{
+					name: 'classInfo',
+					visible: true,
+					displayName: 'Class Information',
+				},
+				{
+					name: 'spells',
+					visible: true,
+					displayName: 'Spells',
+				},
+				{
+					name: 'equipment',
+					visible: true,
+					displayName: 'Equipment',
+				},
+				{
+					name: 'appearance',
+					visible: true,
+					displayName: 'Appearance',
+				},
+				{
+					name: 'backstory',
+					visible: true,
+					displayName: 'Backstory/Notes',
+				},
+			],
+		},
 	}
 
 	navigateToCharacter = item => {
@@ -37,6 +73,10 @@ export default class CharacterTool extends ToolBase {
 			view: 'display',
 			character,
 		});
+	}
+
+	navigateToSettings = () => {
+		this.setState({ view: 'settings' });
 	}
 
 	onPropertyChanged = identifier => change => {
@@ -97,14 +137,36 @@ export default class CharacterTool extends ToolBase {
 		}));
 	}
 
+	handleSettingChange = (setting, value) => {
+		this.setState(({ toolSettings }) => ({
+			toolSettings: {
+				...toolSettings,
+				[setting]: value,
+			},
+		}));
+	}
+
 	render() {
-		const { view, character, sections, sortings } = this.state;
+		const { view, character, sections, sortings, toolSettings } = this.state;
 
 		if (view === 'list') {
 			return (
 				<div>
 					<CharacterList
 						navigateToCharacter={this.navigateToCharacter}
+						navigateToSettings={this.navigateToSettings}
+					/>
+				</div>
+			);
+		}
+
+		if (view === 'settings') {
+			return (
+				<div>
+					<Settings
+						toolSettings={toolSettings}
+						navigateBack={this.navigateToList}
+						handleSettingChange={this.handleSettingChange}
 					/>
 				</div>
 			);
@@ -121,6 +183,8 @@ export default class CharacterTool extends ToolBase {
 					sections={sections}
 					sortings={sortings}
 					handleSortingChange={this.handleSortingChange}
+					toolSettings={toolSettings}
+					navigateToSettings={this.navigateToSettings}
 				/>
 			</div>
 		);
