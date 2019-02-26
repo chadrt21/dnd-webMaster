@@ -11,6 +11,7 @@ export default class CharacterTool extends ToolBase {
 	// Character list will not be stored in state
 	state = {
 		view: 'list',
+		prevView: 'list',
 		character: {},
 		sections: {
 			proficiencies: false,
@@ -76,7 +77,16 @@ export default class CharacterTool extends ToolBase {
 	}
 
 	navigateToSettings = () => {
-		this.setState({ view: 'settings' });
+		this.setState(({ view }) => ({
+			view: 'settings',
+			prevView: view,
+		}));
+	}
+
+	navigateBackFromSettings = () => {
+		this.setState(({ prevView }) => ({
+			view: prevView,
+		}));
 	}
 
 	onPropertyChanged = identifier => change => {
@@ -165,7 +175,7 @@ export default class CharacterTool extends ToolBase {
 				<div>
 					<Settings
 						toolSettings={toolSettings}
-						navigateBack={this.navigateToList}
+						navigateBack={this.navigateBackFromSettings}
 						handleSettingChange={this.handleSettingChange}
 					/>
 				</div>

@@ -19,18 +19,41 @@ import {
 	Icon,
 } from '@blueprintjs/core';
 
+import classNames from 'Utility/classNames';
+
 export default class CharcterList extends React.Component {
 	static propTypes = {
 		navigateToCharacter: PropTypes.func.isRequired,
+		navigateToSettings: PropTypes.func.isRequired,
 	}
 	
 	render() {
 		const {
 			navigateToCharacter,
+			navigateToSettings,
 		} = this.props;
 
 		return (
 			<div className={styles.root}>
+				<Title
+					fontSize={28}
+					rightComponent={
+						<Button
+							minimal
+							icon={
+								<Icon
+									icon="cog"
+									className={styles.icon}
+								/>
+							}
+							onClick={navigateToSettings}
+							className={styles.button}
+						/>
+					}
+					className={classNames(styles.title, styles.header)}
+				>
+					Characters
+				</Title>
 				<Title
 					fontSize={20}
 					rightComponent={
