@@ -44,6 +44,13 @@ export default class Grid extends React.Component {
 	state = {
 		layout: new Layout(defaultLayout),
 		reloading: false,
+		currentCampaignId: 0,
+		campaignTitle: '',
+		savedLayouts: [],
+	}
+
+	fetchCampaign = () => {
+		
 	}
 
 	renderLayout = layout => (
