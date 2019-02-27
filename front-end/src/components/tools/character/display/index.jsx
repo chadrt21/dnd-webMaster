@@ -152,6 +152,7 @@ export default class CharacterDisplay extends React.Component {
 						weight={character.weight}
 						height={character.height}
 						mediaQuery={mediaQuery}
+						description={character.characterDesc}
 					/>
 				</CollapsibleSection>
 			);

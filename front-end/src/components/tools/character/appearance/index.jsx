@@ -152,7 +152,7 @@ export default class Appearance extends React.Component {
 				</div>
 				<TextArea
 					value={description}
-					onChange={onPropertyChanged('description')}
+					onChange={event => onPropertyChanged('characterDesc')(event.target.value)}
 					fill
 					className={styles.description}
 					placeholder="Physcial Description"
