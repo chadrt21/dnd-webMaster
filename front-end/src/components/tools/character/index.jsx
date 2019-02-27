@@ -169,6 +169,11 @@ export default class CharacterTool extends ToolBase {
 		}));
 	}
 
+	handleNewCharacter = (name, isNPC) => {
+		/* eslint-disable-next-line */
+		console.log(`Creating new character ${name} (isNPC = ${isNPC})`);
+	}
+
 	render() {
 		const { view, character, sections, sortings, toolSettings, searches } = this.state;
 
@@ -178,6 +183,7 @@ export default class CharacterTool extends ToolBase {
 					<CharacterList
 						navigateToCharacter={this.navigateToCharacter}
 						navigateToSettings={this.navigateToSettings}
+						handleNewCharacter={this.handleNewCharacter}
 					/>
 				</div>
 			);
