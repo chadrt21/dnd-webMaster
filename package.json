@@ -15,6 +15,7 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.18.3",
     "css-loader": "^2.1.0",
     "express": "^4.16.4",
     "express-session": "^1.15.6",

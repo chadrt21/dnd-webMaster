@@ -9,7 +9,9 @@
  */
 
 import registerExampleRoutes from './example';
+import registerCampaignRoutes from './campaigns';
 
 export default app => {
 	registerExampleRoutes(app);
+	registerCampaignRoutes(app);
 };
