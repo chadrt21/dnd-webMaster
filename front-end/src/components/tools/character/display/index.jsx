@@ -21,9 +21,11 @@ export default class CharacterDisplay extends React.Component {
 
 		sections: PropTypes.object.isRequired,
 		sortings: PropTypes.object.isRequired,
+		searches: PropTypes.object.isRequired,
 		
 		handleSectionExpandedChange: PropTypes.func.isRequired,
 		handleSortingChange: PropTypes.func.isRequired,
+		handleSearchChange: PropTypes.func.isRequired,
 
 		toolSettings: PropTypes.object.isRequired,
 	}
@@ -58,6 +60,8 @@ export default class CharacterDisplay extends React.Component {
 			sections,
 			handleSectionExpandedChange,
 			sortings,
+			searches,
+			handleSearchChange,
 			handleSortingChange,
 		} = this.props;
 
@@ -105,6 +109,8 @@ export default class CharacterDisplay extends React.Component {
 						sortingDirection={sortings.spells.direction}
 						handleSortingChange={handleSortingChange('spells')}
 						onPropertyChanged={onPropertyChanged}
+						search={searches.spells}
+						onSearchChange={handleSearchChange('spells')}
 					/>
 				</CollapsibleSection>
 			);
@@ -123,6 +129,8 @@ export default class CharacterDisplay extends React.Component {
 						sortingDirection={sortings.equipment.direction}
 						handleSortingChange={handleSortingChange('equipment')}
 						onPropertyChanged={onPropertyChanged}
+						onSearchChange={handleSearchChange('equipment')}
+						search={searches.equipment}
 					/>
 				</CollapsibleSection>
 			);

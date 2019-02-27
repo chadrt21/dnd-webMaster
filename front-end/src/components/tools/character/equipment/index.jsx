@@ -17,11 +17,13 @@ import allEquipment from '../../../../dummy-data/equipment';
 
 export default class Equipment extends React.Component {
 	static propTypes = {
+		onSearchChange: PropTypes.func.isRequired,
 		equipment: PropTypes.array,
 		sortingDirection: PropTypes.string,
 		sortingColumn: PropTypes.string,
 		handleSortingChange: PropTypes.func,
 		onPropertyChanged: PropTypes.func,
+		search: PropTypes.string,	
 	}
 
 	renderItem = (item, props) => (
@@ -43,6 +45,8 @@ export default class Equipment extends React.Component {
 			sortingColumn,
 			handleSortingChange,
 			onPropertyChanged,
+			onSearchChange,
+			search,
 		} = this.props;
 
 		return (
@@ -50,6 +54,8 @@ export default class Equipment extends React.Component {
 				<div className={styles.searchContainer}>
 					<InputGroup
 						leftIcon="search"
+						value={search}
+						onChange={event => onSearchChange(event.target.value)}
 					/>
 					<div className={styles.spacer} />
 					<Select
@@ -108,7 +114,12 @@ export default class Equipment extends React.Component {
 					sortingColumn={sortingColumn}
 					sortingDirection={sortingDirection}
 					handleSortChange={handleSortingChange}
-					items={equipment.map(itemId => allEquipment.find(item => item.index === itemId)).filter(item => item)}
+					items={
+						equipment
+							.map(itemId => allEquipment.find(item => item.index === itemId))
+							.filter(item => item)
+							.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
+					}
 				/>
 			</div>
 		);

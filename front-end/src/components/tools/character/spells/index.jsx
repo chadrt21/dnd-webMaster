@@ -21,11 +21,13 @@ import styles from './styles.less';
 
 export default class Spells extends React.Component {
 	static propTypes = {
+		onSearchChange: PropTypes.func.isRequired,
 		spells: PropTypes.array,
 		sortingDirection: PropTypes.string,
 		sortingColumn: PropTypes.string,
 		handleSortingChange: PropTypes.func,
 		onPropertyChanged: PropTypes.func,
+		search: PropTypes.string,
 	}
 
 	renderItem = (item, props) => (
@@ -47,6 +49,8 @@ export default class Spells extends React.Component {
 			sortingColumn,
 			sortingDirection,
 			onPropertyChanged,
+			search,
+			onSearchChange,
 		} = this.props;
 
 		return (
@@ -54,6 +58,8 @@ export default class Spells extends React.Component {
 				<div className={styles.searchContainer}>
 					<InputGroup
 						leftIcon="search"
+						value={search}
+						onChange={event => onSearchChange(event.target.value)}
 					/>
 					<div className={styles.spacer} />
 					<Select
@@ -112,7 +118,15 @@ export default class Spells extends React.Component {
 					sortingColumn={sortingColumn}
 					sortingDirection={sortingDirection}
 					handleSortChange={handleSortingChange}
-					items={spells.map(spellId => allSpells.find(spell => spell.index === spellId)).filter(spell => spell)}
+					items={
+						spells
+							.map(
+								spellId => 
+									allSpells.find(spell => spell.index === spellId)
+							)
+							.filter(spell => spell)
+							.filter(spell => spell.name.toLowerCase().includes(search.toLowerCase()))
+					}
 				/>
 			</div>
 		);

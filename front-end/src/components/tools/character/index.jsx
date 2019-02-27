@@ -65,6 +65,10 @@ export default class CharacterTool extends ToolBase {
 				},
 			],
 		},
+		searches: {
+			spells: '',
+			equipment: '',
+		},
 	}
 
 	navigateToCharacter = item => {
@@ -156,8 +160,17 @@ export default class CharacterTool extends ToolBase {
 		}));
 	}
 
+	handleSearchChange = search => value => {
+		this.setState(({ searches }) => ({
+			searches: {
+				...searches,
+				[search]: value,
+			},
+		}));
+	}
+
 	render() {
-		const { view, character, sections, sortings, toolSettings } = this.state;
+		const { view, character, sections, sortings, toolSettings, searches } = this.state;
 
 		if (view === 'list') {
 			return (
@@ -195,6 +208,8 @@ export default class CharacterTool extends ToolBase {
 					handleSortingChange={this.handleSortingChange}
 					toolSettings={toolSettings}
 					navigateToSettings={this.navigateToSettings}
+					searches={searches}
+					handleSearchChange={this.handleSearchChange}
 				/>
 			</div>
 		);
