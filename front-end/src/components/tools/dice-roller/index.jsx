@@ -14,34 +14,23 @@ It doesn't need to know anything about it's context and can store all of that in
 import React from 'react';
 import ToolBase from '../ToolBase';
 //import Button from '@blueprintjs/core';
-//import styles from './styles.less';
+//import './styles.less';
 
 export default class diceroller extends ToolBase{
 	constructor(props){
 		super(props);
 		this.state = {
 			min: 1,
-			max: 20,
+			max: 6,
 			number: 1,
 		};
 	} 
 	componentDidMount() { /*setting the generated number each time*/
 		this.generateNumber();
 	}
-	changeNumber(){
-		this.setState({
-			min: 1,
-			max: 6,
-			number: 1,
-		});
-		this.generateNumber(); /* after the max "resets" send it to this.generateNumber() */
-	}
-
 	/*generate the number*/ 
 	generateNumber = () => this.setState(previousState => ({ number: Math.floor(Math.random()*(previousState.max)+1) }));
 	
-	
-
 	render() {
 		return(
 			<div className = "diceRoller"> 
@@ -50,11 +39,8 @@ export default class diceroller extends ToolBase{
 					<p id="rNum">{ this.state.number }</p>
 				</div> 
 				<div id = "buttonClick">
-					<button id="generate" onClick={ this.changeNumber }>
-						Roll a d6
-					</button>
-					<button id="generate20" onClick={ this.generateNumber }>
-						Roll a d20
+					<button id="generate" onClick={ this.generateNumber }>
+						click me!
 					</button>
 				</div>
 			</div>
