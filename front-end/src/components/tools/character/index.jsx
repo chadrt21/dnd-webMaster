@@ -169,13 +169,9 @@ export default class CharacterTool extends ToolBase {
 		}));
 	}
 
-	handleNewCharacter = (name, isNPC) => {
-		/* eslint-disable-next-line */
-		console.log(`Creating new character ${name} (isNPC = ${isNPC})`);
-	}
-
 	render() {
 		const { view, character, sections, sortings, toolSettings, searches } = this.state;
+		const { campaignID } = this.props;
 
 		if (view === 'list') {
 			return (
@@ -183,7 +179,7 @@ export default class CharacterTool extends ToolBase {
 					<CharacterList
 						navigateToCharacter={this.navigateToCharacter}
 						navigateToSettings={this.navigateToSettings}
-						handleNewCharacter={this.handleNewCharacter}
+						campaignID={campaignID}
 					/>
 				</div>
 			);

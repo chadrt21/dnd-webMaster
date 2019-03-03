@@ -13,46 +13,81 @@ import List from '../../../list';
 
 import styles from './styles.less';
 
-import characters from '../../../../dummy-data/characters';
 import {
 	Button,
 	Icon,
 	Popover,
 	InputGroup,
 	Keys,
+	Spinner,
 } from '@blueprintjs/core';
 
+import { get, post } from 'Utility/fetch';
 import classNames from 'Utility/classNames';
 
-export default class CharcterList extends React.Component {
+export default class CharacterList extends React.Component {
 	static propTypes = {
 		navigateToCharacter: PropTypes.func.isRequired,
 		navigateToSettings: PropTypes.func.isRequired,
-		handleNewCharacter: PropTypes.func.isRequired,
+		campaignID: PropTypes.number.isRequired,
 	}
 
 	state = {
 		newPCName: '',
 		newNPCName: '',
+		creatingPC: false,
+		creatingNPC: false,
+		characters: [],
+	}
+
+	componentDidMount() {
+		this.fetchCharacters();
+	}
+
+	fetchCharacters = async () => {
+		const { campaignID } = this.props;
+		const characters = await get(`/api/campaigns/${campaignID}/characters`);
+		this.setState({
+			characters: characters.map(character => ({
+				id: character.characterID,
+				name: character.characterName,
+				isNPC: character.isNPC,
+			})),
+		});
 	}
 
 	handleEnter = (name, isNPC) => event => {
 		if (event.keyCode === Keys.ENTER) {
-			const { handleNewCharacter } = this.props;
-			handleNewCharacter(name, isNPC);
+			this.handleNewCharacter(name, isNPC);
 		}
+	}
+
+	handleNewCharacter = (characterName, isNPC) => {
+		const { campaignID } = this.props;
+		this.setState({
+			[isNPC ? 'creatingNPC' : 'creatingPC']: true,
+		}, async () => {
+			await post(`/api/campaigns/${campaignID}/characters`, { characterName, isNPC });
+			await this.fetchCharacters();
+			this.setState({
+				[isNPC ? 'creatingNPC' : 'creatingPC']: false,
+				[isNPC ? 'newNPCName' : 'newPCName']: '',
+			});
+		});
 	}
 	
 	render() {
 		const {
 			navigateToCharacter,
 			navigateToSettings,
-			handleNewCharacter,
 		} = this.props;
 
 		const {
 			newPCName,
 			newNPCName,
+			characters,
+			creatingNPC,
+			creatingPC,
 		} = this.state;
 
 		return (
@@ -91,11 +126,13 @@ export default class CharcterList extends React.Component {
 									autoFocus
 									value={newPCName}
 									onChange={event => this.setState({ newPCName: event.target.value })}
-									rightElement={
+									rightElement={creatingPC ?
+										<Spinner size={20}/>
+										:
 										<Button
 											minimal
 											icon="tick"
-											onClick={() => handleNewCharacter(newPCName, false)}
+											onClick={() => this.handleNewCharacter(newPCName, false)}
 										/>
 									}
 									onKeyDown={this.handleEnter(newPCName, false)}
@@ -108,7 +145,7 @@ export default class CharcterList extends React.Component {
 					PCs
 				</Title>
 				<List
-					items={characters.filter(character => !character.isNpc)}
+					items={characters.filter(character => !character.isNPC)}
 					className={styles.list}
 					onItemSelected={navigateToCharacter}
 				/>
@@ -128,11 +165,13 @@ export default class CharcterList extends React.Component {
 									autoFocus
 									value={newNPCName}
 									onChange={event => this.setState({ newNPCName: event.target.value })}
-									rightElement={
+									rightElement={creatingNPC ?
+										<Spinner size={20} />
+										:
 										<Button
 											minimal
 											icon="tick"
-											onClick={() => handleNewCharacter(newNPCName, true)}
+											onClick={() => this.handleNewCharacter(newNPCName, true)}
 										/>
 									}
 									onKeyDown={this.handleEnter(newNPCName, true)}
@@ -145,7 +184,7 @@ export default class CharcterList extends React.Component {
 					NPCs
 				</Title>
 				<List
-					items={characters.filter(character => character.isNpc)}
+					items={characters.filter(character => character.isNPC)}
 					className={styles.list}
 					onItemSelected={navigateToCharacter}
 				/>
