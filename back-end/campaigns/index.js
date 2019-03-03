@@ -9,6 +9,9 @@ export default app => {
 	app.route('/api/campaigns/:campaignID/exists')
 		.get(asRouteFunction(campaignRoutes.checkIfCampaignExists, true));
 
+	app.route('/api/campaigns/:campaignID/characters/:characterID')
+		.get(campaignRoutes.userCanAccessCampaign, asRouteFunction(characterRoutes.getCharacter, true));
+
 	app.route('/api/campaigns/:campaignID/characters')
 		.get(campaignRoutes.userCanAccessCampaign, asRouteFunction(characterRoutes.getAllCharacters, true));
 

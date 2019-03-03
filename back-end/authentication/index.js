@@ -17,10 +17,10 @@ export default app => {
 
 	app.get(
 		'/api/auth/login/callback',
-		passport.authenticate('google', {
+		(request, response, next) => passport.authenticate('google', {
 			failureRedirect: '/login',
-			successRedirect: '/',
-		})
+			successRedirect: request.session.lastURL || '/',
+		})(request, response, next)
 	);
 	
 	app.get(

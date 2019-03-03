@@ -61,3 +61,21 @@ export const createNewCharacter = async (path, query, user, connection, body) =>
 		characterID: results.insertId,
 	};
 };
+
+/**
+ * @description Get data for a specific character
+ */
+export const getCharacter = async (path, query, user, connection) => {
+	const { characterID } = path;
+
+	const result = await promiseQuery(
+		connection,
+		`
+			SELECT * FROM dungeonbuddiesdb.character
+			WHERE characterID = :characterID
+		`,
+		{ characterID },
+	);
+
+	return result[0];
+};
