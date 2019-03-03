@@ -9,7 +9,18 @@ export const get = path => (
 );
 
 export const post = (path, body) => (
-	fetch(path, { credentials: 'include', method: 'POST', body })
+	fetch(
+		path,
+		{
+			credentials: 'include',
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json',
+			},
+			body: JSON.stringify(body),
+		}
+	)
 		.then(response => {
 			if (response.status !== 200) {
 				throw new Error(response.statusText);

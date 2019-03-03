@@ -122,6 +122,9 @@ export const asRouteFunction = (callback, withDBConnection) => async (request, r
 			connection = await getSQLConnection();
 		}
 		const results = await callback(request.params, request.query, request.user, connection, request.body, request.files);
+		if (withDBConnection) {
+			connection.release();
+		}
 		return response.json(results || {});
 	} catch (err) {
 		return serverError(response, err);

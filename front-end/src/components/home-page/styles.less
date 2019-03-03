@@ -1,4 +1,5 @@
 @import '../../styles/colors.less';
+@import '../../styles/mixins.less';
 
 .root {
 	height: 100%;
@@ -25,9 +26,13 @@
 			height: 120px;
 		}
 
-		.button {
+		.button-container {
 			margin-bottom: 5px;
 			width: 80%;
+
+			:global(.bp3-popover-target) {
+				width: 100%;
+			}
 
 			&:last-child {
 				margin-bottom: 0;
@@ -54,4 +59,22 @@
 			}
 		}
 	}
+}
+
+.popover {
+	.with-popover-styles();
+}
+
+.popover-content {
+	padding: 5px;
+	text-align: center;
+
+	&-title {
+		font-size: 12pt;
+		margin-bottom: 4px;
+	}
+}
+
+.button {
+	.with-button-styles(@text-color);
 }
