@@ -1,6 +1,26 @@
 import {
 	promiseQuery,
+	getSQLConnection,
+	unauthorizedError,
 } from '../utility';
+
+/**
+ * @description This is a piece of express middleware that checks if a user has
+ * access to the given campaign, if they do have access, the request continues as
+ * normal, if not, the request returns a non-authorized http error code
+ */
+export const userCanAccessCampaign = async (request, response, next) => {
+	const { user, params } = request;
+
+	const connection = await getSQLConnection();
+	const campaign = await checkIfCampaignExists(params, null, user, connection);
+	connection.release();
+
+	if (campaign.exists) {
+		return next();
+	}
+	return unauthorizedError(response, 'You do not have access to this campaign');
+};
 
 /**
  * @description Returns an array of all the campaigns associated with the user

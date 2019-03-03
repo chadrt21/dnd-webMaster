@@ -109,6 +109,10 @@ export const serverError = (response, err) => {
 	response.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(err || { reason: 'Internal Server Error' });
 };
 
+export const unauthorizedError = (response, reason) => {
+	response.status(STATUS_CODES.UNAUTHORIZED).json({ reason: reason || 'You are not authorized to view this' });
+};
+
 /**
  * @description This function wraps a server method so that it can be connected to an API route
  * @param {Function} callback The server method to be wrapped
