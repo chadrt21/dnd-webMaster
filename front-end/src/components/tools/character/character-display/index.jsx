@@ -200,13 +200,13 @@ export default class CharacterDisplay extends React.Component {
 				<HeaderRow
 					navigateBack={navigateBack}
 					navigateToSettings={navigateToSettings}
-					name={character.name}
+					name={character.characterName}
 					level={character.level}
 					className={character.className}
 					race={character.race}
 					stats={character.stats}
 					ac={character.baseAc}
-					hp={character.currentHp}
+					hp={character.hp}
 					maxHp={character.maxHp}
 					speed={character.speed}
 					onPropertyChanged={onPropertyChanged}

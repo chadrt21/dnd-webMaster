@@ -49,7 +49,7 @@ export default class CharacterList extends React.Component {
 		const characters = await get(`/api/campaigns/${campaignID}/characters`);
 		this.setState({
 			characters: characters.map(character => ({
-				id: character.characterID,
+				characterID: character.characterID,
 				name: character.characterName,
 				isNPC: character.isNPC,
 			})),

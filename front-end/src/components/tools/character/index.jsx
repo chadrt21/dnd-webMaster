@@ -2,10 +2,10 @@ import React from 'react';
 import ToolBase from '../ToolBase';
 
 import CharacterList from './character-list';
-import Display from './display';
+import Display from './character-display';
 import Settings from './tool-settings';
 
-import characters from '../../../dummy-data/characters';
+import { get } from 'Utility/fetch';
 
 export default class CharacterTool extends ToolBase {
 	// Character list will not be stored in state
@@ -71,13 +71,16 @@ export default class CharacterTool extends ToolBase {
 		},
 	}
 
-	navigateToCharacter = item => {
+	navigateToCharacter = async item => {
 		// TODO: Make API request here
-		const character = characters.find(character => character.id === item.id);
-		this.setState({
-			view: 'display',
-			character,
-		});
+		const { campaignID } = this.props;
+		const character = await get(`/api/campaigns/${campaignID}/characters/${item.characterID}`);
+		if (character.characterID) {
+			this.setState({
+				view: 'display',
+				character,
+			});
+		}
 	}
 
 	navigateToSettings = () => {
