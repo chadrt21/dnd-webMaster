@@ -32,13 +32,13 @@ export default class Spells extends React.Component {
 
 	renderItem = (item, props) => (
 		<MenuItem
-			text={item.name}
+			text={item.spellName}
 			onClick={props.handleClick}
 			className={[
 				styles.menuItem,
 				props.modifiers.active ? styles.active : '',
 			].join(' ')}
-			key={item.index}
+			key={item.spellID}
 		/>
 	)
 	
@@ -90,7 +90,7 @@ export default class Spells extends React.Component {
 					fullWidth
 					sortable
 					head={{
-						name: {
+						spellName: {
 							name: 'Name',
 						},
 						level: {
@@ -120,12 +120,6 @@ export default class Spells extends React.Component {
 					handleSortChange={handleSortingChange}
 					items={
 						spells
-							.map(
-								spellId => 
-									allSpells.find(spell => spell.index === spellId)
-							)
-							.filter(spell => spell)
-							.filter(spell => spell.name.toLowerCase().includes(search.toLowerCase()))
 					}
 				/>
 			</div>

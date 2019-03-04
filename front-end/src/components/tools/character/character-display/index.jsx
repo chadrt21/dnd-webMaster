@@ -124,7 +124,7 @@ export default class CharacterDisplay extends React.Component {
 					key={section}
 				>
 					<Equipment
-						equipment={character.equipment}
+						equipment={[ 1, 2, 3 ]}
 						sortingColumn={sortings.equipment.column}
 						sortingDirection={sortings.equipment.direction}
 						handleSortingChange={handleSortingChange('equipment')}

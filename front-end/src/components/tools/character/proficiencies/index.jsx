@@ -27,12 +27,12 @@ export default class Proficiencies extends React.Component {
 	mapTags = prof => {
 		const { onRemove } = this.props;
 		return (
-			<Tooltip content={prof.skill} key={prof.name}>
+			<Tooltip content={prof.skill} key={prof.proficiencyName}>
 				<Tag
 					onRemove={() => onRemove(prof)}
 					className={styles.tag}
 				>
-					{prof.name}
+					{prof.proficiencyName}
 				</Tag>
 			</Tooltip>
 		);
