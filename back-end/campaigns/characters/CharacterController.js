@@ -68,7 +68,7 @@ export const createNewCharacter = async (path, query, user, connection, body) =>
 export const getCharacter = async (path, query, user, connection) => {
 	const { characterID } = path;
 
-	const result = await promiseQuery(
+	const characterPromise = promiseQuery(
 		connection,
 		`
 			SELECT * FROM dungeonbuddiesdb.character
@@ -77,5 +77,49 @@ export const getCharacter = async (path, query, user, connection) => {
 		{ characterID },
 	);
 
-	return result[0];
+	const spellsPromise = promiseQuery(
+		connection,
+		`
+			SELECT
+				spell.spellID,
+				spellName,
+				1 as level
+			FROM
+				spelllist
+					JOIN
+				spell ON spelllist.spellID = spell.spellID
+			WHERE
+				characterID = :characterID
+		`,
+		{ characterID },
+	);
+
+	const proficienciesPromise = promiseQuery(
+		connection,
+		`
+			SELECT
+				proficiency.proficiencyID,
+				proficiencyName,
+				"SKILL" as skill
+			FROM
+				proficiencylist
+					JOIN
+				proficiency ON proficiencylist.proficiencyID = proficiency.proficiencyID
+			WHERE
+				characterID = :characterID
+		`,
+		{ characterID },
+	);
+
+	const [
+		character,
+		spells,
+		proficiencies,
+	] = await Promise.all([ characterPromise, spellsPromise, proficienciesPromise ]);
+
+	return {
+		...character[0],
+		spells,
+		proficiencies,
+	};
 };
