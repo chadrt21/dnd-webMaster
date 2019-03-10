@@ -2,6 +2,9 @@ import {
 	promiseQuery,
 } from '../../utility';
 
+import * as spellsController from './CharacterSpellsController';
+import * as proficienciesController from './CharacterProficienciesController';
+
 /**
  * @description Returns all characters in the database attached to a given campaign
  */
@@ -77,39 +80,8 @@ export const getCharacter = async (path, query, user, connection) => {
 		{ characterID },
 	);
 
-	const spellsPromise = promiseQuery(
-		connection,
-		`
-			SELECT
-				spell.spellID,
-				spellName,
-				1 as level
-			FROM
-				spelllist
-					JOIN
-				spell ON spelllist.spellID = spell.spellID
-			WHERE
-				characterID = :characterID
-		`,
-		{ characterID },
-	);
-
-	const proficienciesPromise = promiseQuery(
-		connection,
-		`
-			SELECT
-				proficiency.proficiencyID,
-				proficiencyName,
-				"SKILL" as skill
-			FROM
-				proficiencylist
-					JOIN
-				proficiency ON proficiencylist.proficiencyID = proficiency.proficiencyID
-			WHERE
-				characterID = :characterID
-		`,
-		{ characterID },
-	);
+	const spellsPromise = spellsController.getSpellsForCharacter(characterID, connection);
+	const proficienciesPromise = proficienciesController.getProficienciesForCharacter(characterID, connection);
 
 	const [
 		character,
@@ -121,5 +93,6 @@ export const getCharacter = async (path, query, user, connection) => {
 		...character[0],
 		spells,
 		proficiencies,
+		ac: 15,
 	};
 };
