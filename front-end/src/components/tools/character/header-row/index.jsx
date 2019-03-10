@@ -33,6 +33,23 @@ export default class HeaderRow extends React.Component {
 		maxHp: PropTypes.number,
 	}
 
+	mapStatName = abbreviation => {
+		switch (abbreviation) {
+		case 'dex':
+			return 'dexterity';
+		case 'cha':
+			return 'charism';
+		case 'str':
+			return 'strength';
+		case 'int':
+			return 'intelligence';
+		case 'wis':
+			return 'wisdom';
+		case 'con':
+			return 'constitution';
+		}
+	}
+
 	mapStats = stats => (stat, index) => {
 		const { onPropertyChanged } = this.props;
 		return (
@@ -40,7 +57,7 @@ export default class HeaderRow extends React.Component {
 				modifiers={{ arrow: false }}
 				content={
 					<NumericInput
-						onChange={onPropertyChanged(`stats.${stat}`)}
+						onChange={onPropertyChanged(this.mapStatName(stat))}
 						value={stats[stat]}
 						autoFocus
 					/>

@@ -204,8 +204,15 @@ export default class CharacterDisplay extends React.Component {
 					level={character.level}
 					className={character.className}
 					race={character.race}
-					stats={character.stats}
-					ac={character.baseAc}
+					stats={{
+						con: character.constitution,
+						dex: character.dexterity,
+						int: character.intelligence,
+						wis: character.wisdom,
+						cha: character.charism,
+						str: character.strength,
+					}}
+					ac={character.ac}
 					hp={character.hp}
 					maxHp={character.maxHp}
 					speed={character.speed}
