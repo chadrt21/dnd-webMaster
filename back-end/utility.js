@@ -126,17 +126,22 @@ export const unauthorizedError = (response, reason) => {
  * into the callback as the fourth parameter.
  */
 export const asRouteFunction = (callback, withDBConnection) => async (request, response) => {
+	let connection;
+	if (withDBConnection) {
+		connection = await getSQLConnection();
+	}
+	
 	try {
-		let connection;
-		if (withDBConnection) {
-			connection = await getSQLConnection();
-		}
 		const results = await callback(request.params, request.query, request.user, connection, request.body, request.files);
 		if (withDBConnection) {
 			connection.release();
 		}
 		return response.json(results || {});
 	} catch (err) {
+		if (connection && connection.release) {
+			connection.release();
+		}
+
 		return serverError(response, err);
 	}
 };

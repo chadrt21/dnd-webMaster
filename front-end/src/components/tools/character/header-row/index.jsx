@@ -159,7 +159,7 @@ export default class HeaderRow extends React.Component {
 					<Popover
 						content={
 							<NumericInput
-								onChange={onPropertyChanged('currentHp')}
+								onChange={onPropertyChanged('hp')}
 								autoFocus
 								value={hp}
 							/>
@@ -204,7 +204,7 @@ export default class HeaderRow extends React.Component {
 						content={
 							<NumericInput
 								value={ac}
-								onChange={onPropertyChanged('baseAc')}
+								onChange={onPropertyChanged('ac')}
 								autoFocus
 							/>
 						}

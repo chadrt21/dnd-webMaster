@@ -5,7 +5,9 @@ import CharacterList from './character-list';
 import Display from './character-display';
 import Settings from './tool-settings';
 
-import { get } from 'Utility/fetch';
+import { displayError } from '../../toast';
+
+import { get, post } from 'Utility/fetch';
 
 export default class CharacterTool extends ToolBase {
 	// Character list will not be stored in state
@@ -72,15 +74,16 @@ export default class CharacterTool extends ToolBase {
 	}
 
 	navigateToCharacter = async item => {
-		// TODO: Make API request here
+		await this.loadCharacter(item.characterID);
+	}
+
+	loadCharacter = async characterID => {
 		const { campaignID } = this.props;
-		const character = await get(`/api/campaigns/${campaignID}/characters/${item.characterID}`);
-		if (character.characterID) {
-			this.setState({
-				view: 'display',
-				character,
-			});
-		}
+		const character = await get(`/api/campaigns/${campaignID}/characters/${characterID}`);
+		this.setState({
+			view: 'display',
+			character,
+		});
 	}
 
 	navigateToSettings = () => {
@@ -109,8 +112,35 @@ export default class CharacterTool extends ToolBase {
 				}
 				cur = cur[map[i]];
 			}
+
+			// Update the local state with the changes
 			this.setState({
 				character,
+			}, async () => {
+				// Make update in server
+				const { campaignID } = this.props;
+				const { character } = this.state;
+				if (character && character.characterID) {
+					try {
+						// Try and make post request to server with changes
+						const response = await post(
+							`/api/campaigns/${campaignID}/characters/${character.characterID}`,
+							{
+								field: identifier,
+								value: change,
+							}
+						);
+
+						// If the server tells us to reload, then reload, otherwise save a network call
+						if (response.reload) {
+							this.loadCharacter(character.characterID);
+						}
+					} catch (err) {
+						// Reload on error to ensure data synchronization
+						displayError(`There was an error updating "${character.characterName}"`);
+						this.loadCharacter(character.characterID);
+					}
+				}
 			});
 		});
 	}

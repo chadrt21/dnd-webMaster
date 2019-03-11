@@ -16,21 +16,25 @@ export const characterBelongsToCampaign = async (request, response, next) => {
 
 	const connection = await getSQLConnection();
 
-	const results = await promiseQuery(
-		connection,
-		`
-			SELECT COUNT(*) as count FROM characterlist
-			WHERE characterID = :characterID AND campaignID = :campaignID
-		`,
-		{ campaignID, characterID }
-	);
-	
-	connection.release();
+	try {
+		const results = await promiseQuery(
+			connection,
+			`
+				SELECT COUNT(*) as count FROM characterlist
+				WHERE characterID = :characterID AND campaignID = :campaignID
+			`,
+			{ campaignID, characterID }
+		);
 
-	if (results[0].count > 0) {
-		return next();
-	} else {
-		return unauthorizedError(response, 'This character does not belong to this campaign');
+		connection.release();
+
+		if (results[0].count > 0) {
+			return next();
+		} else {
+			return unauthorizedError(response, 'This character does not belong to this campaign');
+		}
+	} catch (err) {
+		connection.release();
 	}
 };
 
