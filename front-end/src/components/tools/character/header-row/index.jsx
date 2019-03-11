@@ -108,7 +108,7 @@ export default class HeaderRow extends React.Component {
 							<EditableText
 								placeholder="Character Name"
 								value={name}
-								onChange={onPropertyChanged('name')}
+								onChange={onPropertyChanged('characterName')}
 							/>
 						</Title>
 					</div>
