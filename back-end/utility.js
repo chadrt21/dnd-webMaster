@@ -34,9 +34,9 @@ function typeCast(field, useDefaultTypeCasting) {
  * @description This is a utility function for the mysql module that formats queries and safely
  * escapes user entered input
  */
-function queryFormat (query, values) {
+function queryFormat(query, values) {
 	if (!values) return query;
-	query = query.replace(/:"(\w+)"/g, function (txt, key) {
+	query = query.replace(/:"([\w\d]+)"/g, function (txt, key) {
 		if (values.hasOwnProperty(key)) {
 			if (Array.isArray(values[key])) {
 				return this.escape(values[key].join(','));
@@ -45,7 +45,13 @@ function queryFormat (query, values) {
 		}
 		return 'NULL';
 	}.bind(this));
-	return query.replace(/:(\w+)/g, function (txt, key) {
+	query = query.replace(/:\(([\w\d]+)\)/g, function (txt, key) {
+		if (values.hasOwnProperty(key)) {
+			return this.escapeId(values[key]);
+		}
+		return '';
+	}.bind(this));
+	return query.replace(/:([\w\d]+)/g, function (txt, key) {
 		if (values.hasOwnProperty(key)) {
 			return this.escape(values[key]);
 		}
@@ -86,7 +92,7 @@ export const promiseQuery = (connection, query, options) => (
 		if (options) {
 			args.push(options);
 		}
-		
+
 		connection.query(
 			query,
 			...args,

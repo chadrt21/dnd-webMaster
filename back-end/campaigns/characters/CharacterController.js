@@ -1,9 +1,38 @@
 import {
 	promiseQuery,
+	getSQLConnection,
+	unauthorizedError,
 } from '../../utility';
 
 import * as spellsController from './CharacterSpellsController';
 import * as proficienciesController from './CharacterProficienciesController';
+
+/**
+ * @description Piece of express middleware to make sure that the character the user
+ * is trying to access belongs to the campaign in the url path
+ */
+export const characterBelongsToCampaign = async (request, response, next) => {
+	const { campaignID, characterID } = request.params;
+
+	const connection = await getSQLConnection();
+
+	const results = await promiseQuery(
+		connection,
+		`
+			SELECT COUNT(*) as count FROM characterlist
+			WHERE characterID = :characterID AND campaignID = :campaignID
+		`,
+		{ campaignID, characterID }
+	);
+	
+	connection.release();
+
+	if (results[0].count > 0) {
+		return next();
+	} else {
+		return unauthorizedError(response, 'This character does not belong to this campaign');
+	}
+};
 
 /**
  * @description Returns all characters in the database attached to a given campaign
@@ -95,4 +124,40 @@ export const getCharacter = async (path, query, user, connection) => {
 		proficiencies,
 		ac: 15,
 	};
+};
+
+/**
+ * @description Updates a character in the database
+ */
+export const updateCharacter = async (path, query, user, connection, body) => {
+	const { characterID } = path;
+	const {
+		field,
+		value,
+	} = body;
+
+	if (field === 'spells') {
+		await spellsController.updateSpellsForCharacter(characterID, connection, value);
+		return {
+			reload: true,	
+		};
+	} else if (field === 'proficiencies') {
+		await proficienciesController.updateProficienciesForCharacter(characterID, connection, value);
+		return {
+			reload: true,
+		};
+	} else {
+		await promiseQuery(
+			connection,
+			`
+				UPDATE dungeonbuddiesdb.character
+				SET :(field) = :value
+				WHERE characterID = :characterID
+			`,
+			{ characterID, value, field }
+		);
+		return {
+			reload: false,
+		};
+	}
 };

@@ -10,13 +10,30 @@ export default app => {
 		.get(asRouteFunction(campaignRoutes.checkIfCampaignExists, true));
 
 	app.route('/api/campaigns/:campaignID/characters/:characterID')
-		.get(campaignRoutes.userCanAccessCampaign, asRouteFunction(characterRoutes.getCharacter, true));
+		.get(
+			campaignRoutes.userCanAccessCampaign,
+			characterRoutes.characterBelongsToCampaign,
+			asRouteFunction(characterRoutes.getCharacter, true)
+		);
+
+	app.route('/api/campaigns/:campaignID/characters/:characterID')
+		.post(
+			campaignRoutes.userCanAccessCampaign,
+			characterRoutes.characterBelongsToCampaign,
+			asRouteFunction(characterRoutes.updateCharacter, true)
+		);
 
 	app.route('/api/campaigns/:campaignID/characters')
-		.get(campaignRoutes.userCanAccessCampaign, asRouteFunction(characterRoutes.getAllCharacters, true));
+		.get(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(characterRoutes.getAllCharacters, true)
+		);
 
 	app.route('/api/campaigns/:campaignID/characters')
-		.post(campaignRoutes.userCanAccessCampaign, asRouteFunction(characterRoutes.createNewCharacter, true));
+		.post(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(characterRoutes.createNewCharacter, true)
+		);
 
 	app.route('/api/campaigns')
 		.get(asRouteFunction(campaignRoutes.getAllCampaigns, true));
