@@ -5,15 +5,12 @@ import {
 	InputGroup,
 	Button,
 	Icon,
-	MenuItem,
 } from '@blueprintjs/core';
-import { Select } from '@blueprintjs/select';
 
 import Table from '../../../table';
+import ResourceSelect from '../../../resource-select';
 
 import styles from './styles.less';
-
-import allEquipment from '../../../../dummy-data/equipment';
 
 export default class Equipment extends React.Component {
 	static propTypes = {
@@ -25,18 +22,6 @@ export default class Equipment extends React.Component {
 		onPropertyChanged: PropTypes.func,
 		search: PropTypes.string,	
 	}
-
-	renderItem = (item, props) => (
-		<MenuItem
-			text={item.name}
-			onClick={props.handleClick}
-			className={[
-				styles.menuItem,
-				props.modifiers.active ? styles.active : '',
-			].join(' ')}
-			key={item.index}
-		/>
-	)
 
 	render() {
 		const {
@@ -58,17 +43,15 @@ export default class Equipment extends React.Component {
 						onChange={event => onSearchChange(event.target.value)}
 					/>
 					<div className={styles.spacer} />
-					<Select
-						items={allEquipment.filter(item => !equipment.find(itemId => itemId === item.index))}
-						itemRenderer={this.renderItem}
-						itemPredicate={(query, item) => item.name.includes(query)}
-						popoverProps={{
-							modifiers: {
-								arrow: false,
-							},
+					<ResourceSelect
+						onResourceSelected={item => onPropertyChanged('equipment')([ ...equipment.map(item => item.equipmentID), item.equipmentID ])}
+						endpoint="/api/search/equipment"
+						idKey="equipmentID"
+						nameKey="equipmentName"
+						fetchOnMount={true}
+						queryOptions={{
+							count: 8,
 						}}
-						onItemSelect={item => onPropertyChanged('equipment')([ ...equipment, item.index ])}
-						resetOnClose
 					>
 						<Button
 							minimal
@@ -80,16 +63,16 @@ export default class Equipment extends React.Component {
 								/>
 							}
 						/>
-					</Select>
+					</ResourceSelect>
 				</div>
 				<Table
 					fullWidth
 					sortable
 					head={{
-						name: {
+						equipmentName: {
 							name: 'Name',
 						},
-						equipment_category: {
+						categoryName: {
 							name: 'Type',
 						},
 						removeButton: {
@@ -105,7 +88,7 @@ export default class Equipment extends React.Component {
 											className={styles.icon}
 										/>
 									}
-									onClick={() => onPropertyChanged('equipment')(equipment.filter(item => item !== row.index))}
+									onClick={() => onPropertyChanged('equipment')(equipment.filter(item => item.equipmentID !== row.equipmentID).map(item => item.equipmentID))}
 								/>
 							),
 							textAlign: 'right',
@@ -114,12 +97,7 @@ export default class Equipment extends React.Component {
 					sortingColumn={sortingColumn}
 					sortingDirection={sortingDirection}
 					handleSortChange={handleSortingChange}
-					items={
-						equipment
-							.map(itemId => allEquipment.find(item => item.index === itemId))
-							.filter(item => item)
-							.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
-					}
+					items={equipment}
 				/>
 			</div>
 		);
