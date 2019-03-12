@@ -7,15 +7,10 @@ import {
 	InputGroup,
 	Button,
 	Icon,
-	MenuItem,
 } from '@blueprintjs/core';
-import {
-	Select,
-} from '@blueprintjs/select';
 
+import ResourceSelect from '../../../resource-select';
 import Table from '../../../table';
-
-import allSpells from '../../../../dummy-data/spells';
 
 import styles from './styles.less';
 
@@ -29,18 +24,6 @@ export default class Spells extends React.Component {
 		onPropertyChanged: PropTypes.func,
 		search: PropTypes.string,
 	}
-
-	renderItem = (item, props) => (
-		<MenuItem
-			text={item.spellName}
-			onClick={props.handleClick}
-			className={[
-				styles.menuItem,
-				props.modifiers.active ? styles.active : '',
-			].join(' ')}
-			key={item.spellID}
-		/>
-	)
 	
 	render() {
 		const {
@@ -62,17 +45,20 @@ export default class Spells extends React.Component {
 						onChange={event => onSearchChange(event.target.value)}
 					/>
 					<div className={styles.spacer} />
-					<Select
-						items={allSpells.filter(spell => !spells.find(spellId => spellId === spell.index))}
-						itemRenderer={this.renderItem}
-						itemPredicate={(query, item) => item.name.includes(query)}
-						popoverProps={{
-							modifiers: {
-								arrow: false,
-							},
+					<ResourceSelect
+						onResourceSelected={
+							spell => onPropertyChanged('spells')([
+								...spells.map(mySpell => mySpell.spellID),
+								spell.spellID,
+							])
+						}
+						endpoint="/api/search/spells"
+						idKey="spellID"
+						nameKey="spellName"
+						fetchOnMount={true}
+						queryOptions={{
+							count: 8,
 						}}
-						onItemSelect={spell => onPropertyChanged('spells')([ ...spells, spell.index ])}
-						resetOnClose
 					>
 						<Button
 							minimal
@@ -84,7 +70,7 @@ export default class Spells extends React.Component {
 								/>
 							}
 						/>
-					</Select>
+					</ResourceSelect>
 				</div>
 				<Table
 					fullWidth
@@ -109,7 +95,11 @@ export default class Spells extends React.Component {
 											className={styles.icon}
 										/>
 									}
-									onClick={() => onPropertyChanged('spells')(spells.filter(spell => spell !== row.index))}
+									onClick={() => onPropertyChanged('spells')(
+										spells
+											.filter(spell => spell.spellID !== row.spellID)
+											.map(spell => spell.spellID)
+									)}
 								/>
 							),
 							textAlign: 'right',
@@ -118,9 +108,7 @@ export default class Spells extends React.Component {
 					sortingColumn={sortingColumn}
 					sortingDirection={sortingDirection}
 					handleSortChange={handleSortingChange}
-					items={
-						spells
-					}
+					items={spells}
 				/>
 			</div>
 		);
