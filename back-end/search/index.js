@@ -44,4 +44,14 @@ export default app => {
 			}),
 			true
 		));
+	
+	app.route('/api/search/equipment')
+		.get(asRouteFunction(
+			searchController.search({
+				tableName: 'equipment',
+				idColumn: 'equipmentID',
+				nameColumn: 'equipmentName',
+			}),
+			true
+		));
 };

@@ -6,6 +6,7 @@ import {
 
 import * as spellsController from './CharacterSpellsController';
 import * as proficienciesController from './CharacterProficienciesController';
+import * as equipmentController from './CharacterEquipmentController';
 
 /**
  * @description Piece of express middleware to make sure that the character the user
@@ -120,17 +121,25 @@ export const getCharacter = async (path, query, user, connection) => {
 
 	const spellsPromise = spellsController.getSpellsForCharacter(characterID, connection);
 	const proficienciesPromise = proficienciesController.getProficienciesForCharacter(characterID, connection);
+	const equipmentPromise = equipmentController.getEquipmentForCharacter(characterID, connection);
 
 	const [
 		character,
 		spells,
 		proficiencies,
-	] = await Promise.all([ characterPromise, spellsPromise, proficienciesPromise ]);
+		equipment,
+	] = await Promise.all([
+		characterPromise,
+		spellsPromise,
+		proficienciesPromise,
+		equipmentPromise,
+	]);
 
 	return {
 		...character[0],
 		spells,
 		proficiencies,
+		equipment,
 		ac: 15,
 	};
 };
@@ -152,6 +161,11 @@ export const updateCharacter = async (path, query, user, connection, body) => {
 		};
 	} else if (field === 'proficiencies') {
 		await proficienciesController.updateProficienciesForCharacter(characterID, connection, value);
+		return {
+			reload: true,
+		};
+	} else if (field === 'equipment') {
+		await equipmentController.updateEquipmentForCharacter(characterID, connection, value);
 		return {
 			reload: true,
 		};
