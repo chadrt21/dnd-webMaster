@@ -206,8 +206,8 @@ export default class CharacterDisplay extends React.Component {
 					navigateToSettings={navigateToSettings}
 					name={character.characterName}
 					level={character.level}
-					className={character.className}
-					race={character.race}
+					className={character.klassName}
+					race={character.raceName}
 					stats={{
 						con: character.constitution,
 						dex: character.dexterity,
@@ -219,7 +219,7 @@ export default class CharacterDisplay extends React.Component {
 					ac={character.ac}
 					hp={character.hp}
 					maxHp={character.maxHp}
-					speed={character.speed}
+					speed={character.raceSpeed}
 					onPropertyChanged={onPropertyChanged}
 					mediaQuery={mediaQuery}
 				/>

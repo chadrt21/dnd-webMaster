@@ -11,6 +11,7 @@ import {
 } from '@blueprintjs/core';
 import SVG from 'react-inlinesvg';
 
+import ResourceSelect from '../../../resource-select';
 import Title from '../../../title';
 import NumericInput from '../../../calculator-input';
 
@@ -139,8 +140,30 @@ export default class HeaderRow extends React.Component {
 					>
 						<span className={classNames(styles.level, styles.editable)}>Level: {level}</span>
 					</Popover>
-					<span className={styles.class}>{className}</span>
-					<span className={styles.race}>{race}</span>
+					<ResourceSelect
+						endpoint="/api/search/klasses"
+						onResourceSelected={klass => onPropertyChanged('klass')(klass.klassID)}
+						queryOptions={{
+							count: 'all',
+						}}
+						idKey="klassID"
+						fetchOnMount={true}
+						nameKey="klassName"
+					>
+						<span className={classNames(styles.class, styles.editable)}>{className}</span>
+					</ResourceSelect>
+					<ResourceSelect
+						endpoint="/api/search/races"
+						onResourceSelected={race => onPropertyChanged('race')(race.raceID)}
+						queryOptions={{
+							count: 'all',
+						}}
+						idKey="raceID"
+						nameKey="raceName"
+						fetchOnMount={true}
+					>
+						<span className={classNames(styles.race, styles.editable)}>{race}</span>
+					</ResourceSelect>
 				</div>
 				<div
 					className={styles.row}
@@ -178,28 +201,17 @@ export default class HeaderRow extends React.Component {
 							</div>
 						</Tooltip>
 					</Popover>
-					<Popover
-						content={
-							<NumericInput
-								value={speed}
-								onChange={onPropertyChanged('speed')}
-								autoFocus
-							/>
-						}
-						modifiers={{ arrow: false }}
+					<Tooltip
+						content="Speed"
+						hoverOpenDelay={750}
 					>
-						<Tooltip
-							content="Speed"
-							hoverOpenDelay={750}
-						>
-							<div className={styles.svg}>
-								<SVG
-									src="/svg/circle.svg"
-								/>
-								<span className={classNames(styles.svgLabel, styles.editable)}>{speed}</span>
-							</div>
-						</Tooltip>
-					</Popover>
+						<div className={styles.svg}>
+							<SVG
+								src="/svg/circle.svg"
+							/>
+							<span className={styles.svgLabel}>{speed}</span>
+						</div>
+					</Tooltip>
 					<Popover
 						content={
 							<NumericInput
