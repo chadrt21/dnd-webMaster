@@ -107,7 +107,12 @@ export const getCharacter = async (path, query, user, connection) => {
 	const characterPromise = promiseQuery(
 		connection,
 		`
-			SELECT * FROM dungeonbuddiesdb.character
+			SELECT * FROM
+				\`character\`
+					JOIN
+				klass ON \`character\`.klassID = klass.klassID
+					JOIN
+				race ON \`character\`.raceID = race.raceID
 			WHERE characterID = :characterID
 		`,
 		{ characterID },
@@ -147,6 +152,32 @@ export const updateCharacter = async (path, query, user, connection, body) => {
 		};
 	} else if (field === 'proficiencies') {
 		await proficienciesController.updateProficienciesForCharacter(characterID, connection, value);
+		return {
+			reload: true,
+		};
+	} else if (field === 'race') {
+		await promiseQuery(
+			connection,
+			`
+				UPDATE \`character\`
+				SET raceID = :value
+				WHERE characterID = :characterID
+			`,
+			{ value, characterID }
+		);
+		return {
+			reload: true,
+		};
+	} else if (field === 'klass') {
+		await promiseQuery(
+			connection,
+			`
+				UPDATE \`character\`
+				SET klassID = :value
+				WHERE characterID = :characterID
+			`,
+			{ value, characterID }
+		);
 		return {
 			reload: true,
 		};

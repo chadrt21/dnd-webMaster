@@ -24,4 +24,24 @@ export default app => {
 			}),
 			true
 		));
+
+	app.route('/api/search/klasses')
+		.get(asRouteFunction(
+			searchController.search({
+				tableName: 'klass',
+				nameColumn: 'klassName',
+				idColumn: 'klassID',
+			}),
+			true
+		));
+
+	app.route('/api/search/races')
+		.get(asRouteFunction(
+			searchController.search({
+				tableName: 'race',
+				nameColumn: 'raceName',
+				idColumn: 'raceID',
+			}),
+			true
+		));
 };
