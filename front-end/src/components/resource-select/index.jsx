@@ -63,7 +63,7 @@ export default class ResourceSelect extends React.Component {
 		}
 
 		if (typeof item[key] === 'string') {
-			return item[key].includes(query);
+			return new RegExp(query, 'i').test(item[key]);
 		}
 
 		return false;
