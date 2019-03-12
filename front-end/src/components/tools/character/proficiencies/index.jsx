@@ -6,14 +6,9 @@ import {
 	Button,
 	Icon,
 	Tooltip,
-	MenuItem,
 } from '@blueprintjs/core';
 
-import {
-	Select,
-} from '@blueprintjs/select';
-
-import allProficiencies from '../../../../dummy-data/proficiencies';
+import ResourceSelect from '../../../resource-select';
 
 import styles from './styles.less';
 
@@ -24,10 +19,10 @@ export default class Proficiencies extends React.Component {
 		proficiencies: PropTypes.array,
 	}
 
-	mapTags = prof => {
+	mapTags = (prof, index) => {
 		const { onRemove } = this.props;
 		return (
-			<Tooltip content={prof.skill} key={prof.proficiencyName}>
+			<Tooltip content={prof.skill} key={`${prof.proficiencyName}-${index}`}>
 				<Tag
 					onRemove={() => onRemove(prof)}
 					className={styles.tag}
@@ -35,23 +30,6 @@ export default class Proficiencies extends React.Component {
 					{prof.proficiencyName}
 				</Tag>
 			</Tooltip>
-		);
-	}
-
-	renderSelectOption = (item, props, index) => {
-		if (index > 10) {
-			return null;
-		}
-
-		return (
-			<MenuItem
-				text={`${item.name} (${item.skill})`}
-				onClick={props.handleClick}
-				className={[
-					styles.menuItem,
-					props.modifiers.active ? styles.active : null,
-				].join(' ')}
-			/>
 		);
 	}
 	
@@ -66,17 +44,15 @@ export default class Proficiencies extends React.Component {
 					:
 					null
 				}
-				<Select
-					items={allProficiencies.filter(item => proficiencies.findIndex(myItem => myItem.name === item.name) === -1)}
-					itemRenderer={this.renderSelectOption}
-					itemPredicate={(query, item) => item.name.includes(query)}
-					onItemSelect={onNew}
-					popoverProps={{
-						modifiers: {
-							arrow: false,
-						},
+				<ResourceSelect
+					onResourceSelected={onNew}
+					endpoint="/api/search/proficiencies"
+					idKey="proficiencyID"
+					nameKey="proficiencyName"
+					queryOptions={{
+						count: 8,
 					}}
-					resetOnClose
+					fetchOnMount={true}
 				>
 					<Button
 						className={styles.button}
@@ -88,7 +64,7 @@ export default class Proficiencies extends React.Component {
 							/>
 						}
 					/>
-				</Select>
+				</ResourceSelect>
 			</div>
 		);
 	}

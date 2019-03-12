@@ -36,7 +36,11 @@ export default class CharacterDisplay extends React.Component {
 			onPropertyChanged,
 		} = this.props;
 
-		onPropertyChanged('proficiencies')(character.proficiencies.filter(item => item !== prof));
+		onPropertyChanged('proficiencies')(
+			character.proficiencies
+				.filter(item => item.proficiencyID !== prof.proficiencyID)
+				.map(item => item.proficiencyID)
+		);
 	}
 
 	handleProficiencyNew = prof => {
@@ -46,8 +50,8 @@ export default class CharacterDisplay extends React.Component {
 		} = this.props;
 
 		onPropertyChanged('proficiencies')([
-			...character.proficiencies,
-			prof,
+			...character.proficiencies.map(item => item.proficiencyID),
+			prof.proficiencyID,
 		]);
 	}
 
