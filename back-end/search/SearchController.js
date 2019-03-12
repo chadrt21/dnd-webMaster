@@ -2,7 +2,11 @@ import {
 	promiseQuery,
 } from '../utility';
 
-export const searchSpells = async (path, queryString, user, connection) => {
+export const search = ({
+	tableName,
+	nameColumn,
+	idColumn,
+}) => async (path, queryString, user, connection) => {
 	const {
 		query,
 		filter,
@@ -22,7 +26,7 @@ export const searchSpells = async (path, queryString, user, connection) => {
 	// Don't include a query condition in the where clause if there is no query provided (i.e. return all)
 	const whereSegment = [];
 	if (query) {
-		whereSegment.push('spellName LIKE :query');
+		whereSegment.push(`${nameColumn} LIKE :query`);
 	}
 
 	// Add any filters to the where clause and create an insert object to protect against sql injection
@@ -52,11 +56,11 @@ export const searchSpells = async (path, queryString, user, connection) => {
 		connection,
 		`
 			SELECT
-				spellID, spellName${fields ? ', :(fieldsArray)' : '' }
+				${idColumn}, ${nameColumn}${fields ? ', :(fieldsArray)' : '' }
 			FROM
-				spell
+				${tableName}
 			${whereSegment.length > 0 ? `WHERE ${whereSegment.join(' AND ')}` : ''}
-			ORDER BY spellName
+			ORDER BY ${nameColumn}
 			${countSegment}
 			
 		`,
