@@ -14,4 +14,14 @@ export default app => {
 			}),
 			true
 		));
+	
+	app.route('/api/search/proficiencies')
+		.get(asRouteFunction(
+			searchController.search({
+				tableName: 'proficiency',
+				nameColumn: 'proficiencyName',
+				idColumn: 'proficiencyID',
+			}),
+			true
+		));
 };
