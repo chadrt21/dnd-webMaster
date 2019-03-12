@@ -138,6 +138,8 @@ export const asRouteFunction = (callback, withDBConnection) => async (request, r
 		}
 		return response.json(results || {});
 	} catch (err) {
+		// eslint-disable-next-line
+		console.log(err);
 		if (connection && connection.release) {
 			connection.release();
 		}
