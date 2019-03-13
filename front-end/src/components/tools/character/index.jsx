@@ -8,6 +8,41 @@ import Settings from './tool-settings';
 import { displayError } from '../../toast';
 
 import { get, post } from 'Utility/fetch';
+import debounce from 'Utility/debounce';
+
+// If settings.orderings is not returned from the server, set a blank one using this default
+const defaultOrderings = [
+	{
+		name: 'proficiencies',
+		visible: true,
+		displayName: 'Proficiencies',
+	},
+	{
+		name: 'classInfo',
+		visible: true,
+		displayName: 'Class Information',
+	},
+	{
+		name: 'spells',
+		visible: true,
+		displayName: 'Spells',
+	},
+	{
+		name: 'equipment',
+		visible: true,
+		displayName: 'Equipment',
+	},
+	{
+		name: 'appearance',
+		visible: true,
+		displayName: 'Appearance',
+	},
+	{
+		name: 'backstory',
+		visible: true,
+		displayName: 'Backstory/Notes',
+	},
+];
 
 export default class CharacterTool extends ToolBase {
 	// Character list will not be stored in state
@@ -37,45 +72,39 @@ export default class CharacterTool extends ToolBase {
 				column: '',
 			},
 		},
-		toolSettings: {
-			orderings: [
-				{
-					name: 'proficiencies',
-					visible: true,
-					displayName: 'Proficiencies',
-				},
-				{
-					name: 'classInfo',
-					visible: true,
-					displayName: 'Class Information',
-				},
-				{
-					name: 'spells',
-					visible: true,
-					displayName: 'Spells',
-				},
-				{
-					name: 'equipment',
-					visible: true,
-					displayName: 'Equipment',
-				},
-				{
-					name: 'appearance',
-					visible: true,
-					displayName: 'Appearance',
-				},
-				{
-					name: 'backstory',
-					visible: true,
-					displayName: 'Backstory/Notes',
-				},
-			],
-		},
+		toolSettings: {},
 		searches: {
 			spells: '',
 			equipment: '',
 			klassFeatures: '',
 		},
+	}
+
+	async componentDidMount() {
+		// When the component first mounts make sure that all tool operations take place
+		super.componentDidMount();
+		const { campaignID } = this.props;
+
+		try {
+			// Try and retrieve tool settings for character tool
+			const toolSettings = await get(`/api/campaigns/${campaignID}/tool-settings/characterTool`);
+
+			// If there are no settings then we will make some default ones
+			if (!toolSettings.orderings) {
+				toolSettings.orderings = defaultOrderings;
+				try {
+					await post(`/api/campaigns/${campaignID}/tool-settings/characterTool`, {
+						value: toolSettings,
+					});
+				} catch (err) {
+					displayError('There was an error setting settings for this tool');
+				}
+			}
+	
+			this.setState({ toolSettings });
+		} catch (err) {
+			displayError('There was an error retrieving settings for this tool');
+		}
 	}
 
 	navigateToCharacter = async item => {
@@ -195,8 +224,24 @@ export default class CharacterTool extends ToolBase {
 				...toolSettings,
 				[setting]: value,
 			},
-		}));
+		}), this.postToolSettings);
 	}
+
+	postToolSettings = debounce(
+		async () => {
+			try {
+				const { campaignID } = this.props;
+				const { toolSettings } = this.state;
+				await post(
+					`/api/campaigns/${campaignID}/tool-settings/characterTool`,
+					{ value: toolSettings }
+				);
+			} catch (err) {
+				displayError('There was an error setting settings for this tool');
+			}
+		},
+		250
+	)
 
 	handleSearchChange = search => value => {
 		this.setState(({ searches }) => ({
