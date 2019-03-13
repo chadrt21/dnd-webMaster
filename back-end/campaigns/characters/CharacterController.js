@@ -114,7 +114,8 @@ export const getCharacter = async (path, query, user, connection) => {
 				klass.klassName,
 				klass.klassID,
 				race.raceName,
-				race.raceID
+				race.raceID,
+				race.raceSpeed
 			FROM
 				\`character\`
 					JOIN
