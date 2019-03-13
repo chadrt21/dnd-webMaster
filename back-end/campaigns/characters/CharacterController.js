@@ -77,9 +77,9 @@ export const createNewCharacter = async (path, query, user, connection, body) =>
 		connection,
 		`
 			INSERT INTO dungeonbuddiesdb.character
-			(characterName, klassID, raceID, hp, height, weight, age, skinDesc, hairDesc, isNPC)
+			(characterName, klassID, raceID, hp, height, weight, age, skinDesc, hairDesc, isNPC, maxHP, ac)
 			VALUES
-			(:characterName, 1, 1, 0, "", 0, 0, "", "", :isNPC)
+			(:characterName, 1, 1, 0, "", 0, 0, "", "", :isNPC, 10, ac)
 		`,
 		{ characterName, isNPC }
 	);

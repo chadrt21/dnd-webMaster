@@ -54,7 +54,7 @@ export const createNewCampaign = async (path, query, user, connection, body) => 
 		connection,
 		`
 			INSERT INTO campaign
-				(campaignTitle, campaignDesc, settingsData)
+				(campaignTitle, campaignDesc, settingData)
 			VALUES
 				(:campaignTitle, '', '{}')
 		`,
@@ -119,7 +119,7 @@ export const getToolSettings = async (path, query, user, connection) => {
 		connection,
 		`
 			SELECT
-				settingsData->:tool AS toolSettings
+				settingData->:tool AS toolSettings
 			FROM
 				campaign
 			WHERE
@@ -148,8 +148,8 @@ export const updateToolSettings = async (path, query, user, connection, body) =>
 			UPDATE
 				campaign
 			SET
-				settingsData = JSON_SET(
-					settingsData,
+				settingData = JSON_SET(
+					settingData,
 					:tool,
 					JSON_MERGE(:value, '{}')
 				)

@@ -58,9 +58,9 @@ export default passport => {
 					connection,
 					`
 					INSERT INTO dm
-						(dmName, dmUserName, dmBio, dmCampaignListID)
+						(dmName, dmUserName, dmBio)
 					VALUES
-						(:displayName, :email, '', 0)
+						(:displayName, :email, '')
 				`,
 					{
 						displayName: profile.displayName,
