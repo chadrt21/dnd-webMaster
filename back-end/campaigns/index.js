@@ -35,6 +35,18 @@ export default app => {
 			asRouteFunction(characterRoutes.createNewCharacter, true)
 		);
 
+	app.route('/api/campaigns/:campaignID/tool-settings/:tool')
+		.get(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(campaignRoutes.getToolSettings, true)
+		);
+
+	app.route('/api/campaigns/:campaignID/tool-settings/:tool')
+		.post(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(campaignRoutes.updateToolSettings, true)
+		);
+
 	app.route('/api/campaigns')
 		.get(asRouteFunction(campaignRoutes.getAllCampaigns, true));
 

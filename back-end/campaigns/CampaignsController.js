@@ -54,9 +54,9 @@ export const createNewCampaign = async (path, query, user, connection, body) => 
 		connection,
 		`
 			INSERT INTO campaign
-				(campaignTitle, campaignDesc)
+				(campaignTitle, campaignDesc, settingsData)
 			VALUES
-				(:campaignTitle, '')
+				(:campaignTitle, '', '{}')
 		`,
 		{
 			campaignTitle,
@@ -106,5 +106,60 @@ export const checkIfCampaignExists = async (path, query, user, connection) => {
 
 	return {
 		exists: result[0].result > 0,
+	};
+};
+
+/**
+ * @description Returns tool settings for a specific tool associated with a campaign
+ */
+export const getToolSettings = async (path, query, user, connection) => {
+	const { campaignID, tool } = path;
+
+	const result = await promiseQuery(
+		connection,
+		`
+			SELECT
+				settingsData->:tool AS toolSettings
+			FROM
+				campaign
+			WHERE
+				campaignID = :campaignID
+		`,
+		{ campaignID, tool: `$.${tool}` }
+	);
+
+	if (result[0].toolSettings) {
+		return JSON.parse(result[0].toolSettings);
+	} else {
+		return {};
+	}
+};
+
+/**
+ * @description Updates the settings for a specific tool
+ */
+export const updateToolSettings = async (path, query, user, connection, body) => {
+	const { campaignID, tool } = path;
+	const { value } = body;
+
+	const result = await promiseQuery(
+		connection,
+		`
+			UPDATE
+				campaign
+			SET
+				settingsData = JSON_SET(
+					settingsData,
+					:tool,
+					JSON_MERGE(:value, '{}')
+				)
+			WHERE
+				campaignID = :campaignID
+		`,
+		{ campaignID, tool: `$.${tool}`, value: JSON.stringify(value) }
+	);
+
+	return {
+		updated: result.changedRows > 0,
 	};
 };
