@@ -25,6 +25,7 @@ export default class KlassFeatures extends React.Component {
 				sortingColumn={sortingColumn}
 				sortingDirection={sortingDirection}
 				handleSortChange={handleSortingChange}
+				sortable
 				head={{
 					featName: {
 						name: 'Feature',

@@ -177,21 +177,23 @@ export default class Table extends React.Component {
 		} = this.props;
 
 		return (
-			<table className={[
-				styles.root,
-				fullWidth ? styles.fullWidth : null,
-				onItemSelect ? styles.selectable : null,
-				sortable ? styles.sortable : null,
-			].join(' ')}>
-				<thead>
-					<tr>
-						{this.renderHead(head)}
-					</tr>
-				</thead>
-				<tbody>
-					{this.doSort(items).map(this.mapRows(head))}
-				</tbody>
-			</table>
+			<div className={styles.maxHeight}>
+				<table className={[
+					styles.root,
+					fullWidth ? styles.fullWidth : null,
+					onItemSelect ? styles.selectable : null,
+					sortable ? styles.sortable : null,
+				].join(' ')}>
+					<thead>
+						<tr>
+							{this.renderHead(head)}
+						</tr>
+					</thead>
+					<tbody>
+						{this.doSort(items).map(this.mapRows(head))}
+					</tbody>
+				</table>
+			</div>
 		);
 	}
 }
