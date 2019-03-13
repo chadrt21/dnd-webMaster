@@ -7,6 +7,7 @@ import {
 import * as spellsController from './CharacterSpellsController';
 import * as proficienciesController from './CharacterProficienciesController';
 import * as equipmentController from './CharacterEquipmentController';
+import * as featuresController from './CharacterFeaturesController';
 
 /**
  * @description Piece of express middleware to make sure that the character the user
@@ -105,10 +106,16 @@ export const createNewCharacter = async (path, query, user, connection, body) =>
 export const getCharacter = async (path, query, user, connection) => {
 	const { characterID } = path;
 
-	const characterPromise = promiseQuery(
+	const character = (await promiseQuery(
 		connection,
 		`
-			SELECT * FROM
+			SELECT
+				\`character\`.*,
+				klass.klassName,
+				klass.klassID,
+				race.raceName,
+				race.raceID
+			FROM
 				\`character\`
 					JOIN
 				klass ON \`character\`.klassID = klass.klassID
@@ -117,29 +124,31 @@ export const getCharacter = async (path, query, user, connection) => {
 			WHERE characterID = :characterID
 		`,
 		{ characterID },
-	);
+	))[0];
 
 	const spellsPromise = spellsController.getSpellsForCharacter(characterID, connection);
 	const proficienciesPromise = proficienciesController.getProficienciesForCharacter(characterID, connection);
 	const equipmentPromise = equipmentController.getEquipmentForCharacter(characterID, connection);
+	const klassFeaturesPromise = featuresController.getKlassFeaturesForCharacter(character, connection);
 
 	const [
-		character,
 		spells,
 		proficiencies,
 		equipment,
+		klassFeatures,
 	] = await Promise.all([
-		characterPromise,
 		spellsPromise,
 		proficienciesPromise,
 		equipmentPromise,
+		klassFeaturesPromise,
 	]);
 
 	return {
-		...character[0],
+		...character,
 		spells,
 		proficiencies,
 		equipment,
+		klassFeatures,
 		ac: 15,
 	};
 };
@@ -206,7 +215,7 @@ export const updateCharacter = async (path, query, user, connection, body) => {
 			{ characterID, value, field }
 		);
 		return {
-			reload: false,
+			reload: field === 'level',
 		};
 	}
 };
