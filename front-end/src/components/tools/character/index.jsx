@@ -32,6 +32,10 @@ export default class CharacterTool extends ToolBase {
 				direction: 'asc',
 				column: '',
 			},
+			klassFeatures: {
+				direction: 'asc',
+				column: '',
+			},
 		},
 		toolSettings: {
 			orderings: [
@@ -70,6 +74,7 @@ export default class CharacterTool extends ToolBase {
 		searches: {
 			spells: '',
 			equipment: '',
+			klassFeatures: '',
 		},
 	}
 

@@ -8,6 +8,7 @@ import Spells from '../spells';
 import Equipment from '../equipment';
 import Appearance from '../appearance';
 import Backstory from '../backstory';
+import KlassFeatures from '../klass-features';
 
 import styles from './styles.less';
 
@@ -89,13 +90,20 @@ export default class CharacterDisplay extends React.Component {
 		case 'classInfo':
 			return (
 				<CollapsibleSection
-					title="Class Information"
+					title="Class Features"
 					expanded={sections.classInfo}
 					changeExpanded={handleSectionExpandedChange('classInfo')}
 					className={styles.section}
 					key={section}
 				>
-					<span>What is supposed to go here again?</span>
+					<KlassFeatures
+						features={character.klassFeatures}
+						sortingColumn={sortings.klassFeatures.column}
+						sortingDirection={sortings.klassFeatures.direction}
+						handleSortingChange={handleSortingChange('klassFeatures')}
+						search={searches.klassFeatures}
+						onSearchChange={handleSearchChange('klassFeatures')}
+					/>
 				</CollapsibleSection>
 			);
 		case 'spells':
