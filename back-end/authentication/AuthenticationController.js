@@ -10,6 +10,9 @@ export const isLoggedIn = (request, response, next) => {
 		return next();
 	}
 
+	if (!request.url.includes('.')) {
+		request.session.lastURL = request.url;
+	}
 	response.redirect('/login');
 	response.end();
 };

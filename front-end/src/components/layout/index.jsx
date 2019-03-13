@@ -2,8 +2,10 @@
 and where they go. It also handles rearranging of tools through drag and drop. */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
 	NonIdealState,
+	Spinner,
 } from '@blueprintjs/core';
 
 import PanelGroup from './PanelGroup';
@@ -14,6 +16,7 @@ import Toolbar from './toolbar';
 import styles from './styles.less';
 
 import { addPane, movePane } from './model/layout-manager';
+import { get } from 'Utility/fetch';
 
 import Layout from './model/Layout';
 import tools from '../tools';
@@ -22,7 +25,7 @@ const defaultLayout = {
 	rows: [
 		{ panels: [
 			{ panes: [
-				{ type: 'map' },
+				{ type: 'character' },
 			] },
 			{ rows: [
 				{ panels: [
@@ -41,9 +44,35 @@ const defaultLayout = {
 };
 
 export default class Grid extends React.Component {
+	static propTypes = {
+		match: PropTypes.object,
+	}
+	
 	state = {
 		layout: new Layout(defaultLayout),
 		reloading: false,
+		currentCampaignID: 0,
+		campaignTitle: '',
+		savedLayouts: [],
+		validating: true,
+	}
+
+	fetchCampaign = () => {
+		
+	}
+
+	async componentDidMount() {
+		const { match } = this.props;
+		const currentCampaignID = match.params.id;
+		const campaign = await get(`/api/campaigns/${currentCampaignID}/exists`);
+		if (campaign.exists) {
+			this.setState({
+				currentCampaignID,
+				validating: false,
+			});
+		} else {
+			// TODO: Handle case where campaign does not exist for user
+		}
 	}
 
 	renderLayout = layout => (
@@ -129,6 +158,8 @@ export default class Grid extends React.Component {
 			);
 		}
 
+		const { currentCampaignID } = this.state;
+
 		return (
 			<div style={{ display: currentTab !== index ? 'none' : undefined }}>
 				<Content
@@ -136,6 +167,7 @@ export default class Grid extends React.Component {
 					pane={pane}
 					width={width}
 					height={height}
+					campaignID={currentCampaignID}
 				/>
 			</div>
 		);
@@ -168,7 +200,7 @@ export default class Grid extends React.Component {
 	}
 
 	render() {
-		const { layout } = this.state;
+		const { layout, validating } = this.state;
 
 		return (
 			<div className={styles.root}>
@@ -179,9 +211,15 @@ export default class Grid extends React.Component {
 						goHome={this.goHome}
 						tools={tools}
 					/>
-					<div className={styles.grid}>
-						{this.renderLayout(layout)}
-					</div>
+					{validating ?
+						<div className={styles.spinnerContainer}>
+							<Spinner />
+						</div>
+						:
+						<div className={styles.grid}>
+							{this.renderLayout(layout)}
+						</div>
+					}
 				</div>
 				<CustomDragLayer />
 			</div>

@@ -26,10 +26,12 @@ You can declare functions that access these parameters and the user object in th
 
 // ... more server methods
 
-export const myServerMethod = (path, query, user) => {
+export const myServerMethod = (path, query, user, connection, body) => {
 	const { id } = path; // path.id is a path parameter
 	const { search } = query; // query.search is a query parameter
 	const { email } = user; // user.email is part of the user model
+	// Connection is the database connection
+	const { arm } = body; // body.arm is part of the body
 
 	// Here you would make a database query of some kind
 
@@ -44,7 +46,7 @@ export const myServerMethod = (path, query, user) => {
 // ... more server methods
 ```
 
-Once you write your method, you need to register it with the ExpressJS instance and say which route it connects to. If the folder does not have an `index.js` file, then you will have to create one. It should export a function that takes an Express app as a parameter. Inside this function, you can define the routes as follows. Notice that you do not need to declare query parameters in the route declaration. Also notice that the method is connected to the route using the `asRouteFunction()` function. This function formats your function so that it can work with express.
+Once you write your method, you need to register it with the ExpressJS instance and say which route it connects to. If the folder does not have an `index.js` file, then you will have to create one. It should export a function that takes an Express app as a parameter. Inside this function, you can define the routes as follows. Notice that you do not need to declare query parameters in the route declaration. Also notice that the method is connected to the route using the `asRouteFunction()` function. This function formats your function so that it can work with express. Optionally, it can also pass a database connection into your callback if you set the second parameter to true.
 
 ```js
 // back-end/component/index.js
@@ -57,7 +59,7 @@ import * as routeFunctions from './SomeController';
 
 export default app => {
 	app.route('/api/controller/resource/:id')
-		.get(asRouteFunction(routeFunctions.myServerMethod));
+		.get(asRouteFunction(routeFunctions.myServerMethod, true));
 };
 ```
 

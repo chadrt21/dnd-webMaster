@@ -18,13 +18,13 @@ import { bindKeys, unbindKeys } from '../../utility/keyboard';
 
 import styles from './styles.less';
 
-import campaigns from '../../dummy-data/campaigns';
 import characters from '../../dummy-data/characters';
 
 export default class Content extends React.Component { 
 	static propTypes = {
 		navigateToCampaign: PropTypes.func.isRequired,
 		navigateToCharacter: PropTypes.func.isRequired,
+		campaigns: PropTypes.array.isRequired,
 	}
 	
 	bindings = {
@@ -49,6 +49,7 @@ export default class Content extends React.Component {
 		const {
 			navigateToCampaign,
 			navigateToCharacter,
+			campaigns,
 		} = this.props;
 
 		return (

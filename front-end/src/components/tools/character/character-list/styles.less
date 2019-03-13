@@ -1,0 +1,44 @@
+@import '../../../../styles/colors.less';
+@import '../../../../styles/mixins.less';
+
+.root {
+	padding: 10px;
+	
+	.list {
+		margin: 10px 0;
+		font-size: 16px;
+	}
+
+	.button {
+		margin-right: 10px;
+		.with-button-styles(@text-color);
+	}
+
+	.title {
+		display: flex;
+		align-items: center;
+
+		.button {
+			margin-left: 10px;
+			.with-button-styles(@text-color);
+		}
+
+		&.header {
+			margin-bottom: 28px;
+		}
+	}
+}
+
+.popover {
+	.with-popover-styles();
+}
+
+.popover-content {
+	padding: 5px;
+	text-align: center;
+
+	&-title {
+		font-size: 12pt;
+		margin-bottom: 6px;
+	}
+}

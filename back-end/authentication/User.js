@@ -8,9 +8,13 @@
 export default class User {
 	name = 'User\'s Display name';
 	email = 'sample@example.org';
+	id = -1;
+	bio = '';
 
-	constructor(name, email) {
+	constructor(name, email, dbUser) {
 		this.name = name;
 		this.email = email;
+		this.id = dbUser.dmID;
+		this.bio = dbUser.dmBio;
 	}
 }
