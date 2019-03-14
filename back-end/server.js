@@ -4,9 +4,14 @@ import express from 'express';
 import path from 'path';
 import configureAuthentication from './authentication';
 import registerRoutes from './route-registry';
+import bodyParser from 'body-parser';
 
 // Declare our server object
 const app = express();
+
+// Enable body parsing so we can accept post requests
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Enable CORS so that we can make HTTP request from webpack-dev-server
 app.use((request, response, next) => {

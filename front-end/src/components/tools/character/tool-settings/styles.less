@@ -1,0 +1,35 @@
+@import '../../../../styles/mixins.less';
+@import '../../../../styles/colors.less';
+
+.root {
+	padding: 15px;
+	color: @text-color;
+
+	.header {
+		display: flex;
+		margin-bottom: 12px;
+	}
+
+	.button {
+		.with-button-styles(@text-color);
+		margin-right: 8px;
+	}
+
+	.body {
+		padding-left: 5px;
+
+		.section-ordering {
+			font-size: 14pt;
+			display: flex;
+			align-items: center;
+		}
+	}
+
+	.icon {
+		color: @text-color !important;
+
+		&.drag-handle {
+			margin-right: 4px;
+		}
+	}
+}

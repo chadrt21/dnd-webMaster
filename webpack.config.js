@@ -68,5 +68,6 @@ module.exports = {
 	},
 	resolve: {
 		extensions: [ '.js', '.jsx', '.less', '.css' ],
+		alias: { Utility: path.resolve(__dirname, 'front-end/src/utility/') },
 	},
 };

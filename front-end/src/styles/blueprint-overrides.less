@@ -1,28 +1,85 @@
 @import './colors.less';
+@import './fonts.less';
+@import './mixins.less';
 
 .bp3-button.bp3-intent-primary {
-	background-color: @primary-color;
+	background-color: @primary-color !important;
 
 	&:hover {
-		background-color: darken(@primary-color, 4%);
+		background-color: darken(@primary-color, 4%) !important;
 	}
 
 	&:active {
-		background-color: darken(@primary-color, 8%);
+		background-color: darken(@primary-color, 8%) !important;
 	}
 }
 
 .bp3-button.bp3-minimal.bp3-intent-primary {
-	color: @primary-color;
-	background-color: rgba(0, 0, 0, 0);
+	color: @primary-color !important;
+	background-color: rgba(0, 0, 0, 0) !important;
 
 	&:hover {
-		background-color: fadeout(@primary-color, 90%);
-		color: @primary-color;
+		background-color: fadeout(@primary-color, 90%) !important;
+		color: @primary-color !important;
 	}
 
 	&:active {
-		background-color: fadeout(@primary-color, 85%);
+		background-color: fadeout(@primary-color, 85%) !important;
+		color: @primary-color !important;
+	}
+
+	.bp3-icon {
+		color: @primary-color !important;
+	}
+}
+
+.bp3-select-popover .bp3-popover-content {
+	background-color: #EFD8AC;
+	color: @text-color !important;
+	font-family: @body-font !important;
+
+	.bp3-input {
+		background-color: #f6e5c3;
+		color: @text-color !important;
+	}
+
+	.bp3-icon {
+		color: @text-color;
+	}
+
+	.bp3-button.bp3-minimal {
+		.with-button-styles(@text-color);
+	}
+}
+
+.bp3-menu {
+	background-color: #EFD8AC;
+	color: @text-color;
+	font-family: 'Overpass'; 
+}
+
+.bp3-input-group {
+	.bp3-input {
+		background-color: #fffdf8;
+		color: @text-color !important;
+	}
+
+	.bp3-icon {
 		color: @primary-color;
 	}
+}
+.bp3-input-group {
+	.bp3-input {
+		background-color: #fffdf8;
+		color: @text-color !important;
+	}
+
+	.bp3-icon {
+		color: @primary-color;
+	}
+}
+
+.bp3-input {
+	background-color: #fffdf8;
+	color: @text-color !important; 
 }

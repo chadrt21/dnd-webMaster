@@ -1,0 +1,37 @@
+@import '../../../../styles/mixins.less';
+@import '../../../../styles/colors.less';
+@import '../../../../styles/fonts.less';
+
+.button {
+	.with-button-styles(@text-color) !important;
+}
+
+.no-results {
+	font-family: @body-font;
+	color: @text-color;
+	margin-right: 10px;
+	text-transform: italic;
+}
+
+.tag {
+	margin-right: 5px;
+	margin-bottom: 5px;
+	background-color: @primary-color;
+	color: @background-color;
+	font-size: 11pt;
+	font-family: @body-font;
+	padding: 4px 8px;
+
+	&:last-child {
+		margin-right: 10px;
+	}
+}
+
+.menu-item {
+	color: @text-color !important;
+
+	&.active {
+		background-color: @primary-color;
+		color: @background-color !important;
+	}
+}

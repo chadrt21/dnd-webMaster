@@ -1,6 +1,6 @@
 // Import your component here
 import ExampleTool from './example';
-import diceroller from './dice-roller';
+import Character from './character';
 
 /**
  * Add an object to the array below in the following format:
@@ -26,9 +26,9 @@ export default [
 		component: ExampleTool,
 	},
 	{
-		name: 'diceroller',
-		displayName: 'Dice Roller',
-		defaultLabel: 'the Dice Roller',
-		component: diceroller,
+		name: 'character',
+		displayName: 'Character Tool',
+		defaultLabel: 'Character',
+		component: Character,
 	},
 ];

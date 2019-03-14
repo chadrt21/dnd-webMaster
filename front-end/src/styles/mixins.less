@@ -1,0 +1,50 @@
+@import './colors.less';
+@import './fonts.less';
+
+.with-button-styles(@color) {
+	color: @color;
+	background-color: rgba(0, 0, 0, 0);
+
+	&:hover {
+		background-color: fadeout(@color, 90%);
+		color: @color;
+	}
+
+	&:active {
+		background-color: fadeout(@color, 85%);
+		color: @color;
+	}
+
+	.icon {
+		color: @color !important;
+	}
+
+	:global(.bp3-icon) {
+		color: @color !important;
+	}
+}
+
+.with-popover-styles() {
+	:global(.bp3-popover-content) {
+		background-color: #EFD8AC;
+		color: @text-color !important;
+		font-family: @body-font !important;
+
+		:global(.bp3-input) {
+			background-color: #f6e5c3;
+			color: @text-color !important;
+		}
+
+		:global(.bp3-icon) {
+			color: @text-color;
+		}
+
+		:global(.bp3-button.bp3-minimal) {
+			.with-button-styles(@text-color);
+		}
+	}
+
+	:global(.bp3-popover-arrow-fill) {
+		fill: #EFD8AC;
+	}
+}

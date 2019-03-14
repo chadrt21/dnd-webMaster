@@ -20,6 +20,7 @@ Web Interface for D&amp;D resources and character management for dungen masters
   - [X] Implement BlueprintJS in Layout PoC
   - [X] Set up ESLint to enforce programming standards
   - [ ] Sprint 1 (In progress: Everyone)
+  - [ ] Make tabs rearrangable in a panel
 
 ## Colaborators
 Chad Ross: chad.ross@biola.edu

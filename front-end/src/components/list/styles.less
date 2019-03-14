@@ -1,0 +1,25 @@
+@import '../../styles/colors.less';
+@import '../../styles/fonts.less';
+
+.root {
+	background-color: @background-color;
+
+	.list-row {
+		cursor: pointer;
+		padding: 5px;
+		font-family: @body-font;
+		color: @text-color;
+		
+		&:hover {
+			background-color: darken(@background-color, 5%);
+		}
+
+		&:nth-child(even) {
+			background-color: darken(@background-color, 10%);
+
+			&:hover {
+				background-color: darken(@background-color, 15%);
+			}
+		}
+	}
+}
