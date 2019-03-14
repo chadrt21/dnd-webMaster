@@ -94,6 +94,7 @@ export default class Content extends React.Component {
 						/>
 						<Menu>
 							<MenuItem text="Logout" href="/api/auth/logout" />
+							<MenuItem text="Profile" href="/profile" />
 						</Menu>
 					</Popover>
 				</div>

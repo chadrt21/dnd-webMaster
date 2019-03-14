@@ -200,7 +200,7 @@ export default class Grid extends React.Component {
 	}
 
 	render() {
-		const { layout, validating } = this.state;
+		const { layout, validating, currentCampaignID } = this.state;
 
 		return (
 			<div className={styles.root}>
@@ -210,6 +210,7 @@ export default class Grid extends React.Component {
 						addTool={this.addPane}
 						goHome={this.goHome}
 						tools={tools}
+						campaignID={currentCampaignID}
 					/>
 					{validating ?
 						<div className={styles.spinnerContainer}>
