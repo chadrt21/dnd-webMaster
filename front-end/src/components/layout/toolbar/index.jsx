@@ -79,18 +79,23 @@ export default class Toolbar extends React.Component {
 					Settings
 				</Button>
 				<div className={styles.spacer} />
-				<Button
-					icon={
-						<Icon
-							icon="user"
-							color="#F7E3AF"
-							iconSize={24}
-						/>
-					}
-					minimal
-					className={styles.toolbarButton}
-					large
-				/>
+				<Popover minimal>
+					<Button
+						icon={
+							<Icon
+								icon="user"
+								color="#F7E3AF"
+								iconSize={24}
+							/>
+						}
+						minimal
+						className={styles.toolbarButton}
+						large
+					/>
+					<Menu className={styles.toolbarMenu}>
+						<MenuItem text="Logout" href="/api/auth/logout" />
+					</Menu>
+				</Popover>
 			</div>
 		);
 	}
