@@ -13,7 +13,7 @@ export const getProfile = async (path, query, user, connection) => {
 		{ id }
 	);
 
-	return results;
+	return results[0] || {};
 };
 
 export const updateProfile = async (path, query, user, connection, body) => {
