@@ -1,5 +1,6 @@
 @import '../../../styles/colors.less';
 @import '../../../styles/fonts.less';
+@import '../../../styles/mixins.less';
 
 .toolbar {
 	height: 40px;
@@ -35,4 +36,38 @@
 	background-color: #EFD8AC;
 	color: @text-color;
 	font-family: @body-font;
+}
+
+.dialog-root {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.dialog-card {
+		width: 50%;
+		max-width: 400px;
+		background-color: @background-color-dark;
+		padding: 10px;
+		border-radius: 4px;
+
+		.title {
+			margin-top: 5px;
+		}
+		
+		.input {
+			width: 100%;
+		}
+
+		.button-container {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 12px;
+
+			.button-minimal {
+				.with-button-styles(@text-color);
+			}
+		}
+	}
 }
