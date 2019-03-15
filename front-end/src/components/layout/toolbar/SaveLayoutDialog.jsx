@@ -1,3 +1,7 @@
+/**
+ * @description This is the modal that allows the user to give their saved layout a name
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
