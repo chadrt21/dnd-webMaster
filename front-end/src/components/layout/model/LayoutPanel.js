@@ -19,8 +19,8 @@ export default class LayoutPanel {
 
 	getPanes = () => this.panes;
 
-	toJson = () => ({
-		panes: this.panes.map(pane => pane.toJson()),
+	toJson = ({ ignoreState }) => ({
+		panes: this.panes.map(pane => pane.toJson({ ignoreState })),
 		selectedPane: this.selectedPane,
 	})
 

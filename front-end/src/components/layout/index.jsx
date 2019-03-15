@@ -192,7 +192,7 @@ export default class Grid extends React.Component {
 	saveLayout = () => {
 		const { layout } = this.state;
 		/* eslint-disable-next-line */
-		console.log(layout.toJson());
+		console.log(layout.toJson({ ignoreState: true }));
 	}
 
 	goHome = () => {

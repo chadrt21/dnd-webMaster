@@ -36,9 +36,9 @@ export default class Layout {
 		return this.rows[0].getPanels()[0];
 	}
 
-	toJson = ignoreWidths => {
+	toJson = ({ ignoreWidths, ignoreState }) => {
 		const obj = {
-			rows: this.rows.map(row => row.toJson(ignoreWidths)),
+			rows: this.rows.map(row => row.toJson({ ignoreWidths, ignoreState })),
 		};
 
 		if (!ignoreWidths) {
