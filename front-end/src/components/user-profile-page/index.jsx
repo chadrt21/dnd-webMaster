@@ -1,3 +1,10 @@
+/**
+ * @description This component is the page where users can edit their profile information such as their
+ * dmName, bio, and eventually maybe alignment (could be fun), icon picture, favorite race/klass, etc
+ * 
+ * @author Joseph Stewart
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
