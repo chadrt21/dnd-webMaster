@@ -25,6 +25,7 @@ export default class Toolbar extends React.Component {
 		addTool: PropTypes.func.isRequired,
 		goHome: PropTypes.func.isRequired,
 		tools: PropTypes.array.isRequired,
+		campaignID: PropTypes.number.isRequired,
 	}
 
 	mapTool = tool => {
@@ -40,6 +41,7 @@ export default class Toolbar extends React.Component {
 			saveLayout,
 			tools,
 			goHome,
+			campaignID,
 		} = this.props;
 
 		return (
@@ -79,18 +81,24 @@ export default class Toolbar extends React.Component {
 					Settings
 				</Button>
 				<div className={styles.spacer} />
-				<Button
-					icon={
-						<Icon
-							icon="user"
-							color="#F7E3AF"
-							iconSize={24}
-						/>
-					}
-					minimal
-					className={styles.toolbarButton}
-					large
-				/>
+				<Popover minimal>
+					<Button
+						icon={
+							<Icon
+								icon="user"
+								color="#F7E3AF"
+								iconSize={24}
+							/>
+						}
+						minimal
+						className={styles.toolbarButton}
+						large
+					/>
+					<Menu className={styles.toolbarMenu}>
+						<MenuItem text="Logout" href="/api/auth/logout" />
+						<MenuItem text="Profile" href={`/profile?back=/app/${campaignID}`} />
+					</Menu>
+				</Popover>
 			</div>
 		);
 	}

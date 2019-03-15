@@ -10,6 +10,10 @@ import {
 	Button,
 	Intent,
 	Icon,
+	Popover,
+	Menu,
+	MenuItem,
+	Position,
 } from '@blueprintjs/core';
 
 import Carousel from './carousel';
@@ -73,17 +77,26 @@ export default class Content extends React.Component {
 						large
 						intent={Intent.PRIMARY}
 					/>
-					<Button
+					<Popover
 						minimal
-						icon={
-							<Icon
-								icon="user"
-								iconSize={24}
-							/>
-						}
-						large
-						intent={Intent.PRIMARY}
-					/>
+						position={Position.BOTTOM_RIGHT}
+					>
+						<Button
+							minimal
+							icon={
+								<Icon
+									icon="user"
+									iconSize={24}
+								/>
+							}
+							large
+							intent={Intent.PRIMARY}
+						/>
+						<Menu>
+							<MenuItem text="Logout" href="/api/auth/logout" />
+							<MenuItem text="Profile" href="/profile" />
+						</Menu>
+					</Popover>
 				</div>
 				<Carousel
 					title="Campaigns"
