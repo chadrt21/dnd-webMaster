@@ -11,6 +11,7 @@ import {
 	Button,
 	Intent,
 	Classes,
+	Keys,
 } from '@blueprintjs/core';
 
 import Title from '../../title';
@@ -28,6 +29,15 @@ export default class SaveLayoutDialog extends React.Component {
 
 	state = {
 		name: '',
+	}
+
+	onKeyDown = event => {
+		const { saveLayout } = this.props;
+		const { name } = this.state;
+
+		if (event.keyCode === Keys.ENTER) {
+			saveLayout(name);
+		}
 	}
 	
 	render() {
@@ -53,6 +63,7 @@ export default class SaveLayoutDialog extends React.Component {
 							autoFocus
 							onChange={event => this.setState({ name: event.target.value })}
 							value={name}
+							onKeyDown={this.onKeyDown}
 						/>
 						<div
 							className={styles.buttonContainer}
