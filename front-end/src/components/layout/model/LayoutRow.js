@@ -36,9 +36,9 @@ export default class LayoutRow {
 	monitorUpdates = () => widths => { this.widths = widths; };
 	getId = () => this.rowId;
 
-	toJson = ignoreWidths => {
+	toJson = ({ ignoreState, ignoreWidths }) => {
 		const obj = {
-			panels: this.panels.map(panel => panel.toJson(ignoreWidths)),
+			panels: this.panels.map(panel => panel.toJson({ ignoreState, ignoreWidths })),
 		};
 
 		if (!ignoreWidths) {

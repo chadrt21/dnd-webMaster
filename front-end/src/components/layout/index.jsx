@@ -20,6 +20,7 @@ import { get } from 'Utility/fetch';
 
 import Layout from './model/Layout';
 import tools from '../tools';
+import { displayError } from '../toast';
 
 const defaultLayout = {
 	rows: [
@@ -189,10 +190,21 @@ export default class Grid extends React.Component {
 		this.setLayout(addPane(layout, type));
 	}
 
-	saveLayout = () => {
-		const { layout } = this.state;
-		/* eslint-disable-next-line */
-		console.log(layout.toJson());
+	loadLayout = layoutData => {
+		this.setState(() => {
+
+			let layout = {};
+			try {
+				layout = new Layout(layoutData);
+			} catch (err) {
+				displayError('There was an error loading the layout');
+			}
+
+			return {
+				layout,
+			};
+
+		});
 	}
 
 	goHome = () => {
@@ -206,11 +218,12 @@ export default class Grid extends React.Component {
 			<div className={styles.root}>
 				<div className={styles.rootFlex}>
 					<Toolbar
-						saveLayout={this.saveLayout}
+						loadLayout={this.loadLayout}
 						addTool={this.addPane}
 						goHome={this.goHome}
 						tools={tools}
 						campaignID={currentCampaignID}
+						currentLayout={layout}
 					/>
 					{validating ?
 						<div className={styles.spinnerContainer}>
