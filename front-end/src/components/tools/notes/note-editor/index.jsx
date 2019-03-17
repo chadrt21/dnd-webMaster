@@ -6,6 +6,7 @@ import ReactQuill from 'react-quill';
 import {
 	EditableText,
 	Button,
+	Spinner,
 } from '@blueprintjs/core';
 
 import Title from '../../../title';
@@ -19,6 +20,7 @@ export default class NoteEditor extends React.Component {
 		note: PropTypes.string.isRequired,
 		onPropertyChanged: PropTypes.func.isRequired,
 		onBack: PropTypes.func.isRequired,
+		savingNote: PropTypes.bool,
 	}
 
 	render() {
@@ -27,6 +29,7 @@ export default class NoteEditor extends React.Component {
 			note,
 			onBack,
 			onPropertyChanged,
+			savingNote,
 		} = this.props;
 
 		return (
@@ -39,6 +42,12 @@ export default class NoteEditor extends React.Component {
 							className={styles.button}
 							minimal
 						/>
+					}
+					rightComponent={
+						savingNote ?
+							<Spinner size={20} className={styles.spinner} />
+							:
+							null
 					}
 					fontSize={25}
 					className={styles.title}

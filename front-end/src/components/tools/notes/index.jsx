@@ -4,7 +4,8 @@ import ToolBase from '../ToolBase';
 import NotesList from './notes-list';
 import NoteEditor from './note-editor';
 
-import { get } from 'Utility/fetch';
+import { get, post } from 'Utility/fetch';
+import debounce from 'Utility/debounce';
 import { displayError } from '../../toast';
 
 export default class NotesTool extends ToolBase {
@@ -15,6 +16,7 @@ export default class NotesTool extends ToolBase {
 			noteTitle: '',
 		},
 		noteID: 0,
+		savingNote: false,
 	}
 
 	loadNote = async () => {
@@ -44,8 +46,49 @@ export default class NotesTool extends ToolBase {
 				...note,
 				[property]: value,
 			},
-		}));
+			savingNote: true,
+		}), () => {
+			if (property === 'noteTitle') {
+				this.postTitle();
+			} else if (property === 'noteContent') {
+				this.postNoteContent();
+			}
+		});
 	}
+
+	postTitle = debounce(
+		async () => {
+			const { note, noteID } = this.state;
+			const { campaignID } = this.props;
+			try {
+				await post(`/api/campaigns/${campaignID}/notes/${noteID}`, {
+					field: 'noteTitle',
+					value: note.noteTitle,
+				});
+				this.setState({ savingNote: false });
+			} catch (err) {
+				displayError('There was an error saving the note title');
+			}
+		},
+		250,
+	)
+
+	postNoteContent = debounce(
+		async () => {
+			const { note, noteID } = this.state;
+			const { campaignID } = this.props;
+			try {
+				await post(`/api/campaigns/${campaignID}/notes/${noteID}`, {
+					field: 'noteContent',
+					value: note.noteContent,
+				});
+				this.setState({ savingNote: false });
+			} catch (err) {
+				displayError('There was an error saving the note content');
+			}
+		},
+		250
+	)
 
 	openNote = noteID => {
 		this.setState(
@@ -56,7 +99,7 @@ export default class NotesTool extends ToolBase {
 	
 	render() {
 		const { campaignID } = this.props;
-		const { view, note } = this.state;
+		const { view, note, savingNote } = this.state;
 
 		if (view === 'editor') {
 			return (
@@ -65,6 +108,7 @@ export default class NotesTool extends ToolBase {
 					title={note.noteTitle}
 					onBack={this.onBack}
 					onPropertyChanged={this.onPropertyChanged}
+					savingNote={savingNote}
 				/>
 			);
 		}
