@@ -147,7 +147,7 @@ A generic select popover element for searching through and selecting resources f
 
 ### Example
 
-```js
+```jsx
 import List from './components/list';
 import {
 	Button,
