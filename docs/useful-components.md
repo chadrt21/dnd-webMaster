@@ -6,6 +6,7 @@
 - [List](#list)
 - [Resource Select](#resource-select)
 - [Table](#table)
+- [Title](#title)
 
 ## Document Description
 
