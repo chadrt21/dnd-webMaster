@@ -4,6 +4,7 @@ import {
 
 import * as campaignRoutes from './CampaignsController';
 import * as characterRoutes from './characters/CharacterController';
+import * as notesRoutes from './notes/NotesController';
 
 export default app => {
 	app.route('/api/campaigns/:campaignID/exists')
@@ -33,6 +34,30 @@ export default app => {
 		.post(
 			campaignRoutes.userCanAccessCampaign,
 			asRouteFunction(characterRoutes.createNewCharacter, true)
+		);
+
+	app.route('/api/campaigns/:campaignID/notes')
+		.get(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(notesRoutes.getAllNotes, true)
+		);
+
+	app.route('/api/campaigns/:campaignID/notes')
+		.post(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(notesRoutes.createNewNote, true)
+		);
+
+	app.route('/api/campaigns/:campaignID/notes/:noteID')
+		.get(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(notesRoutes.getNote, true)
+		);
+
+	app.route('/api/campaigns/:campaignID/notes/:noteID')
+		.post(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(notesRoutes.updateNote, true)
 		);
 
 	app.route('/api/campaigns/:campaignID/tool-settings/:tool')
