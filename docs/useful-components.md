@@ -3,6 +3,8 @@
 - [Document Description](#document-description)
 - [Calculator Input](#calculator-input)
 - [Collapsible Section](#collapsible-section)
+- [List](#list)
+- [Resource Select](#resource-select)
 
 ## Document Description
 
@@ -122,3 +124,51 @@ import List from './components/list';
 ### Other
 
 To see a working example of this, build the project and look at the character tool. This component is used to display the list of characters that is in the campaign.
+
+## Resource Select
+
+### Description
+
+A generic select popover element for searching through and selecting resources from the database that have search routes implemented. If you give it the search API endpoint, it will query that endpoint and display the returned search results in a popover select. The child of the resource select is the popover target (i.e. when the child is clicked, the select will appear). For example, you could use this component to have the user select a spell from the spells table, or an equipment from the equipment table. The component will query the API as the user types.
+
+### Prop
+
+*required*
+
+| Prop Name | Description | Datatype |
+|-----------|-------------|----------|
+| *onResourceSelected* | The function to be called when a resource is selected by the user. The selected resource object (not just the id) is passed as the first parameter | Func |
+| *endpoint* | The search API endpoint to be queried when the user searches, the endpoint must return an array of objects. | String |
+| idKey | The field name of the resource object that uniquely identifies it. So for example, the idKey for a spell resource would be spellID (from the database) | String |
+| nameKey | The field name of the resource object that should be displayed to the user in the select. So for example, the nameKey for a spell resource would be spellName (from the database) | String |
+| queryParameterName | The name of the query string variable that should contain the search value, default is "query" which is the variable name that search API endpoints expect | String |
+| queryOptions | Any additional query string variables that should be added to each API request | Object |
+| fetchOnMount | Whether or not the select should make an API request with an empty search value when the component first mounts | Boolean |
+
+### Example
+
+```js
+import List from './components/list';
+import {
+	Button,
+} from '@blueprintjs/core';
+
+// ... meanwhile in some render function
+
+<ResourceSelect
+	onResourceSelected={spell => console.log(`The user selected ${spell.spellName}`)}
+	endpoint="/api/search/spells"
+	idKey="spellID"
+	nameKey="spellName"
+	queryOptions={{
+		count: 8,
+	}}
+	fetchOnMount
+>
+	<Button>Search for a spell</Button>
+</ResourceSelect>
+```
+
+### Other
+
+See [this](https://blueprintjs.com/docs/#select/select-component) page to see what a select looks like.
