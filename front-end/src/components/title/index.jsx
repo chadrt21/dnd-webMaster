@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 import styles from './styles.less';
 
-const Title = ({ children, color, fontSize, rightComponent, className, ...props }) => (
+const Title = ({ children, color, fontSize, rightComponent, className, leftComponent, ...props }) => (
 	<h1
 		className={[ styles.title, styles[color], className ].join(' ')}
 		style={{
@@ -16,6 +16,7 @@ const Title = ({ children, color, fontSize, rightComponent, className, ...props 
 		}}
 		{...props}
 	>
+		{leftComponent || null}
 		{children}
 		{rightComponent || null}
 	</h1>
@@ -29,6 +30,7 @@ Title.propTypes = {
 	]),
 	fontSize: PropTypes.number,
 	rightComponent: PropTypes.node,
+	leftComponent: PropTypes.node,
 	className: PropTypes.string,
 };
 

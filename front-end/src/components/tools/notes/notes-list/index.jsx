@@ -17,6 +17,7 @@ import styles from './styles.less';
 export default class NotesList extends React.Component {
 	static propTypes = {
 		campaignID: PropTypes.number.isRequired,
+		openNote: PropTypes.func.isRequired,
 	}
 
 	state = {
@@ -62,6 +63,9 @@ export default class NotesList extends React.Component {
 
 	render() {
 		const {
+			openNote,
+		} = this.props;
+		const {
 			notes,
 			loading,
 			creatingNote,
@@ -93,6 +97,7 @@ export default class NotesList extends React.Component {
 				<List
 					items={notes}
 					renderItem={item => item.name || 'Untitled'}
+					onItemSelected={item => openNote(item.noteID)}
 				/>
 			</div>
 		);
