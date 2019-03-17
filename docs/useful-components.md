@@ -29,7 +29,7 @@ The calculator input is a simple number text input (with BlueprintJS stylings) t
 
 ### Example
 
-```js
+```jsx
 import CalculatorInput from '/components/calculator-input';
 
 //... meanwhile in some render function
@@ -65,7 +65,7 @@ This is a UI component that  defines a titled section that can be collapsed or e
 
 ### Example
 
-```js
+```jsx
 import CollapsibleSection from '/components/collapsible-section';
 
 //... meanwhile in some render function
@@ -103,7 +103,7 @@ This component displays item in a list format, highlighting every other item in 
 
 ### Example
 
-```js
+```jsx
 import List from './components/list';
 
 // ... meanwhile in some render function
