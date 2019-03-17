@@ -1,0 +1,22 @@
+@import '../../styles/colors.less';
+@import '../../styles/mixins.less';
+
+.root {
+	padding: 5px 15px;
+
+	.header-row {
+		margin-bottom: 5px;
+		display: flex;
+		align-items: center;
+
+		.button {
+			.with-button-styles(@text-color) !important;
+			margin-right: 10px;
+		}
+	}
+
+	.text-area {
+		resize: vertical;
+	}
+	
+}

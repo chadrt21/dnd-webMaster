@@ -29,11 +29,18 @@ export default class LayoutPane {
 	}
 	getState = () => this.state;
 
-	toJson = () => ({
-		type: this.type,
-		id: this.paneId,
-		state: this.state,
-	});
+	toJson = ({ ignoreState }) => {
+		const obj = {
+			type: this.type,
+			id: this.paneId,
+		};
+
+		if (!ignoreState) {
+			obj.state = this.state;
+		}
+
+		return obj;
+	};
 
 	remove = () => {
 		if (this.parent) {

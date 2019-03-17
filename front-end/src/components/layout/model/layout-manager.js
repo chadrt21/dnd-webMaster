@@ -3,7 +3,7 @@ import LayoutRow from './LayoutRow';
 import LayoutPanel from './LayoutPanel';
 
 export const addPane = (layout, type) => {
-	const jsonModel = layout.toJson();
+	const jsonModel = layout.toJson({});
 	let newModel = {};
 	if (jsonModel.rows.length > 1) {
 		newModel = { rows: [
@@ -45,7 +45,7 @@ export const movePane = (direction, variant, pane, targetPanel) => {
 };
 
 const movePaneNextToSoft = (direction, pane, targetPanel) => {
-	const paneJson = pane.toJson();
+	const paneJson = pane.toJson({});
 	if (pane.remove()) {
 		const parentRow = targetPanel.getParent();
 		parentRow.addPanel(new LayoutPanel({
@@ -59,7 +59,7 @@ const movePaneNextToSoft = (direction, pane, targetPanel) => {
 };
 
 const movePaneVerticallySoft = (direction, pane, targetPanel) => {
-	const paneJson = pane.toJson(true);
+	const paneJson = pane.toJson({ ignoreWidths: true });
 	if (pane.remove()) {
 		const parentRow = targetPanel.getParent();
 		if (parentRow.getPanels().length === 1) {
@@ -68,7 +68,7 @@ const movePaneVerticallySoft = (direction, pane, targetPanel) => {
 				{ panes: [ paneJson ] },
 			] }), direction, parentRow);
 		} else {
-			const targetPanelJson = targetPanel.toJson();
+			const targetPanelJson = targetPanel.toJson({});
 			parentRow.replace(targetPanel, new Layout({ rows: [
 				{ panels: [ targetPanelJson ] },
 				{ panels: [

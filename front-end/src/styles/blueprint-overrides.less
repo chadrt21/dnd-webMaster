@@ -4,6 +4,7 @@
 
 .bp3-button.bp3-intent-primary {
 	background-color: @primary-color !important;
+	color: @white !important;
 
 	&:hover {
 		background-color: darken(@primary-color, 4%) !important;
@@ -55,7 +56,21 @@
 .bp3-menu {
 	background-color: #EFD8AC;
 	color: @text-color;
-	font-family: 'Overpass'; 
+	font-family: 'Overpass';
+
+	.bp3-menu-item, .bp3-submenu .bp3-popover-open > .bp3-menu-item {
+		&:hover {
+			background-color: fadeout(@primary-color, 90%) !important;
+		}
+
+		.bp3-icon.bp3-icon-caret-right {
+			color: @text-color;
+		}
+	}
+
+	.bp3-submenu .bp3-popover-open > .bp3-menu-item {
+		background-color: fadeout(@primary-color, 90%) !important;
+	}
 }
 
 .bp3-input-group {

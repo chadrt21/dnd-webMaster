@@ -47,6 +47,18 @@ export default app => {
 			asRouteFunction(campaignRoutes.updateToolSettings, true)
 		);
 
+	app.route('/api/campaigns/:campaignID/layouts')
+		.get(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(campaignRoutes.getSavedLayouts, true)
+		);
+
+	app.route('/api/campaigns/:campaignID/layouts')
+		.post(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(campaignRoutes.saveLayoutConfiguration, true)
+		);
+
 	app.route('/api/campaigns')
 		.get(asRouteFunction(campaignRoutes.getAllCampaigns, true));
 

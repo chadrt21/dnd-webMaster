@@ -163,3 +163,44 @@ export const updateToolSettings = async (path, query, user, connection, body) =>
 		updated: result.changedRows > 0,
 	};
 };
+
+/**
+ * @description Get UI saved layout configurations
+ */
+export const getSavedLayouts = async (path, query, user, connection) => {
+	const { campaignID } = path;
+
+	const results = await promiseQuery(
+		connection,
+		`
+			SELECT layoutData
+			FROM campaign
+			WHERE campaignID = :campaignID
+		`,
+		{ campaignID }
+	);
+
+	return JSON.parse(results[0].layoutData) || [];
+};
+
+/**
+ * @description Set the saved layout configurations
+ */
+export const saveLayoutConfiguration = async (path, query, user, connection, body) => {
+	const { campaignID } = path;
+	const { layoutData } = body;
+
+	const results = await promiseQuery(
+		connection,
+		`
+			UPDATE campaign
+			SET layoutData = :layoutData
+			WHERE campaignID = :campaignID
+		`,
+		{ campaignID, layoutData: JSON.stringify(layoutData) }
+	);
+
+	return {
+		saved: results.changedRows > 0,
+	};
+};
