@@ -5,6 +5,7 @@
 - [Collapsible Section](#collapsible-section)
 - [List](#list)
 - [Resource Select](#resource-select)
+- [Table](#table)
 
 ## Document Description
 
@@ -172,3 +173,81 @@ import {
 ### Other
 
 See [this](https://blueprintjs.com/docs/#select/select-component) page to see what a select looks like.
+
+## Table
+
+### Description
+
+Displays a table of data using the D&D style for tables. This table can be sortable and the rows can be clickable. It also supports custom render functions for each column.
+
+### Props
+
+*required*
+
+| Prop Name | Description | Datatype |
+|-----------|-------------|----------|
+| *items* | The array of data where each item in the array is a javascript object. | Array[Object] |
+| *head* | The object that defines what columns go where, what the title of said columns are, how that column's cells are rendered, and how it maps to the items array. Each key in the object is key in items array  | Object |
+| head.name | The title of the column. Omit if the column shouldn't have a title | String |
+| head.renderCol | A function to be called (if defined) for each cell in this column. It should return a React Component. It's first parameter is the value to be rendered in the cell and the row that cell belongs to | Func |
+| fullWidth | Whether or not the table should take up the full width of the container | Boolean |
+| onItemSelect | The function to be called when a row in the table is selected. The selected row is passed as the first parameter | Func |
+| sortable | Whether or not the table should be sortable | Boolean |
+| sortingDirection | Whether the table should be sorting in ascending or descending order, use this if you want sorting to be controlled, otherwise this will be maintained in the component state | "asc" or "desc" |
+| sortingColumn | The column that is being sorted, used if you want sorting to be controlled | String |
+| handleSortChange | The function to be called when the user changes the sorting direction, used if the component should be controlled. The first parameter is the new column to be sorting, the second parameter is the direction to sort | Func |
+
+### Example
+
+```jsx
+import Table from './components/table';
+
+const dummySpells = [
+	{
+		spellName: 'Acid arrow',
+		level: 1,
+		spellID: 1,
+	},
+	{
+		spellName: 'Zone of Truth',
+		level: 3,
+		spellID: 2,
+	},
+	{
+		spellName: 'Chromatic Orb',
+		level: 2,
+		spellID: 3,
+	},
+];
+
+// ... meanwhile in some render function
+
+<Table
+	items={dummySpells}
+	head={{
+		'spellName': {
+			name: 'Name',
+		},
+		'level': {
+			name: 'Spell Level',
+		},
+		'spellID': {
+			renderCol: (value, row) => (
+				<a href={`/spells/${value}`}>Go to {row.spellName}</a>
+			)
+		}
+	}}
+	fullWidth
+	onItemSelect={row => console.log(`The user has selected ${row.spellName}`)}
+	sortable
+	sortingDirection={this.state.sortingDirection}
+	sortingColumn={this.state.sortingColumn}
+	handleSortChange={
+		(sortingColumn, sortingDirection) => this.setState({ sortingColumn, sortingDirection })
+	}
+/>
+```
+
+### Other
+
+To see an example of this component, build the project and look at the spells section in the character tool.
