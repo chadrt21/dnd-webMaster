@@ -251,3 +251,39 @@ const dummySpells = [
 ### Other
 
 To see an example of this component, build the project and look at the spells section in the character tool.
+
+## Title
+
+### Description
+
+A component for styled titles
+
+### Props
+
+*required*
+
+| Prop Name | Description | Datatype |
+|-----------|-------------|----------|
+| color | The color of the title | "primary" or "secondary" |
+| fontSize | The font size of the title in pt, the default is 42pt | Number |
+| rightComponent | The component to be placed on the right of the title | Component |
+| className | The CSS class to be applied to the h1 element | String |
+
+###  Example
+
+```jsx
+import Title from './components/title';
+
+//... meanwhile in some render function
+
+<Title
+	color="primary"
+	fontSize={28}
+>
+Some Title
+</Title>
+```
+
+### Other
+
+Most of the titles in the project use this component
