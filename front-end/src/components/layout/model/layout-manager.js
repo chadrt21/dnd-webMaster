@@ -1,6 +1,7 @@
 import Layout from './Layout';
 import LayoutRow from './LayoutRow';
 import LayoutPanel from './LayoutPanel';
+import LayoutPane from './LayoutPane';
 
 export const addPane = (layout, type) => {
 	const jsonModel = layout.toJson({});
@@ -33,6 +34,10 @@ export const addPane = (layout, type) => {
 		] };
 	}
 	return new Layout(newModel);
+};
+
+export const insertPaneIntoPanel = (object, target) => {
+	target.addPane(new LayoutPane(object));
 };
 
 export const movePane = (direction, variant, pane, targetPanel) => {

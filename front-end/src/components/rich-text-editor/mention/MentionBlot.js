@@ -11,7 +11,6 @@ export default Quill => {
 		static create(value) {
 			const node = super.create(value);
 			/* eslint-disable-next-line */
-			node.onclick = () => console.log('Hello');
 			node.innerText = `@${value.name}`;
 			node.setAttribute('data-resource-id', value.id);
 			return node;

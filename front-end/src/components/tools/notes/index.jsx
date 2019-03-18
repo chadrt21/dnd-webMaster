@@ -98,7 +98,7 @@ export default class NotesTool extends ToolBase {
 	}
 	
 	render() {
-		const { campaignID } = this.props;
+		const { campaignID, insertPaneIntoPanel } = this.props;
 		const { view, note, savingNote } = this.state;
 
 		if (view === 'editor') {
@@ -109,6 +109,7 @@ export default class NotesTool extends ToolBase {
 					onBack={this.onBack}
 					onPropertyChanged={this.onPropertyChanged}
 					savingNote={savingNote}
+					insertPaneIntoPanel={insertPaneIntoPanel}
 				/>
 			);
 		}

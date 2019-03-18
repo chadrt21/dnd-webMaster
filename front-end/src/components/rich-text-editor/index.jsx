@@ -8,11 +8,16 @@ import Toolbar from './Toolbar';
 import Mention from './mention/Mention';
 import getMentionBlot from './mention/MentionBlot';
 
+import styles from './mention/mention.less';
+
+const MentionBlot = getMentionBlot(Quill);
+
 Quill.register('modules/mention', Mention);
-Quill.register(getMentionBlot(Quill));
+Quill.register(MentionBlot);
 
 export default class RichTextEditor extends React.Component {
 	static propTypes = {
+		insertPaneIntoPanel: PropTypes.func.isRequired,
 		value: PropTypes.string,
 		onChange: PropTypes.func,
 	}
@@ -33,12 +38,20 @@ export default class RichTextEditor extends React.Component {
 		}
 	}
 
+	handleClick = event => {
+		if (event.target.parentElement.classList.contains(styles.mentionBlot)) {
+			const { insertPaneIntoPanel } = this.props;
+			const value = MentionBlot.value(event.target.parentElement);
+			insertPaneIntoPanel('example', { clickValue: value });
+		}
+	}
+
 	render() {
 		const { value: propValue } = this.props;
 		const { value: stateValue } = this.state;
 
 		return (
-			<React.Fragment>
+			<div onClick={this.handleClick}>
 				<Toolbar />
 				<ReactQuill
 					value={propValue === undefined ? stateValue : propValue}
@@ -57,7 +70,7 @@ export default class RichTextEditor extends React.Component {
 					}}
 					placeholder="Your note..."
 				/>
-			</React.Fragment>
+			</div>
 		);
 	}
 }

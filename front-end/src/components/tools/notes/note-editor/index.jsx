@@ -17,6 +17,7 @@ export default class NoteEditor extends React.Component {
 		note: PropTypes.string.isRequired,
 		onPropertyChanged: PropTypes.func.isRequired,
 		onBack: PropTypes.func.isRequired,
+		insertPaneIntoPanel: PropTypes.func.isRequired,
 		savingNote: PropTypes.bool,
 	}
 
@@ -27,6 +28,7 @@ export default class NoteEditor extends React.Component {
 			onBack,
 			onPropertyChanged,
 			savingNote,
+			insertPaneIntoPanel,
 		} = this.props;
 
 		return (
@@ -58,6 +60,7 @@ export default class NoteEditor extends React.Component {
 				<RichTextEditor
 					value={note}
 					onChange={onPropertyChanged('noteContent')}
+					insertPaneIntoPanel={insertPaneIntoPanel}
 				/>
 			</div>
 		);

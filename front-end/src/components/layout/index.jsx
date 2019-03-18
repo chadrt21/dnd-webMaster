@@ -15,7 +15,7 @@ import Toolbar from './toolbar';
 
 import styles from './styles.less';
 
-import { addPane, movePane } from './model/layout-manager';
+import { addPane, movePane, insertPaneIntoPanel } from './model/layout-manager';
 import { get } from 'Utility/fetch';
 
 import Layout from './model/Layout';
@@ -131,7 +131,7 @@ export default class Grid extends React.Component {
 				key={`panel-${panel.getId()}`}
 				renderContent={(currentTab, width, height) => (
 					<React.Fragment>
-						{panel.getPanes().map(this.mapContent(currentTab, width, height))}
+						{panel.getPanes().map(this.mapContent(currentTab, width, height, panel))}
 					</React.Fragment>
 				)}
 				tools={tools}
@@ -143,7 +143,7 @@ export default class Grid extends React.Component {
 		);
 	}
 
-	mapContent = (currentTab, width, height) => (pane, index) => {
+	mapContent = (currentTab, width, height, panel) => (pane, index) => {
 		const tool = tools.find(tool => tool.name === pane.getType());
 		let Content;
 
@@ -177,6 +177,9 @@ export default class Grid extends React.Component {
 						pane.tabName = name;
 						this.setLayout(this.state.layout);
 					}}
+					insertPaneIntoPanel={
+						(type, state, tabName) => this.insertPaneIntoPanel({ type, state, tabName }, panel)
+					}
 				/>
 			</div>
 		);
@@ -196,6 +199,11 @@ export default class Grid extends React.Component {
 	addPane = type => {
 		const { layout } = this.state;
 		this.setLayout(addPane(layout, type));
+	}
+
+	insertPaneIntoPanel = (paneObject, target) => {
+		insertPaneIntoPanel(paneObject, target);
+		this.setLayout(this.state.layout);
 	}
 
 	loadLayout = layoutData => {
