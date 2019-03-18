@@ -1,0 +1,37 @@
+@import '../../../styles/colors.less';
+
+.drop-down {
+	width: 200px;
+	position: absolute;
+
+	&.hidden {
+		display: none;
+	}
+
+	.drop-down-child {
+		color: @text-color;
+
+		&.selected {
+			background-color: @primary-color;
+			color: @background-color-dark;
+		}
+
+		.menu-item {
+			&:hover:before {
+				display: none;
+			}
+
+			&:hover:after {
+				display: none;
+			}
+		}
+	};
+}
+
+.mention-blot {
+	color: green;
+	
+	&:hover:before, &:hover:after {
+		display: none;
+	}
+}

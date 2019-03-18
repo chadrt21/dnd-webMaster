@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ReactQuill from 'react-quill';
-
 import {
 	EditableText,
 	Button,
@@ -10,8 +8,7 @@ import {
 } from '@blueprintjs/core';
 
 import Title from '../../../title';
-import Toolbar from './Toolbar';
-
+import RichTextEditor from '../../../rich-text-editor';
 import styles from './styles.less';
 
 export default class NoteEditor extends React.Component {
@@ -58,17 +55,9 @@ export default class NoteEditor extends React.Component {
 						placeholder="Title..."
 					/>
 				</Title>
-				<Toolbar />
-				<ReactQuill
+				<RichTextEditor
 					value={note}
 					onChange={onPropertyChanged('noteContent')}
-					theme="bubble"
-					modules={{
-						toolbar: {
-							container: '#toolbar',
-						},
-					}}
-					placeholder="Your note..."
 				/>
 			</div>
 		);
