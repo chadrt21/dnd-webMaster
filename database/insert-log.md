@@ -1,0 +1,24 @@
+# Database Insert Script Log
+
+- **Static Data Insert Script ToDo List (In 5eAPI Alphabetical Order)**
+  - [X] Ability Scores
+  - [X] Classes
+  - [ ] Conditions
+  - [X] Damage Types
+  - [ ] Equipment Categories
+  - [X] Equipment
+  - [X] Features
+  - [ ] Languages
+  - [ ] Levels
+  - [X] Magic Schools
+  - [ ] Monsters
+  - [X] Proficiencies
+  - [X] Races
+  - [X] Skills
+  - [X] Spellcasting
+  - [X] Spells
+  - [ ] StartingEquipment
+  - [ ] Subclasses
+  - [ ] Subraces
+  - [ ] Traits
+  - [X] Weapon Properties
