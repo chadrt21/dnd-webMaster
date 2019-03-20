@@ -169,6 +169,10 @@ export default class Grid extends React.Component {
 					width={width}
 					height={height}
 					campaignID={currentCampaignID}
+					setTabName={name => {
+						pane.tabName = name;
+						this.setLayout(this.state.layout);
+					}}
 				/>
 			</div>
 		);

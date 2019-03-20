@@ -27,6 +27,7 @@ export default class CharacterDisplay extends React.Component {
 		handleSectionExpandedChange: PropTypes.func.isRequired,
 		handleSortingChange: PropTypes.func.isRequired,
 		handleSearchChange: PropTypes.func.isRequired,
+		setTabName: PropTypes.func.isRequired,
 
 		toolSettings: PropTypes.object.isRequired,
 	}
@@ -205,6 +206,7 @@ export default class CharacterDisplay extends React.Component {
 			onPropertyChanged,
 			mediaQuery,
 			navigateToSettings,
+			setTabName,
 		} = this.props;
 
 		return (
@@ -230,6 +232,7 @@ export default class CharacterDisplay extends React.Component {
 					speed={character.raceSpeed}
 					onPropertyChanged={onPropertyChanged}
 					mediaQuery={mediaQuery}
+					setTabName={setTabName}
 				/>
 				{this.renderAllSections()}
 			</div>
