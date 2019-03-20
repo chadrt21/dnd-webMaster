@@ -67,6 +67,9 @@ export default class RichTextEditor extends React.Component {
 							idKey: 'spellID',
 							nameKey: 'spellName',
 						},
+						clipboard: {
+							matchVisual: false,
+						},
 					}}
 					placeholder="Your note..."
 				/>
