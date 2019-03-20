@@ -8,8 +8,6 @@ import Toolbar from './Toolbar';
 import Mention from './mention/Mention';
 import getMentionBlot from './mention/MentionBlot';
 
-import styles from './mention/mention.less';
-
 const MentionBlot = getMentionBlot(Quill);
 
 Quill.register('modules/mention', Mention);
@@ -39,7 +37,7 @@ export default class RichTextEditor extends React.Component {
 	}
 
 	handleClick = event => {
-		if (event.target.parentElement.classList.contains(styles.mentionBlot)) {
+		if (event.target.parentElement.classList.contains('ql-mention-blot')) {
 			const { insertPaneIntoPanel } = this.props;
 			const value = MentionBlot.value(event.target.parentElement);
 			insertPaneIntoPanel('example', { clickValue: value });

@@ -1,12 +1,10 @@
-import styles from './mention.less';
-
 export default Quill => {
 	const InlineBlot = Quill.import('blots/embed');
 
 	class MentionBlot extends InlineBlot {
 		static blotName = 'mention';
 		static tagName = 'A';
-		static className = styles.mentionBlot;
+		static className = 'ql-mention-blot';
 	
 		static create(value) {
 			const node = super.create(value);

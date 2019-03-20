@@ -1,6 +1,34 @@
 import {
 	promiseQuery,
 } from '../../utility';
+import sanitizeHtml from 'sanitize-html';
+
+const sanitizeOptions = {
+	allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'span' ]),
+	allowedAttributes: {
+		...sanitizeHtml.defaults.allowedAttributes,
+		a: [ 'class', 'href', 'data-*' ],
+	},
+	transformTags: {
+		'*': (tagName, attribs) => {
+			if (attribs.class) {
+				const classNames = attribs.class.split(' ');
+				return {
+					tagName,
+					attribs: {
+						...attribs,
+						class: classNames.filter(className => /^ql-.+/.test(className)).join(' '),
+					},
+				};
+			} else {
+				return {
+					tagName,
+					attribs,
+				};
+			}
+		},
+	},
+};
 
 /**
  * @description Returns all of the notes saved to a campaign
@@ -88,12 +116,17 @@ export const getNote = async (path, query, user, connection) => {
  */
 export const updateNote = async (path, query, user, connection, body) => {
 	const { campaignID, noteID } = path;
-	const { field, value } = body;
+	const { field } = body;
+	let { value } = body;
 
 	if (field.toLowerCase() === 'noteid') {
 		return {
 			reload: true,
 		};
+	}
+
+	if (field === 'noteContent') {
+		value = sanitizeHtml(value, sanitizeOptions);
 	}
 
 	const result = await promiseQuery(
