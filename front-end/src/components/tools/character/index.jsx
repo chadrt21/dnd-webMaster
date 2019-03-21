@@ -112,8 +112,9 @@ export default class CharacterTool extends ToolBase {
 	}
 
 	loadCharacter = async characterID => {
-		const { campaignID } = this.props;
+		const { campaignID, setTabName } = this.props;
 		const character = await get(`/api/campaigns/${campaignID}/characters/${characterID}`);
+		setTabName(character.characterName);
 		this.setState({
 			view: 'display',
 			character,
@@ -180,6 +181,8 @@ export default class CharacterTool extends ToolBase {
 	}
 
 	navigateToList = () => {
+		const { setTabName } = this.props;
+		setTabName();
 		this.setState({ view: 'list' });
 	}
 
@@ -254,7 +257,7 @@ export default class CharacterTool extends ToolBase {
 
 	render() {
 		const { view, character, sections, sortings, toolSettings, searches } = this.state;
-		const { campaignID } = this.props;
+		const { campaignID, setTabName } = this.props;
 
 		if (view === 'list') {
 			return (
@@ -295,6 +298,7 @@ export default class CharacterTool extends ToolBase {
 					navigateToSettings={this.navigateToSettings}
 					searches={searches}
 					handleSearchChange={this.handleSearchChange}
+					setTabName={setTabName}
 				/>
 			</div>
 		);

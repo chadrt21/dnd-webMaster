@@ -62,7 +62,9 @@ export default class ContentPanel extends React.Component {
 		const tool = tools.find(tool => tool.name === pane.getType());
 		let label;
 
-		if (tool && tool.defaultLabel) {
+		if (pane.tabName) {
+			label = pane.tabName;
+		} else if (tool && tool.defaultLabel) {
 			label = tool.defaultLabel;
 		} else {
 			label = 'Not Found';

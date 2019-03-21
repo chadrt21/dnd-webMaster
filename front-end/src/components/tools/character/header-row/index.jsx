@@ -11,6 +11,8 @@ import {
 } from '@blueprintjs/core';
 import SVG from 'react-inlinesvg';
 
+import debounce from 'Utility/debounce';
+
 import ResourceSelect from '../../../resource-select';
 import Title from '../../../title';
 import NumericInput from '../../../calculator-input';
@@ -23,6 +25,7 @@ export default class HeaderRow extends React.Component {
 		navigateToSettings: PropTypes.func.isRequired,
 		onPropertyChanged: PropTypes.func.isRequired,
 		mediaQuery: PropTypes.func.isRequired,
+		setTabName: PropTypes.func.isRequired,
 		name: PropTypes.string,
 		className: PropTypes.string,
 		race: PropTypes.string,
@@ -73,6 +76,20 @@ export default class HeaderRow extends React.Component {
 		);
 	};
 
+	editCharacterName = value => {
+		const { onPropertyChanged } = this.props;
+		this.debouncedTabNameChange(value);
+		onPropertyChanged('characterName')(value);
+	}
+
+	debouncedTabNameChange = debounce(
+		name => {
+			const { setTabName } = this.props;
+			setTabName(name);
+		},
+		250
+	)
+
 	render() {
 		const {
 			navigateBack,
@@ -109,7 +126,7 @@ export default class HeaderRow extends React.Component {
 							<EditableText
 								placeholder="Character Name"
 								value={name}
-								onChange={onPropertyChanged('characterName')}
+								onChange={this.editCharacterName}
 							/>
 						</Title>
 					</div>
