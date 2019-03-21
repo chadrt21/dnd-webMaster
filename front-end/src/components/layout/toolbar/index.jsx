@@ -18,6 +18,7 @@ import {
 } from '@blueprintjs/core';
 
 import SaveLayoutDialog from './SaveLayoutDialog';
+import EditLayoutsDialog from './EditLayoutsDialog';
 
 import { displayError } from '../../toast';
 import { get, post } from 'Utility/fetch';
@@ -37,6 +38,8 @@ export default class Toolbar extends React.Component {
 	state = {
 		savedLayouts: [],
 		nameDialogOpen: false,
+		editDialogOpen: false,
+		defaultLoaded: false,
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -55,16 +58,23 @@ export default class Toolbar extends React.Component {
 		const { currentLayout } = this.props;
 		const layout = currentLayout.toJson({ ignoreState: true });
 
-		this.setState(({ savedLayouts }) => ({
-			savedLayouts: [
-				...savedLayouts,
-				{
-					name,
-					layout,
-				},
-			],
-			nameDialogOpen: false,
-		}), async () => {
+		this.setState(({ savedLayouts }) => {
+			let id = Math.max(...savedLayouts.map(layout => layout.id)) + 1;
+			if (id === -Infinity) {
+				id = 0;
+			}
+			return {
+				savedLayouts: [
+					...savedLayouts,
+					{
+						name,
+						layout,
+						id,
+					},
+				],
+				nameDialogOpen: false,
+			};
+		}, async () => {
 			try {
 				const { campaignID } = this.props;
 				const { savedLayouts } = this.state;
@@ -80,13 +90,35 @@ export default class Toolbar extends React.Component {
 		});
 	}
 
+	editLayouts = layoutData => {
+		const { campaignID } = this.props;
+
+		this.setState({ savedLayouts: layoutData }, async () => {
+			const { savedLayouts } = this.state;
+			try {
+				await post(
+					`/api/campaigns/${campaignID}/layouts`,
+					{
+						layoutData: savedLayouts,
+					}
+				);
+			} catch (err) {
+				displayError('There was an error editing the layouts');
+			}
+		});
+	}
+
 	loadLayouts = async ({ campaignID, loadLayout }) => {
 		const savedLayouts = await get(`/api/campaigns/${campaignID}/layouts`);
 		this.setState({ savedLayouts }, () => {
-			const { savedLayouts } = this.state;
+			const { savedLayouts, defaultLoaded } = this.state;
 			for (let i = 0; i < savedLayouts.length; i++) {
-				if (savedLayouts[i].default) {
-					loadLayout(savedLayouts[i].layout);
+				if (savedLayouts[i].default && !defaultLoaded) {
+					this.setState({
+						defaultLoaded: true,
+					}, () => {
+						loadLayout(savedLayouts[i].layout);
+					});
 					break;
 				}
 			}
@@ -110,6 +142,7 @@ export default class Toolbar extends React.Component {
 		const {
 			savedLayouts,
 			nameDialogOpen,
+			editDialogOpen,
 		} = this.state;
 
 		return (
@@ -159,6 +192,10 @@ export default class Toolbar extends React.Component {
 							text="Save This Layout"
 							onClick={() => this.setState({ nameDialogOpen: true })}
 						/>
+						<MenuItem
+							text="Edit Layouts"
+							onClick={() => this.setState({ editDialogOpen: true })}
+						/>
 					</Menu>
 				</Popover>
 				<Button
@@ -190,6 +227,12 @@ export default class Toolbar extends React.Component {
 					open={nameDialogOpen}
 					onCancel={() => this.setState({ nameDialogOpen: false })}
 					saveLayout={this.saveLayout}
+				/>
+				<EditLayoutsDialog
+					open={editDialogOpen}
+					onCancel={() => this.setState({ editDialogOpen: false })}
+					updateLayouts={this.editLayouts}
+					layouts={savedLayouts}
 				/>
 			</div>
 		);
