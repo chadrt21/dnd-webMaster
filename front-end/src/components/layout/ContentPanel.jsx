@@ -88,10 +88,19 @@ export default class ContentPanel extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		const { currentTab } = this.state;
-		if (!nextProps.panes[currentTab]) {
-			this.setState({ currentTab: 0 });
+		let { currentTab } = this.state;
+		const nextState = {};
+
+		if (nextProps.defaultSelected !== currentTab) {
+			nextState.currentTab = nextProps.defaultSelected;
+			currentTab = nextProps.defaultSelected;
 		}
+
+		if (!nextProps.panes[currentTab]) {
+			nextState.currentTab = 0;
+		}
+
+		this.setState(nextState);
 	}
 
 	componentResized = entries => {
