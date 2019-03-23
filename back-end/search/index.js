@@ -54,4 +54,10 @@ export default app => {
 			}),
 			true
 		));
+		
+	app.route('/api/search/global')
+	    .get(asRouteFunction(asRouteFunction(
+	        searchController/globalSearch, 
+	        true
+	    );
 };
