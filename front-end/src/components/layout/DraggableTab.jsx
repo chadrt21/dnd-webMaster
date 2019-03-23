@@ -15,6 +15,11 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 
 const tabSource = {
 	beginDrag: ({ label, pane, panelId, index }) => ({ index, label, pane, panelId }),
+	isDragging: (props, monitor) => {
+		const panelId = props.pane.getId();
+		const sourcePanelId = monitor.getItem().pane.getId();
+		return panelId === sourcePanelId;
+	},
 };
 
 const tabTarget = {
@@ -116,7 +121,7 @@ class DraggableTab extends React.Component {
 						root: styles.tab,
 					}}
 					label={label}
-					isDragging={item && item.pane.getId() === pane.getId()}
+					isDragging={isDragging}
 					{...rest}
 				/>
 			</div>
