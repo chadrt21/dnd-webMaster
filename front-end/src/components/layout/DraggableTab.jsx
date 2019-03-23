@@ -74,6 +74,7 @@ const collect = (connect, monitor) => ({
 	connectDragSource: connect.dragSource(),
 	isDragging: monitor.isDragging(),
 	connectDragPreview: connect.dragPreview(),
+	item: monitor.getItem(),
 });
 
 class DraggableTab extends React.Component {	
@@ -86,6 +87,7 @@ class DraggableTab extends React.Component {
 		moveTabs: PropTypes.func.isRequired,
 		isDragging: PropTypes.bool,
 		panelId: PropTypes.number,
+		item: PropTypes.object,
 	}
 
 	componentDidMount() {
@@ -103,6 +105,7 @@ class DraggableTab extends React.Component {
 			pane,
 			connectDragPreview,
 			connectDropTarget,
+			item,
 			...rest
 		} = this.props;
 
@@ -113,7 +116,9 @@ class DraggableTab extends React.Component {
 						root: styles.tab,
 					}}
 					label={label}
-					{...rest} />
+					isDragging={item && item.pane.getId() === pane.getId()}
+					{...rest}
+				/>
 			</div>
 		));
 	}

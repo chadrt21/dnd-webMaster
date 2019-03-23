@@ -7,19 +7,28 @@ import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
 import styles from './styles.less';
 
+import classNames from 'Utility/classNames';
+
 export default class Tab extends React.Component {
 	static propTypes = {
-		selected: PropTypes.bool.isRequired,
-		label: PropTypes.string.isRequired,
-		onClick: PropTypes.func.isRequired,
-		onClose: PropTypes.func.isRequired,
+		selected: PropTypes.bool,
+		label: PropTypes.string,
+		onClick: PropTypes.func,
+		onClose: PropTypes.func,
+		isDragging: PropTypes.bool,
 	}
 
 	render() {
-		const { selected, label, onClick, onClose } = this.props;
+		const { selected, label, onClick, onClose, isDragging } = this.props;
 
 		return (
-			<div className={`${styles.tab} ${selected ? styles.tabSelected : ''}`} onClick={onClick}>
+			<div
+				className={classNames(
+					styles.tab,
+					selected ? styles.tabSelected : null,
+					isDragging ? styles.tabDragging : null
+				)}
+				onClick={onClick}>
 				<span className={styles.text}>{label}</span>
 				{selected ?
 					<Icon iconSize={12} icon="cross" onClick={onClose} className={styles.tabClose} />

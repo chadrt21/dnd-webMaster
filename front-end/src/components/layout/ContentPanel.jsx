@@ -102,18 +102,21 @@ export default class ContentPanel extends React.Component {
 	}
 
 	render() {
-		const { panes, dropPaneIntoPanel, movePane, renderContent } = this.props;
+		const { panes, dropPaneIntoPanel, movePane, renderContent, panelId } = this.props;
 		const { currentTab, width, height } = this.state;
 
 		return (
 			<ResizeSensor onResize={this.componentResized}>
 				<div className={styles.pane}>
 					<div className={styles.paneHeader}>
-						<TabContainer onDrop={item => {
-							dropPaneIntoPanel(item.pane, () => {
-								this.focusPane(item.pane);
-							});
-						}}>
+						<TabContainer
+							onDrop={item => {
+								dropPaneIntoPanel(item.pane, () => {
+									this.focusPane(item.pane);
+								});
+							}}
+							panelId={panelId}
+						>
 							{panes && panes.map(this.mapTabs)}
 						</TabContainer>
 					</div>
