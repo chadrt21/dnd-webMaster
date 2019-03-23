@@ -1,0 +1,51 @@
+@import '../../../../styles/colors.less';
+@import '../../../../styles/mixins.less';
+
+.item {
+	padding: 10px;
+	background-color: @background-color;
+	margin-bottom: 4px;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	.title {
+		margin-top: 4px;
+		margin-bottom: 8px;
+	}
+
+	.subtitle-container {
+		margin-bottom: 18px;
+
+		.subtitle {
+			margin-right: 14px;
+			color: @text-color;
+
+			&:last-child {
+				margin-right: 0;
+			}
+
+			.subtitle-key {
+				font-size: 12px;
+				margin-right: 5px;
+			}
+
+			.subtitle-value {
+				font-weight: bold;
+			}
+		}
+	}
+
+	.description {
+		color: @text-color;
+		.with-max-lines(3, @background-color);
+	}
+
+	&.dark {
+		background-color: @background-color-dark;
+		.description {
+			.with-max-lines(3, @background-color-dark);
+		}
+	}
+}
