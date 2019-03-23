@@ -53,6 +53,12 @@ export default class LayoutPanel {
 		}
 	}
 
+	swapPanes = (from, to) => {
+		const temp = this.panes[from];
+		this.panes[from] = this.panes[to];
+		this.panes[to] = temp;
+	}
+
 	getSelectedTab = () => this.selectedPane;
 	getId = () => this.panelId;
 	monitorUpdates = () => tab => this.selectedPane = tab;

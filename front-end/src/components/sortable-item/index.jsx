@@ -35,25 +35,33 @@ const itemTarget = {
 		).getBoundingClientRect();
 
 		// Get vertical middle
-		const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+		const hoverMiddle = 
+			props.horizontal ?
+				(hoverBoundingRect.left - hoverBoundingRect.right) / 2
+				:
+				(hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
 		// Determine mouse position
 		const clientOffset = monitor.getClientOffset();
 
 		// Get pixels to the top
-		const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+		const hoverClientPos =
+			props.horizontal ?
+				clientOffset.x - hoverBoundingRect.right
+				:
+				clientOffset.y - hoverBoundingRect.top;
 
 		// Only perform the move when the mouse has crossed half of the items height
 		// When dragging downwards, only move when the cursor is below 50%
 		// When dragging upwards, only move when the cursor is above 50%
 
 		// Dragging downwards
-		if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+		if (dragIndex < hoverIndex && hoverClientPos < hoverMiddle) {
 			return;
 		}
 
 		// Dragging upwards
-		if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+		if (dragIndex > hoverIndex && hoverClientPos > hoverMiddle) {
 			return;
 		}
 
@@ -92,17 +100,18 @@ SortableItem.propTypes = {
 	children: PropTypes.node.isRequired,
 	isDragging: PropTypes.bool, // Supplied by react-dnd
 	item: PropTypes.object, // Supplied by react-dnd
+	horizontal: PropTypes.bool,
 };
 
-export default DropTarget(
-	'CHARACTER_SECTION',
+export default type => DropTarget(
+	type,
 	itemTarget,
 	connect => ({
 		connectDropTarget: connect.dropTarget(),
 	})
 )(
 	DragSource(
-		'CHARACTER_SECTION',
+		type,
 		itemSource,
 		(connect, monitor) => ({
 			connectDragSource: connect.dragSource(),

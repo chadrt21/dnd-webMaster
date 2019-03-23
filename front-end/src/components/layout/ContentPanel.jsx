@@ -17,6 +17,8 @@ export default class ContentPanel extends React.Component {
 		defaultSelected: PropTypes.number,
 		removePane: PropTypes.func.isRequired,
 		tools: PropTypes.array.isRequired,
+		moveTabs: PropTypes.func.isRequired,
+		panelId: PropTypes.number.isRequired,
 		panes: PropTypes.array,
 		dropPaneIntoPanel: PropTypes.func,
 		movePane: PropTypes.func,
@@ -57,7 +59,7 @@ export default class ContentPanel extends React.Component {
 
 	mapTabs = (pane, index) => {
 		const { currentTab } = this.state;
-		const { tools } = this.props;
+		const { tools, moveTabs, panelId } = this.props;
 
 		const tool = tools.find(tool => tool.name === pane.getType());
 		let label;
@@ -78,6 +80,9 @@ export default class ContentPanel extends React.Component {
 				onClick={() => this.handleTabChanged(index)}
 				onClose={this.handleRemovePane(index, pane)}
 				key={index}
+				panelId={panelId}
+				moveTabs={moveTabs}
+				index={index}
 			/>
 		);
 	}

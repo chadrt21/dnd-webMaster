@@ -135,6 +135,10 @@ export default class Grid extends React.Component {
 					</React.Fragment>
 				)}
 				tools={tools}
+				moveTabs={(from, to) => {
+					panel.swapPanes(from, to);
+					this.setLayout(this.state.layout);
+				}}
 			/>
 		);
 	}
