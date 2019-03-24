@@ -47,5 +47,6 @@ export default {
 	displayName: 'spellName',
 	description: 'spellDesc',
 	id: 'spellID',
+	endpoint: '/api/search/spells',
 	fields: 'spellHigherLevelDesc,spellRange,duration,castingTime,spellDesc,componentV,componentM,componentS,spellMaterial,ritual,concentration',
 };

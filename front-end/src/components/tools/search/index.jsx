@@ -15,7 +15,6 @@ export default class SearchTool extends ToolBase {
 		view: 'list',
 		results: [],
 		type: 'spells',
-		endpoint: '/api/search/spells',
 		query: '',
 		loadingQuery: false,
 		result: {},
@@ -23,8 +22,8 @@ export default class SearchTool extends ToolBase {
 
 	search = debounce(
 		async () => {
-			const { endpoint, query, type } = this.state;
-			const results = await get(`${endpoint}?query=${query}&fields=${formats[type].fields}`);
+			const { query, type } = this.state;
+			const results = await get(`${formats[type].endpoint}?query=${query}&fields=${formats[type].fields}`);
 			this.setState({ results, loadingQuery: false });
 		},
 		250
