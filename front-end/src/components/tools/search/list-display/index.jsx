@@ -20,11 +20,6 @@ export default class SearchListDisplay extends React.Component {
 		loadingQuery: PropTypes.bool,
 	}
 
-	componentDidMount() {
-		const { query, onQueryChange } = this.props;
-		onQueryChange(query);
-	}
-
 	mapResult = (result, index) => {
 		const { resultFormat, onNavigateToResult } = this.props;
 
