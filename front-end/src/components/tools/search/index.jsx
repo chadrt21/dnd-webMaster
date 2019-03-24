@@ -1,11 +1,12 @@
 import React from 'react';
 import ToolBase from '../ToolBase';
 
-import SearchListDisplay from './search-list-display';
-import SearchResultDisplay from './search-result-display';
+import SearchListDisplay from './list-display';
+import SearchResultDisplay from './result-display';
 
 import { get } from 'Utility/fetch';
 import debounce from 'Utility/debounce';
+import formats from './search-types';
 
 import styles from './styles.less';
 
@@ -13,28 +14,7 @@ export default class SearchTool extends ToolBase {
 	state = {
 		view: 'list',
 		results: [],
-		resultFormat: {
-			image: 'none',
-			subHeadings: [
-				{
-					key: 'spellRange',
-					display: 'Range',
-					includeInPreview: true,
-				},
-				{
-					key: 'duration',
-					display: 'Duration',
-					includeInPreview: true,
-				},
-				{
-					key: 'castingTime',
-					display: 'Casting Time',
-				},
-			],
-			displayName: 'spellName',
-			description: 'spellDesc',
-		},
-		type: 'spell',
+		type: 'spells',
 		endpoint: '/api/search/spells',
 		query: '',
 		loadingQuery: false,
@@ -57,7 +37,7 @@ export default class SearchTool extends ToolBase {
 		const {
 			view,
 			results,
-			resultFormat,
+			type,
 			query,
 			loadingQuery,
 		} = this.state;
@@ -68,7 +48,7 @@ export default class SearchTool extends ToolBase {
 					<SearchListDisplay
 						onQueryChange={this.onQueryChange}
 						query={query}
-						resultFormat={resultFormat}
+						resultFormat={formats[type]}
 						results={results}
 						loadingQuery={loadingQuery}
 					/>

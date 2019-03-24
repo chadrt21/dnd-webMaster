@@ -6,7 +6,7 @@ import {
 	Spinner,
 } from '@blueprintjs/core';
 
-import SearchListItem from '../search-list-item';
+import SearchListItem from '../list-item';
 
 import styles from './styles.less';
 
@@ -32,7 +32,7 @@ export default class SearchListDisplay extends React.Component {
 				result={result}
 				resultFormat={resultFormat}
 				index={index}
-				key={result.spellID}
+				key={result[resultFormat.id]}
 			/>
 		);
 	}
