@@ -18,6 +18,7 @@ export default class SearchTool extends ToolBase {
 		endpoint: '/api/search/spells',
 		query: '',
 		loadingQuery: false,
+		result: {},
 	}
 
 	search = debounce(
@@ -32,6 +33,19 @@ export default class SearchTool extends ToolBase {
 	onQueryChange = query => {
 		this.setState({ query, loadingQuery: true }, this.search);
 	}
+
+	onNavigateToResult = result => {
+		this.setState({
+			view: 'result',
+			result,
+		});
+	}
+
+	onNavigateBack = () => {
+		this.setState({
+			view: 'list',
+		});
+	}
 	
 	render() {
 		const {
@@ -40,6 +54,7 @@ export default class SearchTool extends ToolBase {
 			type,
 			query,
 			loadingQuery,
+			result,
 		} = this.state;
 
 		if (view === 'list') {
@@ -51,6 +66,7 @@ export default class SearchTool extends ToolBase {
 						resultFormat={formats[type]}
 						results={results}
 						loadingQuery={loadingQuery}
+						onNavigateToResult={this.onNavigateToResult}
 					/>
 				</div>
 			);
@@ -59,7 +75,9 @@ export default class SearchTool extends ToolBase {
 		return (
 			<div className={styles.root}>
 				<SearchResultDisplay
-
+					onNavigateBack={this.onNavigateBack}
+					result={result}
+					resultFormat={formats[type]}
 				/>
 			</div>
 		);

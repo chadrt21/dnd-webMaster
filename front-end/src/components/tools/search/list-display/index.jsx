@@ -16,6 +16,7 @@ export default class SearchListDisplay extends React.Component {
 		results: PropTypes.array.isRequired,
 		resultFormat: PropTypes.object.isRequired,
 		query: PropTypes.string.isRequired,
+		onNavigateToResult: PropTypes.func.isRequired,
 		loadingQuery: PropTypes.bool,
 	}
 
@@ -25,7 +26,7 @@ export default class SearchListDisplay extends React.Component {
 	}
 
 	mapResult = (result, index) => {
-		const { resultFormat } = this.props;
+		const { resultFormat, onNavigateToResult } = this.props;
 
 		return (
 			<SearchListItem
@@ -33,6 +34,7 @@ export default class SearchListDisplay extends React.Component {
 				resultFormat={resultFormat}
 				index={index}
 				key={result[resultFormat.id]}
+				onNavigateToResult={() => onNavigateToResult(result)}
 			/>
 		);
 	}

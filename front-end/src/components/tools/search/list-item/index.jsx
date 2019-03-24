@@ -12,6 +12,7 @@ export default class SearchListItem extends React.Component {
 		result: PropTypes.object.isRequired,
 		resultFormat: PropTypes.object.isRequired,
 		index: PropTypes.number.isRequired,
+		onNavigateToResult: PropTypes.func.isRequired,
 	}
 
 	mapSubtitle = subTitle => {
@@ -35,16 +36,19 @@ export default class SearchListItem extends React.Component {
 	}
 
 	render() {
-		const { result, resultFormat, index } = this.props;
+		const { result, resultFormat, index, onNavigateToResult } = this.props;
 
 		return (
-			<div className={classNames(
-				styles.item,
-				index % 2 === 1 ? styles.dark : null
-			)}>
-				<Title fontSize={28} className={styles.title}>{result[resultFormat.displayName]}</Title>
+			<div
+				className={classNames(
+					styles.item,
+					index % 2 === 1 ? styles.dark : null
+				)}
+				onClick={onNavigateToResult}
+			>
+				<Title fontSize={22} className={styles.title}>{result[resultFormat.displayName]}</Title>
 				<div className={styles.subtitleContainer}>
-					{resultFormat.subHeadings.map(this.mapSubtitle)}
+					{resultFormat.data.map(this.mapSubtitle)}
 				</div>
 				<p className={styles.description}>{result[resultFormat.description]}</p>
 			</div>

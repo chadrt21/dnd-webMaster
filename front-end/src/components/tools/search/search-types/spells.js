@@ -1,6 +1,6 @@
 export default {
 	image: 'none',
-	subHeadings: [
+	data: [
 		{
 			key: 'spellRange',
 			display: 'Range',
@@ -24,9 +24,28 @@ export default {
 			].filter(spell => spell).join(', ').trim() || 'None',
 			includeInPreview: true,
 		},
+		{
+			key: 'spellMaterial',
+			display: 'Material',
+			hideOnNullValue: true,
+		},
+		{
+			display: 'Ritual',
+			getValue: spell => spell.ritual ? 'Yes' : 'No',
+		},
+		{
+			display: 'Concentration',
+			getValue: spell => spell.concentration ? 'Yes' : 'No',
+		},
+		{
+			key: 'spellHigherLevelDesc',
+			display: 'At Higher Level',
+			type: 'block',
+			hideOnNullValue: true,
+		},
 	],
 	displayName: 'spellName',
 	description: 'spellDesc',
 	id: 'spellID',
-	fields: 'spellRange,duration,castingTime,spellDesc,componentV,componentM,componentS',
+	fields: 'spellHigherLevelDesc,spellRange,duration,castingTime,spellDesc,componentV,componentM,componentS,spellMaterial,ritual,concentration',
 };
