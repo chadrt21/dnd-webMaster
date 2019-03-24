@@ -12,11 +12,13 @@ import {
 } from '@blueprintjs/core';
 
 import Title from '../../title';
-import SortableItem from '../../sortable-item';
+import createSortableItem from '../../sortable-item';
 
 import classNames from 'Utility/classNames';
 
 import styles from './styles.less';
+
+const SortableItem = createSortableItem('SAVED_LAYOUT');
 
 export default class EditLayoutsDialog extends React.Component {
 	static propTypes = {
