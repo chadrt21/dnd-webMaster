@@ -24,7 +24,12 @@ export default class SearchListItem extends React.Component {
 		return (
 			<span className={styles.subtitle}>
 				<span className={styles.subtitleKey}>{subTitle.display}</span>
-				<span className={styles.subtitleValue}>{result[subTitle.key]}</span>
+				<span className={styles.subtitleValue}>{
+					subTitle.getValue ?
+						subTitle.getValue(result)
+						:
+						result[subTitle.key]
+				}</span>
 			</span>
 		);
 	}

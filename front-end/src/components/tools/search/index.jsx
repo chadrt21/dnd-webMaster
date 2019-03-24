@@ -22,8 +22,8 @@ export default class SearchTool extends ToolBase {
 
 	search = debounce(
 		async () => {
-			const { endpoint, query } = this.state;
-			const results = await get(`${endpoint}?query=${query}&fields=spellRange,duration,castingTime,spellDesc`);
+			const { endpoint, query, type } = this.state;
+			const results = await get(`${endpoint}?query=${query}&fields=${formats[type].fields}`);
 			this.setState({ results, loadingQuery: false });
 		},
 		250
