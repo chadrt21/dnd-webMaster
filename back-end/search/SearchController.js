@@ -62,7 +62,7 @@ export const search = ({
 			${whereSegment.length > 0 ? `WHERE ${whereSegment.join(' AND ')}` : ''}
 			ORDER BY ${nameColumn}
 			${countSegment}
-			
+
 		`,
 		{
 			query: `%${query}%`,
@@ -76,49 +76,48 @@ export const search = ({
 };
 
 export const globalSearch = async (path, query, user, connection) => {
-    const equipmentResults = await search({ 
-        tableName: 'equipment', 
-        idColumn: 'equipmentID', 
-        nameColumn: 'equipmentName' 
-    })(path, query, user, connection)
+	const equipmentResults = await search({
+		tableName: 'equipment',
+		idColumn: 'equipmentID',
+		nameColumn: 'equipmentName',
+	})(path, query, user, connection);
 
-    const spellResults = await search({
-        tableName: 'spell',
-        idColumn: 'spellID',
-        nameColumn: 'spellName'
-    })(path, query, user, connection)
-    
-    const raceResult = await search({
-        tableName: 'races',
-        idColumn: 'raceID',
-        nameColumn: 'raceName'
-    })(path, query, user, connection)
-    
-    const characterResult = await search({
-        tableName: 'Chacacter',
-        idColumn: 'characterID',
-        nameColumn: 'characterName'
-    })(path, query, user, connection)
-    
-    const plotResult = await search({
-        tableName: 'PlotPoint',
-        idColumn: 'plotPointID',
-        nameColumn: 'plotPointTitle'
-    })(path, query, user, connection)
-    
-    const klassResult = await search({
-        tableName: 'Klass',
-        idColumn: 'klassID',
-        nameColumn: 'klassName'
-    })(path, query, user, connection)
-    
+	const spellResults = await search({
+		tableName: 'spell',
+		idColumn: 'spellID',
+		nameColumn: 'spellName',
+	})(path, query, user, connection);
 
-  return { 
-        equipment: equipmentResults, 
-        spell: spellResults, 
-        race: raceName,
-        character: characterResult,
-        plot: plotResult,
-        klass: klassResult
-    } // And you would return the other results as well
-}
+	const raceResult = await search({
+		tableName: 'races',
+		idColumn: 'raceID',
+		nameColumn: 'raceName',
+	})(path, query, user, connection);
+
+	const characterResult = await search({
+		tableName: 'Chacacter',
+		idColumn: 'characterID',
+		nameColumn: 'characterName',
+	})(path, query, user, connection);
+
+	const plotResult = await search({
+		tableName: 'PlotPoint',
+		idColumn: 'plotPointID',
+		nameColumn: 'plotPointTitle',
+	})(path, query, user, connection);
+
+	const klassResult = await search({
+		tableName: 'Klass',
+		idColumn: 'klassID',
+		nameColumn: 'klassName',
+	})(path, query, user, connection);
+
+	return {
+		equipment: equipmentResults,
+		spell: spellResults,
+		race: raceResult,
+		character: characterResult,
+		plot: plotResult,
+		klass: klassResult,
+	};
+};

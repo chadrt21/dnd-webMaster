@@ -14,7 +14,7 @@ export default app => {
 			}),
 			true
 		));
-	
+
 	app.route('/api/search/proficiencies')
 		.get(asRouteFunction(
 			searchController.search({
@@ -44,7 +44,7 @@ export default app => {
 			}),
 			true
 		));
-	
+
 	app.route('/api/search/equipment')
 		.get(asRouteFunction(
 			searchController.search({
@@ -54,10 +54,10 @@ export default app => {
 			}),
 			true
 		));
-		
+
 	app.route('/api/search/global')
-	    .get(asRouteFunction(asRouteFunction(
-	        searchController/globalSearch, 
-	        true
-	    );
+		.get(asRouteFunction(
+			searchController/globalSearch,
+			true
+		));
 };
