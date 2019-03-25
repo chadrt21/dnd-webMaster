@@ -3,7 +3,12 @@ displaying the active tab and allowing user to switch between tabs */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ResizeSensor } from '@blueprintjs/core';
+import {
+	ResizeSensor,
+	Menu,
+	MenuItem,
+	ContextMenu,
+} from '@blueprintjs/core';
 
 import Tab from './DraggableTab';
 import DropTargetOverlay from './DropTargetOverlay';
@@ -110,6 +115,16 @@ export default class ContentPanel extends React.Component {
 		});
 	}
 
+	renderContextMenu = event => {
+		ContextMenu.show(
+			<Menu>
+				<MenuItem text="Insert New Tool" />
+				<MenuItem text="Duplicate Active Tab" />
+			</Menu>,
+			{ left: event.clientX, top: event.clientY }
+		);
+	}
+
 	render() {
 		const { panes, dropPaneIntoPanel, movePane, renderContent, panelId } = this.props;
 		const { currentTab, width, height } = this.state;
@@ -125,6 +140,7 @@ export default class ContentPanel extends React.Component {
 								});
 							}}
 							panelId={panelId}
+							renderContextMenu={this.renderContextMenu}
 						>
 							{panes && panes.map(this.mapTabs)}
 						</TabContainer>
