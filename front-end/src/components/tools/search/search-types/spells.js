@@ -44,6 +44,31 @@ export default {
 			hideOnNullValue: true,
 		},
 	],
+	filters: [
+		{
+			display: 'Description:',
+			key: 'spellDesc', // Must be unique
+			type: 'text',
+		},
+		{
+			display: 'Material Component:',
+			key: 'componentM',
+			type: 'boolean',
+			getFilter: value => value ? 'componentM:1' : 'componentM:0',
+		},
+		{
+			display: 'Verbal Component:',
+			key: 'componentV',
+			type: 'boolean',
+			getFilter: value => value ? 'componentV:1' : 'componentV:0',
+		},
+		{
+			display: 'Somatic Component:',
+			key: 'componentS',
+			type: 'boolean',
+			getFilter: value => value ? 'componentS:1' : 'componentS:0',
+		},
+	],
 	displayName: 'spellName',
 	description: 'spellDesc',
 	id: 'spellID',

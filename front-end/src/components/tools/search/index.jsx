@@ -25,6 +25,8 @@ export default class SearchTool extends ToolBase {
 		count: 10,
 		nextPageLoading: false,
 		continueInfiniteScroll: true,
+		activeFilters: {},
+		filterOpen: false,
 	}
 
 	componentDidMount() {
@@ -32,10 +34,43 @@ export default class SearchTool extends ToolBase {
 		this.search();
 	}
 
+	toggleFilterOpen = () => {
+		this.setState(({ filterOpen }) => ({ filterOpen: !filterOpen }));
+	}
+
+	mapFilters = data => {
+		const { activeFilters } = this.state;
+		const value = activeFilters[data.key];
+		if (!value && value !== false && value !== 0) {
+			return '';
+		}
+		
+		if (data.getFilter) {
+			return data.getFilter(value);
+		}
+		
+		return `${data.key}:${value}`;
+	}
+
+	onFilterChange = (filterKey, value) => {
+		this.setState(
+			({ activeFilters }) => ({
+				activeFilters: {
+					...activeFilters,
+					[filterKey]: value,
+				},
+				count: 10,
+			}),
+			this.search
+		);
+	}
+
 	search = debounce(
 		async () => {
 			const { query, type, count } = this.state;
-			const results = await get(`${formats[type].endpoint}?query=${query}&fields=${formats[type].fields}&count=${count}`);
+			const results = await get(
+				`${formats[type].endpoint}?query=${query}&fields=${formats[type].fields}&count=${count}&filter=${formats[type].filters.map(this.mapFilters).filter(value => value)}`
+			);
 			const continueInfiniteScroll = results.length === count;
 
 			this.setState({
@@ -93,6 +128,8 @@ export default class SearchTool extends ToolBase {
 			loadingQuery,
 			result,
 			nextPageLoading,
+			filterOpen,
+			activeFilters,
 		} = this.state;
 
 		if (view === 'list') {
@@ -106,6 +143,10 @@ export default class SearchTool extends ToolBase {
 							results={results}
 							loadingQuery={loadingQuery}
 							onNavigateToResult={this.onNavigateToResult}
+							filterOpen={filterOpen}
+							toggleFilterOpen={this.toggleFilterOpen}
+							activeFilters={activeFilters}
+							onFilterChange={this.onFilterChange}
 						/>
 						{nextPageLoading ?
 							<div className={styles.spinnerContainer}>

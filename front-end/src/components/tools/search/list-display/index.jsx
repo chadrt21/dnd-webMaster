@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 import {
 	InputGroup,
 	Spinner,
+	Collapse,
+	Button,
 } from '@blueprintjs/core';
 
 import SearchListItem from '../list-item';
+import Filter from '../filter';
 
 import styles from './styles.less';
 
@@ -17,6 +20,10 @@ export default class SearchListDisplay extends React.Component {
 		resultFormat: PropTypes.object.isRequired,
 		query: PropTypes.string.isRequired,
 		onNavigateToResult: PropTypes.func.isRequired,
+		onFilterChange: PropTypes.func.isRequired,
+		toggleFilterOpen: PropTypes.func.isRequired,
+		activeFilters: PropTypes.object,
+		filterOpen: PropTypes.bool,
 		loadingQuery: PropTypes.bool,
 	}
 
@@ -40,6 +47,11 @@ export default class SearchListDisplay extends React.Component {
 			onQueryChange,
 			loadingQuery,
 			results,
+			filterOpen,
+			toggleFilterOpen,
+			activeFilters,
+			onFilterChange,
+			resultFormat,
 		} = this.props;
 
 		return (
@@ -49,16 +61,32 @@ export default class SearchListDisplay extends React.Component {
 						value={query}
 						onChange={event => onQueryChange(event.target.value)}
 						rightElement={
-							loadingQuery ?
-								<Spinner size={20} />
-								:
-								null
+							<div style={{ display: 'flex' }}>
+								{loadingQuery ?
+									<Spinner size={20} />
+									:
+									null
+								}
+								<Button
+									className={styles.button}
+									minimal
+									icon="settings"
+									onClick={toggleFilterOpen}
+								/>
+							</div>
 						}
 						leftIcon="search"
 						placeholder="Search..."
 						big
 					/>
 				</div>
+				<Collapse isOpen={filterOpen}>
+					<Filter
+						activeFilters={activeFilters}
+						onFilterChange={onFilterChange}
+						resultFormat={resultFormat}
+					/>
+				</Collapse>
 				{results.map(this.mapResult)}
 			</div>
 		);
