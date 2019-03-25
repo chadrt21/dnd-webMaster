@@ -112,6 +112,18 @@ export const globalSearch = async (path, query, user, connection) => {
 		nameColumn: 'klassName',
 	})(path, query, user, connection);
 
+	const subklassResult = await search({
+		tableName: 'Subklass',
+		idColumn: 'subklassID',
+		nameColumn: 'subklassName',
+	})(path, query, user, connection);
+
+	const featResult = await search({
+		tableName: 'Feat',
+		idColumn: 'featID',
+		nameColumn: 'featName',
+	})(path, query, user, connection);
+
 	return {
 		equipment: equipmentResults,
 		spell: spellResults,
@@ -119,5 +131,7 @@ export const globalSearch = async (path, query, user, connection) => {
 		character: characterResult,
 		plot: plotResult,
 		klass: klassResult,
+		subklass: subklassResult,
+		feat: featResult,
 	};
 };
