@@ -45,6 +45,7 @@ export default {
 	],
 	displayName: 'equipmentName',
 	description: 'equipmentDesc',
+	typeDisplayName: 'Equipment',
 	id: 'equipmentID',
 	endpoint: '/api/search/equipment',
 	fields: 'equipmentName,equipmentDesc,categoryName,subcategoryName,equipmentWeight,costQuantity,costUnit,speedQuantity,speedUnit',

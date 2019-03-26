@@ -6,10 +6,16 @@ import {
 	Spinner,
 	Collapse,
 	Button,
+	Popover,
+	Menu,
+	MenuItem,
+	Position,
 } from '@blueprintjs/core';
 
 import SearchListItem from '../list-item';
 import Filter from '../filter';
+
+import typesObject from '../search-types';
 
 import styles from './styles.less';
 
@@ -22,6 +28,7 @@ export default class SearchListDisplay extends React.Component {
 		onNavigateToResult: PropTypes.func.isRequired,
 		onFilterChange: PropTypes.func.isRequired,
 		toggleFilterOpen: PropTypes.func.isRequired,
+		onTypeChange: PropTypes.func.isRequired,
 		activeFilters: PropTypes.object,
 		filterOpen: PropTypes.bool,
 		loadingQuery: PropTypes.bool,
@@ -37,6 +44,16 @@ export default class SearchListDisplay extends React.Component {
 				index={index}
 				key={result[resultFormat.id]}
 				onNavigateToResult={() => onNavigateToResult(result)}
+			/>
+		);
+	}
+
+	mapMenuItem = type => {
+		const { onTypeChange } = this.props;
+		return (
+			<MenuItem
+				text={typesObject[type].typeDisplayName}
+				onClick={() => onTypeChange(type)}
 			/>
 		);
 	}
@@ -67,12 +84,31 @@ export default class SearchListDisplay extends React.Component {
 									:
 									null
 								}
-								<Button
-									className={styles.button}
-									minimal
-									icon="settings"
-									onClick={toggleFilterOpen}
-								/>
+								{resultFormat.filters ?
+									<Button
+										className={styles.button}
+										minimal
+										icon="settings"
+										onClick={toggleFilterOpen}
+									/>
+									:
+									null
+								}
+								<Popover
+									position={Position.BOTTOM_LEFT}
+									modifiers={{ arrow: false }}
+								>
+									<Button
+										rightIcon="caret-down"
+										minimal
+										className={styles.button}
+									>
+										{resultFormat.typeDisplayName}
+									</Button>
+									<Menu>
+										{Object.keys(typesObject).map(this.mapMenuItem)}
+									</Menu>
+								</Popover>
 							</div>
 						}
 						leftIcon="search"
@@ -80,13 +116,17 @@ export default class SearchListDisplay extends React.Component {
 						big
 					/>
 				</div>
-				<Collapse isOpen={filterOpen}>
-					<Filter
-						activeFilters={activeFilters}
-						onFilterChange={onFilterChange}
-						resultFormat={resultFormat}
-					/>
-				</Collapse>
+				{resultFormat.filters ?
+					<Collapse isOpen={filterOpen}>
+						<Filter
+							activeFilters={activeFilters}
+							onFilterChange={onFilterChange}
+							resultFormat={resultFormat}
+						/>
+					</Collapse>
+					:
+					null
+				}
 				{results.map(this.mapResult)}
 			</div>
 		);

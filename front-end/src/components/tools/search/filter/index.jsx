@@ -70,7 +70,7 @@ export default class Filter extends React.Component {
 
 		return (
 			<Card className={styles.root}>
-				{resultFormat.filters.map(this.mapFilter)}
+				{resultFormat.filters ? resultFormat.filters.map(this.mapFilter) : <span>There are no filters</span>}
 			</Card>
 		);
 	}

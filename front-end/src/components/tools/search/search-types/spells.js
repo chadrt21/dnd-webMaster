@@ -70,6 +70,7 @@ export default {
 		},
 	],
 	displayName: 'spellName',
+	typeDisplayName: 'Spells',
 	description: 'spellDesc',
 	id: 'spellID',
 	endpoint: '/api/search/spells',

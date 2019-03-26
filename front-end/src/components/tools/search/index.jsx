@@ -69,7 +69,7 @@ export default class SearchTool extends ToolBase {
 		async () => {
 			const { query, type, count } = this.state;
 			const results = await get(
-				`${formats[type].endpoint}?query=${query}&fields=${formats[type].fields}&count=${count}&filter=${formats[type].filters.map(this.mapFilters).filter(value => value)}`
+				`${formats[type].endpoint}?query=${query}&fields=${formats[type].fields}&count=${count}&filter=${formats[type].filters ? formats[type].filters.map(this.mapFilters).filter(value => value) : ''}`
 			);
 			const continueInfiniteScroll = results.length === count;
 
@@ -118,6 +118,17 @@ export default class SearchTool extends ToolBase {
 			}), this.search);
 		}
 	}
+
+	onTypeChange = type => {
+		this.setState({
+			type,
+			query: '',
+			activeFilters: {},
+			result: {},
+			results: [],
+			count: 10,
+		}, this.search);
+	}
 	
 	render() {
 		const {
@@ -147,6 +158,7 @@ export default class SearchTool extends ToolBase {
 							toggleFilterOpen={this.toggleFilterOpen}
 							activeFilters={activeFilters}
 							onFilterChange={this.onFilterChange}
+							onTypeChange={this.onTypeChange}
 						/>
 						{nextPageLoading ?
 							<div className={styles.spinnerContainer}>
