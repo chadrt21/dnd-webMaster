@@ -11,6 +11,20 @@ export default app => {
 				tableName: 'spell',
 				nameColumn: 'spellName',
 				idColumn: 'spellID',
+				joins: [
+					'JOIN spellschool ON spellschool.schoolID = spell.schoolID',
+				],
+				fieldNameMap: {
+					'klasses': `(
+						SELECT GROUP_CONCAT(klassName SEPARATOR ', ')
+						FROM klass
+						WHERE klassID IN (
+							SELECT klassID
+							FROM spellklasslist
+							WHERE spellklasslist.spellID = spell.spellID
+						)
+					) AS klasses`,
+				},
 			}),
 			true
 		));

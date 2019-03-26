@@ -6,6 +6,8 @@ export const search = ({
 	tableName,
 	nameColumn,
 	idColumn,
+	joins, // Optional
+	fieldNameMap, // Optional
 }) => async (path, queryString, user, connection) => {
 	const {
 		query,
@@ -53,22 +55,38 @@ export const search = ({
 
 	// If additional fields are required create an array to include in the query
 	let fieldsArray = [];
+	const customFields = [];
 	if (fields) {
-		fieldsArray = fields.split(',');
+		fieldsArray = 
+			fields
+				.split(',')
+				.map(field => {
+					if (fieldNameMap && fieldNameMap[field]) {
+						customFields.push(fieldNameMap[field]);
+						return null;
+					}
+					return field;
+				})
+				.filter(field => field);
 	}
 
 	// Now we actually execute the query
 	const results = await promiseQuery(
 		connection,
 		`
-			SELECT
-				${idColumn}, ${nameColumn}${fields ? ', :(fieldsArray)' : '' }
-			FROM
-				${tableName}
+			SELECT * FROM (
+				SELECT
+					${idColumn},
+					${nameColumn}
+					${fieldsArray.length > 0 ? ', :(fieldsArray)' : '' }
+					${customFields.length > 0 ? `, ${customFields.join(',')}` : ''}
+				FROM
+					${tableName}
+					${joins ? joins.join(' ') : ''}
+			) T
 			${whereSegment.length > 0 ? `WHERE ${whereSegment.join(' AND ')}` : ''}
 			ORDER BY ${nameColumn}
 			${countSegment}
-			
 		`,
 		{
 			query: `%${query}%`,
