@@ -48,7 +48,7 @@ export default [
 	},
 	{
 		name: 'diceRoller',
-		displayName: 'Dice Roll',
+		displayName: 'Dice Roll Tool',
 		defaultLabel: 'Dice Roller',
 		component: diceRoller,
 	},
