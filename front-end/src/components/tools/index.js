@@ -1,6 +1,7 @@
 // Import your component here
 import ExampleTool from './example';
 import Character from './character';
+import SearchTool from './search';
 
 /**
  * Add an object to the array below in the following format:
@@ -30,5 +31,11 @@ export default [
 		displayName: 'Character Tool',
 		defaultLabel: 'Character',
 		component: Character,
+	},
+	{
+		name: 'search',
+		displayName: 'Search Tool',
+		defaultLabel: 'Search',
+		component: SearchTool,
 	},
 ];
