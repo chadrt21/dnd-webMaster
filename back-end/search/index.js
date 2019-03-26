@@ -68,4 +68,21 @@ export default app => {
 			}),
 			true
 		));
+
+	app.route('/api/search/feats')
+		.get(asRouteFunction(
+			searchController.search({
+				tableName: 'feat',
+				idColumn: 'featID',
+				nameColumn: 'featName',
+				fieldNameMap: {
+					'klassName': `(
+						SELECT GROUP_CONCAT(klassName SEPARATOR ', ') FROM klass WHERE klass.klassID IN (
+							SELECT klassID FROM featklasslist WHERE featklasslist.featID = feat.featID
+						)
+					) AS klassName`,
+				},
+			}),
+			true
+		));
 };
