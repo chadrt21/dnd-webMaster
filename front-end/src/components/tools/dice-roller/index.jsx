@@ -1,26 +1,20 @@
-/** 
- * You can store that in state
-
-So when your making your dice roller, you need to ask two questions (it helps to pretend to be the component):
-1. What do I need to know about myself to render?
-2. What do I need to know about my context to render?
-So the dice roller would need to know three things in order to render
-1. The number of dice rolling
-2. The number of sides on said dice
-3. The result of the last roll
-It doesn't need to know anything about it's context and can store all of that in state
-*/
+/*
+ * @description This component generates the dice rolling tool
+ * @author Ashley Cheah
+ */
 
 import React from 'react';
 import ToolBase from '../ToolBase';
-//import Button from '@blueprintjs/core';
 import styles from './styles.less';
 //<Component className={styles.yourClassName} />
 
+import {
+	Alignment,
+	Button,
+	ButtonGroup,	
+} from '@blueprintjs/core';
 
-const h1 = () => (
-	<div className={styles.h1}>My Header Text</div>
-);
+
  
 export default class diceroller extends ToolBase{
 	constructor(props){
@@ -52,30 +46,15 @@ export default class diceroller extends ToolBase{
 		return(
 			<div className = "diceRoller"> 
 				<h1 className={styles.h1}> Dice Roller </h1>
-				<div id = "buttonClick">
-					<button id="generate" onClick={ () => this.maxChange(4) }>
-						Roll a d4
+				<div className="dice-button-group">
+					<button type="button" className="rollButton" onClick={ () => this.maxChange(4) }>
+						Roll
 					</button>
-					<button id="generate" onClick={ () => this.maxChange(6) }>
-						Roll a d6
-					</button>
-					<button id="generate" onClick={ () => this.maxChange(8) }>
-						Roll a d8
-					</button>
-					<button id="generate" onClick={ () => this.maxChange(10) }>
-						Roll a d10
-					</button>
-					<button id="generate20" onClick={ () => this.maxChange(12) }>
-						Roll a d12
-					</button>
-					<button id="generate20" onClick={ () => this.maxChange(20) }>
-						Roll a d20
-					</button>
-					<button id="generate" onClick={ () => this.maxChange(100) }>
-						Roll a d100
+					<button type="button" className="icon-caret-down"  onClick={ () => this.maxChange(6) }>
+						caret here
 					</button>
 				</div>
-				<div id = "outputContainer"> 
+				<div className={styles.dice} id = "outputContainer"> 
 					<p id="rNum">{ this.state.number }</p>
 				</div> 
 			</div>
