@@ -27,11 +27,16 @@ export default class SearchTool extends ToolBase {
 		continueInfiniteScroll: true,
 		activeFilters: {},
 		filterOpen: false,
+		resourceID: null,
 	}
 
 	componentDidMount() {
 		super.componentDidMount();
 		this.search();
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		console.log(prevState.resourceID, this.state.resourceID);
 	}
 
 	toggleFilterOpen = () => {

@@ -40,7 +40,7 @@ export default class RichTextEditor extends React.Component {
 		if (event.target.parentElement.classList.contains('ql-mention-blot')) {
 			const { insertPaneIntoPanel } = this.props;
 			const value = MentionBlot.value(event.target.parentElement);
-			insertPaneIntoPanel('example', { clickValue: value });
+			insertPaneIntoPanel('search', { type: value.type, resourceID: value.id });
 		}
 	}
 

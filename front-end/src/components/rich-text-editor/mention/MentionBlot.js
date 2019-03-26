@@ -11,6 +11,7 @@ export default Quill => {
 			/* eslint-disable-next-line */
 			node.innerText = `@${value.name}`;
 			node.setAttribute('data-resource-id', value.id);
+			node.setAttribute('data-resource-type', value.type || 'spells');
 			return node;
 		}
 
@@ -20,9 +21,11 @@ export default Quill => {
 				name = 'Name not found';
 			}
 			const id = node.getAttribute('data-resource-id');
+			const type = node.getAttribute('data-resource-type');
 			return {
 				id,
 				name,
+				type,
 			};
 		}
 	}

@@ -206,6 +206,7 @@ export default class Mention {
 		this.quill.insertEmbed(this.atIndex - 1, 'mention', {
 			name: this.results[index][this.nameKey],
 			id: this.results[index][this.idKey],
+			type: 'spells',
 		});
 		this.quill.insertText(this.atIndex, ' ');
 		this.quill.setSelection(this.atIndex + 1, 0);
