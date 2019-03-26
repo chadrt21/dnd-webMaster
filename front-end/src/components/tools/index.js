@@ -2,6 +2,7 @@
 import ExampleTool from './example';
 import Character from './character';
 import SearchTool from './search';
+import Notes from './notes';
 
 /**
  * Add an object to the array below in the following format:
@@ -37,5 +38,11 @@ export default [
 		displayName: 'Search Tool',
 		defaultLabel: 'Search',
 		component: SearchTool,
+	},
+	{
+		name: 'notes',
+		displayName: 'Notes Tool',
+		defaultLabel: 'Notes',
+		component: Notes,
 	},
 ];

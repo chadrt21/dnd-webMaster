@@ -7,6 +7,7 @@ import {
 
 import SearchListDisplay from './list-display';
 import SearchResultDisplay from './result-display';
+import { displayError } from '../../toast';
 
 import { get } from 'Utility/fetch';
 import debounce from 'Utility/debounce';
@@ -27,11 +28,40 @@ export default class SearchTool extends ToolBase {
 		continueInfiniteScroll: true,
 		activeFilters: {},
 		filterOpen: false,
+		resourceID: null,
 	}
 
 	componentDidMount() {
 		super.componentDidMount();
+
+		const { setTabName } = this.props;
+		const { type } = this.state;
+
 		this.search();
+		setTabName(`${formats[type].typeDisplayName} Search`);
+	}
+
+	async componentDidUpdate() {
+		const {
+			type,
+			resourceID,
+		} = this.state;
+
+		if (resourceID) {
+			const { setTabName } = this.props;
+
+			try {
+				const result = await get(`${formats[type].endpoint}?id=${resourceID}&fields=${formats[type].fields}`);
+				setTabName(result[0][formats[type].displayName]);
+				this.setState({
+					result: result[0],
+					resourceID: null,
+					view: 'result',
+				});
+			} catch (err) {
+				displayError('We could not load your resource');
+			}
+		}
 	}
 
 	toggleFilterOpen = () => {
@@ -92,6 +122,10 @@ export default class SearchTool extends ToolBase {
 	}
 
 	onNavigateToResult = result => {
+		const { type } = this.state;
+		const { setTabName } = this.props;
+
+		setTabName(`${result[formats[type].displayName]}`);
 		this.setState({
 			view: 'result',
 			result,
@@ -99,6 +133,11 @@ export default class SearchTool extends ToolBase {
 	}
 
 	onNavigateBack = () => {
+		const { type } = this.state;
+		const { setTabName } = this.props;
+
+		setTabName(`${formats[type].typeDisplayName} Search`);
+
 		this.setState({
 			view: 'list',
 		});
@@ -120,6 +159,9 @@ export default class SearchTool extends ToolBase {
 	}
 
 	onTypeChange = type => {
+		const { setTabName } = this.props;
+
+		setTabName(`${formats[type].typeDisplayName} Search`);
 		this.setState({
 			type,
 			query: '',
