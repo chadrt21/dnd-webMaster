@@ -14,14 +14,15 @@ export default class List extends React.Component {
 		onItemSelected: PropTypes.func,
 		className: PropTypes.string,
 		leftComponent: PropTypes.node,
+		renderItem: PropTypes.func,
 	}
 	
 	mapListItem = (item, index) => {
-		const { onItemSelected, leftComponent } = this.props;
+		const { onItemSelected, leftComponent, renderItem } = this.props;
 		return (
 			<div key={index} className={styles.listRow} onClick={() => onItemSelected(item)}>
 				{leftComponent || null}
-				{item.name}
+				{renderItem ? renderItem(item) : item.name}
 			</div>
 		);
 	};

@@ -1,0 +1,22 @@
+@import '../../../../styles/colors.less';
+@import '../../../../styles/mixins.less';
+
+.root {
+	padding: 10px;
+	color: @text-color;
+
+	.title {
+		display: flex;
+		align-items: stretch;
+		margin-bottom: 2px;
+
+		.spinner {
+			margin-left: 15px;
+		}
+	}
+
+	.button {
+		margin-right: 10px;
+		.with-button-styles(@text-color);
+	}
+}

@@ -11,6 +11,7 @@ export const search = ({
 		query,
 		filter,
 		fields,
+		id,
 	} = queryString;
 
 	// Default count to 10 if it is not provided, if it is not a number then don't include a limit
@@ -24,7 +25,7 @@ export const search = ({
 	}
 
 	// Don't include a query condition in the where clause if there is no query provided (i.e. return all)
-	const whereSegment = [];
+	let whereSegment = [];
 	if (query) {
 		whereSegment.push(`${nameColumn} LIKE :query`);
 	}
@@ -43,6 +44,11 @@ export const search = ({
 				}
 			}
 		);
+	}
+
+	// If we want a specific id let's get it
+	if (id) {
+		whereSegment = [ `${idColumn} = :id` ];
 	}
 
 	// If additional fields are required create an array to include in the query
@@ -69,6 +75,7 @@ export const search = ({
 			...sqlFilterObject,
 			count: parseInt(count),
 			fieldsArray,
+			id,
 		}
 	);
 
