@@ -48,3 +48,37 @@
 		fill: #EFD8AC;
 	}
 }
+
+.with-max-lines(@line-count, @color) {
+	display: block;
+	-webkit-line-clamp: @line-count;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	text-overflow: ellipsis;
+	line-height: 1.3em;
+	overflow: hidden;
+
+	@-moz-document url-prefix() {
+		overflow: hidden;
+		position: relative;
+		max-height: 1.3em * @line-count;
+		&:before {
+			background-color: @color;
+			bottom: 0;
+			position: absolute;
+			right: 0;
+			float: right;
+			content: '\2026';
+			margin-left: -3rem;
+			width: 3rem;
+		}
+		&:after {
+			content: '';
+			background-color: @color;
+			position: absolute;
+			height: 50px;
+			width: 100%;
+			z-index: 1;
+		}
+	}
+}

@@ -3,6 +3,7 @@ export default class LayoutPane {
 	paneId = -1;
 	parent = null;
 	state = {};
+	tabName = null;
 
 	constructor(jsonModel, parent) {
 		if (!jsonModel.id && typeof jsonModel.id !== 'number') {
@@ -16,6 +17,9 @@ export default class LayoutPane {
 		}
 		if (jsonModel.state) {
 			this.state = jsonModel.state;
+		}
+		if (jsonModel.tabName) {
+			this.tabName = jsonModel.tabName;
 		}
 	}
 
@@ -37,6 +41,7 @@ export default class LayoutPane {
 
 		if (!ignoreState) {
 			obj.state = this.state;
+			obj.tabName = this.tabName;
 		}
 
 		return obj;

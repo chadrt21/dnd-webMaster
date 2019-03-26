@@ -2,10 +2,13 @@
 @import '../../styles/fonts.less';
 
 .root {
+	height: 100%;
+
 	.root-flex {
 		display: flex;
 		flex-direction: column;
 		justify-items: stretch;
+		height: 100%;
 	
 		.grid {
 			width: 100%;
@@ -87,6 +90,10 @@
 			&:hover {
 				background-color: #DACAAE;
 			}
+		}
+
+		&-dragging {
+			opacity: .5;
 		}
 
 		&-close {

@@ -1,0 +1,44 @@
+@import '../../../../styles/colors.less';
+@import '../../../../styles/mixins.less';
+
+.root {
+	color: @text-color;
+
+	.header {
+		display: flex;
+
+		.button {
+			.with-button-styles(@text-color);
+			margin-right: 12px;
+		}
+	}
+
+	.inline-data-container {
+		margin-bottom: 28px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		.inline-data {
+			margin: 4px 0;
+
+			.inline-data-key {
+				font-size: 12px;
+				margin-right: 5px;
+			}
+
+			.inline-data-value {
+				font-weight: bold;
+			}
+		}
+	}
+
+	.block-data-container {
+		margin: 8px 0 28px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}

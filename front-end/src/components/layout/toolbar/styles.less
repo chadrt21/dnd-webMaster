@@ -45,7 +45,7 @@
 	justify-content: center;
 	align-items: center;
 
-	.dialog-card {
+	.dialog-card, .dialog-card-edit-layouts {
 		width: 50%;
 		max-width: 400px;
 		background-color: @background-color-dark;
@@ -60,13 +60,72 @@
 			width: 100%;
 		}
 
-		.button-container {
+		.button-container, .button-container-edit-layouts {
 			display: flex;
 			justify-content: space-between;
 			margin-top: 12px;
+		}
 
-			.button-minimal {
-				.with-button-styles(@text-color);
+		.button-minimal {
+			.with-button-styles(@text-color);
+		}
+
+		.button-container-edit-layouts {
+			justify-content: flex-end;
+		}
+
+		.sortable-item {
+			margin: 0;
+			display: flex;
+			align-items: center;
+
+			.name {
+				color: @text-color;
+			}
+
+			.icon {
+				color: @text-color;
+
+				&.drag-handle {
+					margin-right: 8px;
+				}
+			}
+
+			.spacer {
+				flex-grow: 1;
+			}
+
+			.default-button {
+				display: none;
+				opacity: .75;
+
+				&.default-selected {
+					display: flex;
+					opacity: 1;
+				}
+			}
+
+			&:hover {
+				.default-button {
+					display: flex;
+				}
+			}
+		}
+	}
+
+	.dialog-card-edit-layouts {
+		min-height: fit-content;
+		max-height: 400px;
+		height: 50%;
+		display: flex;
+		flex-direction: column;
+
+		.sortable-item-container {
+			flex-grow: 1;
+
+			.sortable-item-content {
+				max-height: 100%;
+				overflow-y: auto;
 			}
 		}
 	}
