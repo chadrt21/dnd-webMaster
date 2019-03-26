@@ -5,6 +5,11 @@ import {
 	Card,
 	InputGroup,
 	Radio,
+	Popover,
+	Position,
+	Button,
+	Menu,
+	MenuItem,
 } from '@blueprintjs/core';
 
 import styles from './styles.less';
@@ -16,7 +21,18 @@ export default class Filter extends React.Component {
 		resultFormat: PropTypes.object.isRequired,
 	}
 
-	renderType = (type, key) => {
+	mapDropDownMenu = key => item => {
+		const { onFilterChange } = this.props;
+
+		return (
+			<MenuItem
+				text={item}
+				onClick={() => onFilterChange(key, item)}
+			/>
+		);
+	}
+
+	renderType = (type, key, options) => {
 		const { activeFilters, onFilterChange } = this.props;
 
 		if (type === 'text') {
@@ -51,6 +67,28 @@ export default class Filter extends React.Component {
 					/>
 				</React.Fragment>
 			);
+		} else if (type === 'dropdown') {
+			return (
+				<Popover
+					position={Position.BOTTOM_LEFT}
+					modifiers={{ arrow: false }}
+				>
+					<Button
+						minimal
+						rightIcon="caret-down"
+						className={styles.button}
+					>
+						{activeFilters[key] || <em>None</em>}
+					</Button>
+					<Menu>
+						<MenuItem
+							text={<em>None</em>}
+							onClick={() => onFilterChange(key, null)}
+						/>
+						{options.map(this.mapDropDownMenu(key))}
+					</Menu>
+				</Popover>
+			);
 		}
 
 		return (
@@ -61,7 +99,7 @@ export default class Filter extends React.Component {
 	mapFilter = data => (
 		<div className={styles.filter}>
 			<span className={styles.filterKey}>{data.display}</span>
-			{this.renderType(data.type, data.key)}
+			{this.renderType(data.type, data.key, data.options)}
 		</div>
 	);
 

@@ -2,6 +2,15 @@ export default {
 	image: 'none',
 	data: [
 		{
+			key: 'klasses',
+			display: 'Classes',
+			includeInPreview: true,
+		},
+		{
+			key: 'schoolName',
+			display: 'School',
+		},
+		{
 			key: 'spellRange',
 			display: 'Range',
 			includeInPreview: true,
@@ -68,11 +77,26 @@ export default {
 			type: 'boolean',
 			getFilter: value => value ? 'componentS:1' : 'componentS:0',
 		},
+		{
+			display: 'Class:',
+			key: 'klasses',
+			type: 'dropdown',
+			options: [
+				'Bard',
+				'Cleric',
+				'Druid',
+				'Paladin',
+				'Ranger',
+				'Sorcerer',
+				'Warlock',
+				'Wizard',
+			],
+		},
 	],
 	displayName: 'spellName',
 	typeDisplayName: 'Spells',
 	description: 'spellDesc',
 	id: 'spellID',
 	endpoint: '/api/search/spells',
-	fields: 'spellHigherLevelDesc,spellRange,duration,castingTime,spellDesc,componentV,componentM,componentS,spellMaterial,ritual,concentration',
+	fields: 'schoolName,klasses,spellHigherLevelDesc,spellRange,duration,castingTime,spellDesc,componentV,componentM,componentS,spellMaterial,ritual,concentration',
 };
