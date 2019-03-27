@@ -24,6 +24,7 @@ export default class ContentPanel extends React.Component {
 		tools: PropTypes.array.isRequired,
 		moveTabs: PropTypes.func.isRequired,
 		panelId: PropTypes.number.isRequired,
+		insertPaneIntoPanel: PropTypes.func.isRequired,
 		panes: PropTypes.array,
 		dropPaneIntoPanel: PropTypes.func,
 		movePane: PropTypes.func,
@@ -115,11 +116,39 @@ export default class ContentPanel extends React.Component {
 		});
 	}
 
+	mapToolMenuItem = tool => {
+		const { insertPaneIntoPanel } = this.props;
+
+		return (
+			<MenuItem
+				text={tool.displayName}
+				onClick={() => insertPaneIntoPanel(tool.name)}
+			/>
+		);
+	}
+
 	renderContextMenu = event => {
+		const { tools } = this.props;
+
 		ContextMenu.show(
 			<Menu>
-				<MenuItem text="Insert New Tool" />
-				<MenuItem text="Duplicate Active Tab" />
+				<MenuItem text="Add New Tool">
+					{tools.map(this.mapToolMenuItem)}
+				</MenuItem>
+				<MenuItem
+					text="Duplicate Active Tab"
+					onClick={() => {
+						const { insertPaneIntoPanel, panes } = this.props;
+						const { currentTab } = this.state;
+						const currentPane = panes[currentTab];
+
+						insertPaneIntoPanel(
+							currentPane.type,
+							currentPane.state,
+							currentPane.tabName,
+						);
+					}}
+				/>
 			</Menu>,
 			{ left: event.clientX, top: event.clientY }
 		);
