@@ -31,14 +31,15 @@ export default class SearchTool extends ToolBase {
 		resourceID: null,
 	}
 
+	getPreservedState = state => ({
+		type: state.type,
+		resourceID: state.result && state.result[formats[state.type].id],
+		view: state.view,
+	})
+
 	componentDidMount() {
 		super.componentDidMount();
-
-		const { setTabName } = this.props;
-		const { type } = this.state;
-
 		this.search();
-		setTabName(`${formats[type].typeDisplayName} Search`);
 	}
 
 	async componentDidUpdate() {
