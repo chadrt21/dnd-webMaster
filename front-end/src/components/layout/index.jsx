@@ -260,7 +260,7 @@ export default class Grid extends React.Component {
 										>
 											<Button
 												intent={Intent.PRIMARY}
-												rightIcon="plus"
+												rightIcon="caret-down"
 											>
 												Open one!
 											</Button>
