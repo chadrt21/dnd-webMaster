@@ -6,6 +6,12 @@ import PropTypes from 'prop-types';
 import {
 	NonIdealState,
 	Spinner,
+	Popover,
+	Position,
+	Button,
+	Intent,
+	Menu,
+	MenuItem,
 } from '@blueprintjs/core';
 
 import PanelGroup from './PanelGroup';
@@ -23,25 +29,7 @@ import tools from '../tools';
 import { displayError } from '../toast';
 
 const defaultLayout = {
-	rows: [
-		{ panels: [
-			{ panes: [
-				{ type: 'character' },
-			] },
-			{ rows: [
-				{ panels: [
-					{ panes: [
-						{ type: 'npc 1' }, { type: 'npc 2' }, { type: 'npc 3' },
-					] },
-				] },
-				{ panels: [
-					{ panes: [
-						{ type: 'pc' }, { type: 'pc' },
-					] },
-				] },
-			] },
-		] },
-	],
+	rows: [],
 };
 
 export default class Grid extends React.Component {
@@ -230,6 +218,13 @@ export default class Grid extends React.Component {
 		window.location.href = '/';
 	}
 
+	mapToolMenuItem = tool => (
+		<MenuItem
+			text={tool.displayName}
+			onClick={() => this.addPane(tool.name)}
+		/>
+	)
+
 	render() {
 		const { layout, validating, currentCampaignID } = this.state;
 
@@ -248,10 +243,34 @@ export default class Grid extends React.Component {
 						<div className={styles.spinnerContainer}>
 							<Spinner />
 						</div>
-						:
-						<div className={styles.grid}>
-							{this.renderLayout(layout)}
-						</div>
+						: layout.rows.length > 0 ?
+							<div className={styles.grid}>
+								{this.renderLayout(layout)}
+							</div>
+							:
+							<div className={styles.grid}>
+								<NonIdealState
+									title="No tools"
+									description="It looks like you don't have any tools open!"
+									icon="info-sign"
+									action={
+										<Popover
+											position={Position.BOTTOM_LEFT}
+											modifiers={{ arrow: false }}
+										>
+											<Button
+												intent={Intent.PRIMARY}
+												rightIcon="plus"
+											>
+												Open one!
+											</Button>
+											<Menu>
+												{tools.map(this.mapToolMenuItem)}
+											</Menu>
+										</Popover>
+									}
+								/>
+							</div>
 					}
 				</div>
 				<CustomDragLayer />
