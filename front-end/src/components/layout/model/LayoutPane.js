@@ -4,6 +4,7 @@ export default class LayoutPane {
 	parent = null;
 	state = {};
 	tabName = null;
+	getPreservedState = null;
 
 	constructor(jsonModel, parent) {
 		if (!jsonModel.id && typeof jsonModel.id !== 'number') {
@@ -25,11 +26,12 @@ export default class LayoutPane {
 
 	getType = () => this.type;
 	getId = () => this.paneId;
-	setState = state => {
+	setState = (state, getPreservedState) => {
 		this.state = {
 			...this.state,
 			...state,
 		};
+		this.getPreservedState = getPreservedState;
 	}
 	getState = () => this.state;
 
@@ -42,6 +44,12 @@ export default class LayoutPane {
 		if (!ignoreState) {
 			obj.state = this.state;
 			obj.tabName = this.tabName;
+		} else if (typeof this.getPreservedState === 'function') {
+			obj.state = this.getPreservedState(this.state);
+			if (obj.state.__tabName) {
+				obj.tabName = this.tabName;
+				obj.state.__tabName = undefined;
+			}
 		}
 
 		return obj;
