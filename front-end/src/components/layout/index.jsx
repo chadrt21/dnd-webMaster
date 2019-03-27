@@ -139,6 +139,9 @@ export default class Grid extends React.Component {
 					panel.swapPanes(from, to);
 					this.setLayout(this.state.layout);
 				}}
+				insertPaneIntoPanel={
+					(type, state, tabName) => this.insertPaneIntoPanel({ type, state, tabName }, panel)
+				}
 			/>
 		);
 	}

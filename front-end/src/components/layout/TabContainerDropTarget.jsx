@@ -21,6 +21,7 @@ class TabContainerDropTarget extends React.Component {
 	static propTypes = {
 		connectDropTarget: PropTypes.func.isRequired,
 		onDrop: PropTypes.func.isRequired,
+		renderContextMenu: PropTypes.func.isRequired,
 		children: PropTypes.node,
 		isOver: PropTypes.bool,
 		item: PropTypes.object,
@@ -28,14 +29,21 @@ class TabContainerDropTarget extends React.Component {
 	}
 	
 	render() {
-		const { children, connectDropTarget, isOver, item, panelId } = this.props;
+		const {
+			children,
+			connectDropTarget,
+			isOver,
+			item,
+			panelId,
+			renderContextMenu,
+		} = this.props;
 
 		const style = {
 			backgroundColor: isOver && item.panelId !== panelId ? '#DACAAE' : undefined,
 		};
 
 		return connectDropTarget(
-			<div className={styles.tabContainer} style={style}>
+			<div className={styles.tabContainer} style={style} onContextMenu={renderContextMenu}>
 				{children}
 			</div>
 		);
