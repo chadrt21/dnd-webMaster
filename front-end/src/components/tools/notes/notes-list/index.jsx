@@ -31,6 +31,8 @@ export default class NotesList extends React.Component {
 		folderID: null,
 		creatingFolder: false,
 		nameFolderModalOpen: false,
+		renameFolderModalOpen: false,
+		renameFolderID: 0,
 	}
 
 	componentDidMount() {
@@ -137,6 +139,19 @@ export default class NotesList extends React.Component {
 					<div className={styles.spacer} />
 					<div className={styles.actionButtons}>
 						<Button
+							icon="edit"
+							small
+							className={styles.button}
+							onClick={event => {
+								event.stopPropagation();
+								this.setState({
+									renameFolderModalOpen: true,
+									renameFolderID: item.noteFolderID,
+								});
+							}}
+							minimal
+						/>
+						<Button
 							icon="trash"
 							small
 							className={styles.button}
@@ -184,6 +199,20 @@ export default class NotesList extends React.Component {
 		}
 	}
 
+	renameFolder = async title => {
+		try {
+			const { campaignID } = this.props;
+			const { renameFolderID } = this.state;
+			await post(`/api/campaigns/${campaignID}/notes/folders/rename/${renameFolderID}`, { title });
+			this.setState({
+				renameFolderID: 0,
+				renameFolderModalOpen: false,
+			}, this.loadNotes);
+		} catch (err) {
+			displayError('Could not rename folder');
+		}
+	}
+
 	render() {
 		const {
 			results,
@@ -192,6 +221,7 @@ export default class NotesList extends React.Component {
 			creatingFolder,
 			currentFolder,
 			nameFolderModalOpen,
+			renameFolderModalOpen,
 		} = this.state;
 
 		if (loading) {
@@ -234,7 +264,7 @@ export default class NotesList extends React.Component {
 							undefined
 					}
 				>
-					Notes{currentFolder.noteFolderID ? `/${currentFolder.filepath}` : ''}
+					{currentFolder.noteFolderID ? currentFolder.folderName : 'Notes'}
 				</Title>
 				<List
 					items={results}
@@ -245,6 +275,11 @@ export default class NotesList extends React.Component {
 					open={nameFolderModalOpen}
 					onSubmit={this.handleNewFolder}
 					onCancel={() => this.setState({ nameFolderModalOpen: false })}
+				/>
+				<FolderNameModal
+					open={renameFolderModalOpen}
+					onSubmit={this.renameFolder}
+					onCancel={() => this.setState({ renameFolderModalOpen: false })}
 				/>
 			</div>
 		);
