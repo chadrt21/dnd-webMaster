@@ -41,9 +41,7 @@ export const getAllNotes = async (path, query, user, connection) => {
 		`
 			SELECT noteTitle, note.noteID
 			FROM
-				notelist
-					JOIN
-				note ON notelist.noteID = note.noteID
+				note
 			WHERE
 				campaignID = :campaignID
 		`,
@@ -64,26 +62,15 @@ export const createNewNote = async (path, query, user, connection, body) => {
 		connection,
 		`
 			INSERT INTO note
-			(noteContent, noteTitle)
+			(noteContent, noteTitle, campaignID)
 			VALUES
-			('', :title)
+			('', :title, :campaignID)
 		`,
-		{ title: title || '' }
-	);
-
-	const insertedNoteList = await promiseQuery(
-		connection,
-		`
-			INSERT INTO notelist
-			(campaignID, noteID)
-			VALUES
-			(:campaignID, :noteID)
-		`,
-		{ campaignID, noteID: insertedNote.insertId }
+		{ title: title || '', campaignID }
 	);
 
 	return {
-		created: insertedNoteList.insertId > 0,
+		created: insertedNote.insertId > 0,
 	};
 };
 
@@ -101,9 +88,7 @@ export const getNote = async (path, query, user, connection) => {
 			WHERE
 				noteID = :noteID
 					AND
-				noteID IN (
-					SELECT noteID FROM notelist WHERE campaignID = :campaignID
-				)
+				campaignID = :campaignID
 		`,
 		{ campaignID, noteID }
 	);
@@ -137,9 +122,7 @@ export const updateNote = async (path, query, user, connection, body) => {
 			WHERE
 				noteID = :noteID
 					AND
-				noteID IN (
-					SELECT noteID FROM notelist WHERE campaignID = :campaignID
-				)
+				campaignID = :campaignID
 		`,
 		{ campaignID, value, field, noteID }
 	);
