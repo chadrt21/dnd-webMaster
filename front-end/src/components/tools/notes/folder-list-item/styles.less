@@ -1,0 +1,33 @@
+@import '../../../../styles/mixins.less';
+@import '../../../../styles/colors.less';
+
+.list-item-container {
+	display: flex;
+	align-items: center;
+
+	.folder-container {
+		display: flex;
+	
+		.icon {
+			color: @text-color;
+			margin-right: 5px;
+		}
+	}
+
+	.spacer {
+		flex-grow: 1;
+	}
+
+	.action-buttons {
+		visibility: hidden;
+		display: inline-block
+	}
+
+	&:hover .action-buttons {
+		visibility: visible;
+	}
+
+	.button {
+		.with-button-styles(@text-color);
+	}
+}
