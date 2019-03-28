@@ -40,6 +40,7 @@ class FolderListItem extends React.Component {
 		folderID: PropTypes.number.isRequired,
 		connectDropTarget: PropTypes.func.isRequired,
 		connectDragSource: PropTypes.func.isRequired,
+		isOver: PropTypes.bool,
 	}
 
 	render() {
@@ -49,12 +50,14 @@ class FolderListItem extends React.Component {
 			onEdit,
 			connectDragSource,
 			connectDropTarget,
+			isOver,
 		} = this.props;
+
 		return connectDragSource(connectDropTarget(
 			<div className={styles.listItemContainer}>
 				<span className={styles.folderContainer}>
 					<Icon
-						icon="folder-close"
+						icon={isOver ? 'folder-open' : 'folder-close'}
 						className={styles.icon}
 					/>
 					<span>{folderName}</span>
@@ -84,8 +87,9 @@ class FolderListItem extends React.Component {
 export default DropTarget(
 	'NOTE_ITEM',
 	folderListItemDropTarget,
-	connect => ({
+	(connect, monitor) => ({
 		connectDropTarget: connect.dropTarget(),
+		isOver: monitor.isOver(),
 	})
 )(
 	DragSource(

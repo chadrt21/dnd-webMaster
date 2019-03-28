@@ -5,6 +5,7 @@ import { DropTarget } from 'react-dnd';
 
 import {
 	Button,
+	Tooltip,
 } from '@blueprintjs/core';
 
 const folderBackButtonDropTarget = {
@@ -14,14 +15,19 @@ const folderBackButtonDropTarget = {
 	},
 };
 
-const FolderBackButton = ({ onBack, connectDropTarget, className }) => connectDropTarget(
+const FolderBackButton = ({ onBack, connectDropTarget, className, isDragging }) => connectDropTarget(
 	<span>
-		<Button
-			minimal
-			icon="arrow-left"
-			className={className}
-			onClick={onBack}
-		/>
+		<Tooltip
+			content="Move out of folder"
+			isOpen={isDragging}
+		>
+			<Button
+				minimal
+				icon="arrow-left"
+				className={className}
+				onClick={onBack}
+			/>
+		</Tooltip>
 	</span>
 );
 
@@ -30,12 +36,16 @@ FolderBackButton.propTypes = {
 	className: PropTypes.string.isRequired,
 	connectDropTarget: PropTypes.func.isRequired,
 	moveIntoFolder: PropTypes.func.isRequired,
+	isOver: PropTypes.bool,
 };
 
 export default DropTarget(
 	'NOTE_ITEM',
 	folderBackButtonDropTarget,
-	connect => ({ connectDropTarget: connect.dropTarget() })
+	(connect, monitor) => ({
+		connectDropTarget: connect.dropTarget(),
+		isDragging: !!monitor.getItem(),
+	})
 )(
 	FolderBackButton
 );
