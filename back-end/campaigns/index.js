@@ -54,6 +54,12 @@ export default app => {
 			asRouteFunction(notesRoutes.createNewFolder, true)
 		);
 
+	app.route('/api/campaigns/:campaignID/notes/folders/move-into/:destFolderID')
+		.post(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(notesRoutes.moveIntoFolder, true)
+		);
+
 	app.route('/api/campaigns/:campaignID/notes/:noteID')
 		.get(
 			campaignRoutes.userCanAccessCampaign,

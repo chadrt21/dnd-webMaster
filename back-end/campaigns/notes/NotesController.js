@@ -166,6 +166,75 @@ export const createNewNote = async (path, query, user, connection, body) => {
 };
 
 /**
+ * @description Move a note or folder into a destination folder
+ */
+export const moveIntoFolder = async (path, query, user, connection, body) => {
+	const { campaignID, destFolderID } = path;
+	const { sourceNoteID, sourceFolderID } = body;
+
+	if (destFolderID !== 'null' && destFolderID !== '0') {
+		const hasFolderCheck = await promiseQuery(
+			connection,
+			`
+				SELECT noteFolderID
+				FROM
+					notefolder
+				WHERE
+					campaignID = :campaignID
+						AND
+					noteFolderID = :destFolderID
+			`,
+			{ campaignID, destFolderID }
+		);
+
+		if (hasFolderCheck.length !== 1) {
+			throw new Error('You do not have access to this folder');
+		}
+	}
+
+	let result = {};
+	if (sourceNoteID) {
+		result = await promiseQuery(
+			connection,
+			`
+				UPDATE note
+				SET folderID = :destFolderID
+				WHERE
+					noteID = :sourceNoteID
+						AND
+					campaignID = :campaignID
+			`,
+			{
+				sourceNoteID,
+				campaignID,
+				destFolderID: destFolderID !== 'null' && destFolderID !== '0' ? destFolderID : null,
+			}
+		);
+	} else if (sourceFolderID) {
+		result = await promiseQuery(
+			connection,
+			`
+				UPDATE notefolder
+				SET parentID = :destFolderID
+				WHERE
+					noteFolderID = :sourceFolderID
+						AND
+					campaignID = :campaignID
+			`,
+			{
+				sourceFolderID,
+				campaignID,
+				destFolderID: destFolderID !== 'null' && destFolderID !== '0' ? destFolderID : null,
+			}
+		);
+	}
+
+	return {
+		moved: result.changedRows > 0,
+	};
+};
+
+/**
  * @description Gets a specific note and it's title and content
  */
 export const getNote = async (path, query, user, connection) => {
