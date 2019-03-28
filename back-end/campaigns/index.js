@@ -54,6 +54,12 @@ export default app => {
 			asRouteFunction(notesRoutes.createNewFolder, true)
 		);
 
+	app.route('/api/campaigns/:campaignID/notes/folders/:folderID')
+		.delete(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(notesRoutes.deleteFolder, true)
+		);
+
 	app.route('/api/campaigns/:campaignID/notes/folders/move-into/:destFolderID')
 		.post(
 			campaignRoutes.userCanAccessCampaign,
@@ -70,6 +76,12 @@ export default app => {
 		.post(
 			campaignRoutes.userCanAccessCampaign,
 			asRouteFunction(notesRoutes.updateNote, true)
+		);
+
+	app.route('/api/campaigns/:campaignID/notes/:noteID')
+		.delete(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(notesRoutes.deleteNote, true)
 		);
 
 	app.route('/api/campaigns/:campaignID/tool-settings/:tool')

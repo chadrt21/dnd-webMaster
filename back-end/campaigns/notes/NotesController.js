@@ -183,6 +183,8 @@ export const moveIntoFolder = async (path, query, user, connection, body) => {
 					campaignID = :campaignID
 						AND
 					noteFolderID = :destFolderID
+						AND
+					isDeleted = 0
 			`,
 			{ campaignID, destFolderID }
 		);
@@ -203,6 +205,8 @@ export const moveIntoFolder = async (path, query, user, connection, body) => {
 					noteID = :sourceNoteID
 						AND
 					campaignID = :campaignID
+						AND
+					isDeleted = 0
 			`,
 			{
 				sourceNoteID,
@@ -220,6 +224,8 @@ export const moveIntoFolder = async (path, query, user, connection, body) => {
 					noteFolderID = :sourceFolderID
 						AND
 					campaignID = :campaignID
+						AND
+					isDeleted = 0
 			`,
 			{
 				sourceFolderID,
@@ -231,6 +237,54 @@ export const moveIntoFolder = async (path, query, user, connection, body) => {
 
 	return {
 		moved: result.changedRows > 0,
+	};
+};
+
+/**
+ * @description Delete a note
+ */
+export const deleteNote = async (path, query, user, connection) => {
+	const { noteID, campaignID } = path;
+
+	const result = await promiseQuery(
+		connection,
+		`
+			UPDATE note
+			SET isDeleted = 1
+			WHERE
+				noteID = :noteID
+					AND
+				campaignID = :campaignID
+		`,
+		{ noteID, campaignID }
+	);
+
+	return {
+		deleted: result.changedRows > 0,
+	};
+};
+
+/**
+ * @description Delete a folder
+ */
+export const deleteFolder = async (path, query, user, connection) => {
+	const { folderID, campaignID } = path;
+
+	const result = await promiseQuery(
+		connection,
+		`
+			UPDATE notefolder
+			SET isDeleted = 1
+			WHERE
+				noteFolderID = :folderID
+					AND
+				campaignID = :campaignID
+		`,
+		{ folderID, campaignID }
+	);
+
+	return {
+		deleted: result.changedRows > 0,
 	};
 };
 
@@ -249,6 +303,8 @@ export const getNote = async (path, query, user, connection) => {
 				noteID = :noteID
 					AND
 				campaignID = :campaignID
+					AND
+				isDeleted = 0
 		`,
 		{ campaignID, noteID }
 	);
@@ -283,6 +339,8 @@ export const updateNote = async (path, query, user, connection, body) => {
 				noteID = :noteID
 					AND
 				campaignID = :campaignID
+					AND
+				isDeleted = 0
 		`,
 		{ campaignID, value, field, noteID }
 	);
