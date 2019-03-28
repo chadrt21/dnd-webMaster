@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import {
 	Button,
 	Spinner,
-	Icon,
 } from '@blueprintjs/core';
 
 import Title from '../../../title';
 import List from '../../../list';
 import FolderNameModal from '../folder-name-modal';
+import FolderListItem from '../folder-list-item';
+import NoteListItem from '../note-list-item';
+import FolderBackButton from '../folder-back-button';
 
 import { get, post, httpDelete } from 'Utility/fetch';
 import classNames from 'Utility/classNames';
@@ -106,63 +108,58 @@ export default class NotesList extends React.Component {
 		});
 	}
 
+	moveIntoFolder = async (dest, body) => {
+		try {
+			const { campaignID } = this.props;
+			await post(`/api/campaigns/${campaignID}/notes/folders/move-into/${dest}`, body);
+			this.loadNotes();
+		} catch (err) {
+			displayError('Could not move item');
+		}
+	}
+
+	moveUpOneDirectory = async body => {
+		const { currentFolder } = this.state;
+
+		try {
+			const { campaignID } = this.props;
+			await post(`/api/campaigns/${campaignID}/notes/folders/move-into/${currentFolder.parentID || '0'}`, body);
+			this.loadNotes();
+		} catch (err) {
+			displayError('Could not move item');
+		}
+	}
+
 	renderListItem = item => {
 		if (item.type === 'note') {
 			return (
-				<div className={styles.listItemContainer}>
-					<span>{item.name || 'Untitled'}</span>
-					<div className={styles.spacer} />
-					<div className={styles.actionButtons}>
-						<Button
-							icon="trash"
-							className={styles.button}
-							onClick={event => {
-								event.stopPropagation();
-								this.deleteNote(item.noteID);
-							}}
-							minimal
-							small
-						/>
-					</div>
-				</div>
+				<NoteListItem
+					noteID={item.noteID}
+					onDelete={event => {
+						event.stopPropagation();
+						this.deleteNote(item.noteID);
+					}}
+					noteName={item.name}
+				/>
 			);	
 		} else {
 			return (
-				<div className={styles.listItemContainer}>
-					<span className={styles.folderContainer}>
-						<Icon
-							icon="folder-close"
-							className={styles.icon}
-						/>
-						<span>{item.name}</span>
-					</span>
-					<div className={styles.spacer} />
-					<div className={styles.actionButtons}>
-						<Button
-							icon="edit"
-							small
-							className={styles.button}
-							onClick={event => {
-								event.stopPropagation();
-								this.setState({
-									renameFolderModalOpen: true,
-									renameFolderID: item.noteFolderID,
-								});
-							}}
-							minimal
-						/>
-						<Button
-							icon="trash"
-							small
-							className={styles.button}
-							onClick={event => {
-								event.stopPropagation();
-								this.deleteFolder(item.noteFolderID);
-							}}
-							minimal
-						/>
-					</div>
-				</div>
+				<FolderListItem
+					folderName={item.name}
+					moveIntoFolder={this.moveIntoFolder}
+					onDelete={event => {
+						event.stopPropagation();
+						this.deleteFolder(item.noteFolderID);
+					}}
+					onEdit={event => {
+						event.stopPropagation();
+						this.setState({
+							renameFolderModalOpen: true,
+							renameFolderID: item.noteFolderID,
+						});
+					}}
+					folderID={item.noteFolderID}
+				/>
 			);
 		}
 	}
@@ -254,11 +251,10 @@ export default class NotesList extends React.Component {
 					}
 					leftComponent={
 						currentFolder.noteFolderID ?
-							<Button
-								minimal
-								icon="arrow-left"
+							<FolderBackButton
 								className={classNames(styles.button, styles.left)}
-								onClick={this.handleBack}
+								onBack={this.handleBack}
+								moveIntoFolder={this.moveUpOneDirectory}
 							/>
 							:
 							undefined
