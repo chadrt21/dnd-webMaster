@@ -48,6 +48,12 @@ export default app => {
 			asRouteFunction(notesRoutes.createNewNote, true)
 		);
 
+	app.route('/api/campaigns/:campaignID/notes/folders')
+		.post(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(notesRoutes.createNewFolder, true)
+		);
+
 	app.route('/api/campaigns/:campaignID/notes/:noteID')
 		.get(
 			campaignRoutes.userCanAccessCampaign,

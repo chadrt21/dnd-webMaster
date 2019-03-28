@@ -35,20 +35,106 @@ const sanitizeOptions = {
  */
 export const getAllNotes = async (path, query, user, connection) => {
 	const { campaignID } = path;
+	const { folderID } = query;
 
-	const results = await promiseQuery(
+	const folderSection = folderID ? 'folderID = :folderID' : 'folderID IS NULL';
+	const folderParentSection = folderID ? 'parentID = :folderID' : 'parentID IS NULL';
+
+	const notes = await promiseQuery(
 		connection,
 		`
-			SELECT noteTitle, note.noteID
+			SELECT noteTitle, noteID
 			FROM
 				note
 			WHERE
 				campaignID = :campaignID
+					AND
+				isDeleted = 0
+					AND
+				${folderSection}
 		`,
-		{ campaignID }
+		{ campaignID, folderID }
 	);
 
-	return results;
+	const folders = await promiseQuery(
+		connection,
+		`
+			SELECT folderName, noteFolderID, filepath
+			FROM
+				notefolder
+			WHERE
+				campaignID = :campaignID
+					AND
+				NOT isDeleted = 1
+					AND
+				${folderParentSection}
+		`,
+		{ campaignID, folderID }
+	);
+
+	let currentFolder = {
+		filepath: '/',
+		folderName: '',
+		noteFolderID: null,
+	};
+
+	if (folderID) {
+		const filepathQueryResults = await promiseQuery(
+			connection,
+			`
+				SELECT folderName, noteFolderID, filepath
+				FROM
+					notefolder
+				WHERE
+					noteFolderID = :folderID
+						AND
+					campaignID = :campaignID
+						AND
+					isDeleted = 0
+			`,
+			{ folderID, campaignID }
+		);
+		
+		if (filepathQueryResults.length !== 1) {
+			throw new Error('The folder you are looking for does not exist');
+		}
+
+		currentFolder = filepathQueryResults[0];
+	}
+
+	return {
+		folders,
+		notes,
+		currentFolder,
+	};
+};
+
+/**
+ * @description Creates a new folder on a campaign with an optional parent folder
+ */
+export const createNewFolder = async (path, query, user, connection, body) => {
+	const { campaignID } = path;
+	const {
+		title,
+		parentID,
+	} = body;
+
+	const parentIDSQLValue = parentID ? ':parentID' : 'NULL';
+
+	const insertedFolder = await promiseQuery(
+		connection,
+		`
+			INSERT INTO notefolder
+				(parentID, folderName, campaignID)
+			VALUES
+				(${parentIDSQLValue}, :title, ${campaignID})
+		`,
+		{ title: title || '', parentID, campaignID }
+	);
+
+	return {
+		created: insertedFolder.insertId > 0,
+	};
 };
 
 /**
@@ -56,17 +142,22 @@ export const getAllNotes = async (path, query, user, connection) => {
  */
 export const createNewNote = async (path, query, user, connection, body) => {
 	const { campaignID } = path;
-	const { title } = body;
+	const {
+		title,
+		folderID,
+	} = body;
+
+	const folderIDSQLValue = folderID ? ':folderID' : 'NULL';
 
 	const insertedNote = await promiseQuery(
 		connection,
 		`
 			INSERT INTO note
-			(noteContent, noteTitle, campaignID)
+			(noteContent, noteTitle, campaignID, folderID)
 			VALUES
-			('', :title, :campaignID)
+			('', :title, :campaignID, ${folderIDSQLValue})
 		`,
-		{ title: title || '', campaignID }
+		{ title: title || '', campaignID, folderID }
 	);
 
 	return {
