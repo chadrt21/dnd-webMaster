@@ -9,6 +9,7 @@ import {
 
 import Title from '../../../title';
 import List from '../../../list';
+import FolderNameModal from '../folder-name-modal';
 
 import { get, post } from 'Utility/fetch';
 import classNames from 'Utility/classNames';
@@ -29,6 +30,7 @@ export default class NotesList extends React.Component {
 		creatingNote: false,
 		folderID: null,
 		creatingFolder: false,
+		nameFolderModalOpen: false,
 	}
 
 	componentDidMount() {
@@ -83,15 +85,16 @@ export default class NotesList extends React.Component {
 		}, this.loadNotes);
 	}
 
-	handleNewFolder = () => {
+	handleNewFolder = title => {
 		this.setState({
 			creatingFolder: true,
+			nameFolderModalOpen: false,
 		}, async () => {
 			try {
 				const { campaignID } = this.props;
 				const { folderID } = this.state;
 
-				await post(`/api/campaigns/${campaignID}/notes/folders`, { parentID: folderID, title: 'Test Folder' });
+				await post(`/api/campaigns/${campaignID}/notes/folders`, { parentID: folderID, title });
 				this.setState({
 					creatingFolder: false,
 				}, this.loadNotes);
@@ -136,6 +139,7 @@ export default class NotesList extends React.Component {
 			creatingNote,
 			creatingFolder,
 			currentFolder,
+			nameFolderModalOpen,
 		} = this.state;
 
 		if (loading) {
@@ -162,7 +166,7 @@ export default class NotesList extends React.Component {
 								icon="folder-new"
 								className={styles.button}
 								loading={creatingFolder}
-								onClick={this.handleNewFolder}
+								onClick={() => this.setState({ nameFolderModalOpen: true })}
 							/>
 						</div>
 					}
@@ -180,11 +184,15 @@ export default class NotesList extends React.Component {
 				>
 					Notes{currentFolder.noteFolderID ? `/${currentFolder.filepath}` : ''}
 				</Title>
-
 				<List
 					items={results}
 					renderItem={this.renderListItem}
 					onItemSelected={this.handleItemClick}
+				/>
+				<FolderNameModal
+					open={nameFolderModalOpen}
+					onSubmit={this.handleNewFolder}
+					onCancel={() => this.setState({ nameFolderModalOpen: false })}
 				/>
 			</div>
 		);
