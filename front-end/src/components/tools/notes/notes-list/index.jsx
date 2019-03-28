@@ -11,7 +11,7 @@ import Title from '../../../title';
 import List from '../../../list';
 import FolderNameModal from '../folder-name-modal';
 
-import { get, post } from 'Utility/fetch';
+import { get, post, httpDelete } from 'Utility/fetch';
 import classNames from 'Utility/classNames';
 import { displayError } from '../../../toast';
 
@@ -106,16 +106,48 @@ export default class NotesList extends React.Component {
 
 	renderListItem = item => {
 		if (item.type === 'note') {
-			return item.name || 'Untitled';
+			return (
+				<div className={styles.listItemContainer}>
+					<span>{item.name || 'Untitled'}</span>
+					<div className={styles.spacer} />
+					<div className={styles.actionButtons}>
+						<Button
+							icon="trash"
+							className={styles.button}
+							onClick={event => {
+								event.stopPropagation();
+								this.deleteNote(item.noteID);
+							}}
+							minimal
+							small
+						/>
+					</div>
+				</div>
+			);	
 		} else {
 			return (
-				<span className={styles.folderContainer}>
-					<Icon
-						icon="folder-close"
-						className={styles.icon}
-					/>
-					<span>{item.name}</span>
-				</span>
+				<div className={styles.listItemContainer}>
+					<span className={styles.folderContainer}>
+						<Icon
+							icon="folder-close"
+							className={styles.icon}
+						/>
+						<span>{item.name}</span>
+					</span>
+					<div className={styles.spacer} />
+					<div className={styles.actionButtons}>
+						<Button
+							icon="trash"
+							small
+							className={styles.button}
+							onClick={event => {
+								event.stopPropagation();
+								this.deleteFolder(item.noteFolderID);
+							}}
+							minimal
+						/>
+					</div>
+				</div>
 			);
 		}
 	}
@@ -129,6 +161,26 @@ export default class NotesList extends React.Component {
 			this.setState({
 				folderID: item.noteFolderID,
 			}, this.loadNotes);
+		}
+	}
+
+	deleteNote = async noteID => {
+		try {
+			const { campaignID } = this.props;
+			await httpDelete(`/api/campaigns/${campaignID}/notes/${noteID}`);
+			this.loadNotes();
+		} catch (err) {
+			displayError('Could not delete note');
+		}
+	}
+
+	deleteFolder = async folderID => {
+		try {
+			const { campaignID } = this.props;
+			await httpDelete(`/api/campaigns/${campaignID}/notes/folders/${folderID}`);
+			this.loadNotes();
+		} catch (err) {
+			displayError('Could not delete folder');
 		}
 	}
 
