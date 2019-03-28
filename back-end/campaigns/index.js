@@ -66,6 +66,12 @@ export default app => {
 			asRouteFunction(notesRoutes.moveIntoFolder, true)
 		);
 
+	app.route('/api/campaigns/:campaignID/notes/folders/rename/:folderID')
+		.post(
+			campaignRoutes.userCanAccessCampaign,
+			asRouteFunction(notesRoutes.renameFolder, true)
+		);
+
 	app.route('/api/campaigns/:campaignID/notes/:noteID')
 		.get(
 			campaignRoutes.userCanAccessCampaign,

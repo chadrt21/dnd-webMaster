@@ -241,6 +241,30 @@ export const moveIntoFolder = async (path, query, user, connection, body) => {
 	};
 };
 
+export const renameFolder = async (path, query, user, connection, body) => {
+	const { campaignID, folderID } = path;
+	const { title } = body;
+
+	const result = await promiseQuery(
+		connection,
+		`
+			UPDATE notefolder
+			SET folderName = :title
+			WHERE
+				campaignID = :campaignID
+					AND
+				noteFolderID = :folderID
+					AND
+				isDeleted = 0
+		`,
+		{ campaignID, title, folderID }
+	);
+
+	return {
+		changed: result.changedRows > 0,
+	};
+};
+
 /**
  * @description Delete a note
  */
