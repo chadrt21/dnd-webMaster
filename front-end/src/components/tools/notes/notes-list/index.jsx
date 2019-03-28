@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import {
 	Button,
 	Spinner,
+	Icon,
 } from '@blueprintjs/core';
 
 import Title from '../../../title';
 import List from '../../../list';
 
 import { get, post } from 'Utility/fetch';
+import classNames from 'Utility/classNames';
 import { displayError } from '../../../toast';
 
 import styles from './styles.less';
@@ -21,9 +23,12 @@ export default class NotesList extends React.Component {
 	}
 
 	state = {
-		notes: [],
+		results: [],
+		currentFolder: {},
 		loading: true,
 		creatingNote: false,
+		folderID: null,
+		creatingFolder: false,
 	}
 
 	componentDidMount() {
@@ -33,11 +38,18 @@ export default class NotesList extends React.Component {
 	loadNotes = async () => {
 		try {
 			const { campaignID } = this.props;
+			const { folderID } = this.state;
 
-			const notes = await get(`/api/campaigns/${campaignID}/notes`);
+			const apiResponse = await get(`/api/campaigns/${campaignID}/notes${folderID ? `?folderID=${folderID}` : ''}`);
+
+			const results = [
+				...apiResponse.folders.map(folder => ({ ...folder, name: folder.folderName, type: 'folder' })),
+				...apiResponse.notes.map(note => ({ ...note, name: note.noteTitle, type: 'note' })),
+			];
 
 			this.setState({
-				notes: notes.map(note => ({ ...note, name: note.noteTitle })),
+				results,
+				currentFolder: apiResponse.currentFolder,
 				loading: false,
 			});
 		} catch (err) {
@@ -51,7 +63,9 @@ export default class NotesList extends React.Component {
 		}, async () => {
 			try {
 				const { campaignID } = this.props;
-				await post(`/api/campaigns/${campaignID}/notes`, {});
+				const { folderID } = this.state;
+
+				await post(`/api/campaigns/${campaignID}/notes`, { folderID });
 				this.setState({
 					creatingNote: false,
 				}, this.loadNotes);
@@ -61,14 +75,67 @@ export default class NotesList extends React.Component {
 		});
 	}
 
+	handleBack = () => {
+		const { currentFolder } = this.state;
+
+		this.setState({
+			folderID: currentFolder.parentID,
+		}, this.loadNotes);
+	}
+
+	handleNewFolder = () => {
+		this.setState({
+			creatingFolder: true,
+		}, async () => {
+			try {
+				const { campaignID } = this.props;
+				const { folderID } = this.state;
+
+				await post(`/api/campaigns/${campaignID}/notes/folders`, { parentID: folderID, title: 'Test Folder' });
+				this.setState({
+					creatingFolder: false,
+				}, this.loadNotes);
+			} catch (err) {
+				displayError('There was an error creating the folder');
+			}
+		});
+	}
+
+	renderListItem = item => {
+		if (item.type === 'note') {
+			return item.name || 'Untitled';
+		} else {
+			return (
+				<span className={styles.folderContainer}>
+					<Icon
+						icon="folder-close"
+						className={styles.icon}
+					/>
+					<span>{item.name}</span>
+				</span>
+			);
+		}
+	}
+
+	handleItemClick = item => {
+		const { openNote } = this.props;
+
+		if (item.type === 'note') {
+			openNote(item.noteID);
+		} else {
+			this.setState({
+				folderID: item.noteFolderID,
+			}, this.loadNotes);
+		}
+	}
+
 	render() {
 		const {
-			openNote,
-		} = this.props;
-		const {
-			notes,
+			results,
 			loading,
 			creatingNote,
+			creatingFolder,
+			currentFolder,
 		} = this.state;
 
 		if (loading) {
@@ -82,22 +149,42 @@ export default class NotesList extends React.Component {
 				<Title
 					fontSize={25}
 					rightComponent={
-						<Button
-							minimal
-							icon="plus"
-							className={styles.button}
-							loading={creatingNote}
-							onClick={this.handleNewNote}
-						/>
+						<div className={styles.buttonContainer}>
+							<Button
+								minimal
+								icon="plus"
+								className={styles.button}
+								loading={creatingNote}
+								onClick={this.handleNewNote}
+							/>
+							<Button
+								minimal
+								icon="folder-new"
+								className={styles.button}
+								loading={creatingFolder}
+								onClick={this.handleNewFolder}
+							/>
+						</div>
+					}
+					leftComponent={
+						currentFolder.noteFolderID ?
+							<Button
+								minimal
+								icon="arrow-left"
+								className={classNames(styles.button, styles.left)}
+								onClick={this.handleBack}
+							/>
+							:
+							undefined
 					}
 				>
-					Notes
+					Notes{currentFolder.noteFolderID ? `/${currentFolder.filepath}` : ''}
 				</Title>
 
 				<List
-					items={notes}
-					renderItem={item => item.name || 'Untitled'}
-					onItemSelected={item => openNote(item.noteID)}
+					items={results}
+					renderItem={this.renderListItem}
+					onItemSelected={this.handleItemClick}
 				/>
 			</div>
 		);

@@ -5,10 +5,27 @@
 	padding: 10px;
 }
 
+.button-container {
+	display: inline-block;
+}
+
 .button {
 	margin-left: 10px;
-	
 	.with-button-styles(@text-color) !important;
+
+	&.left {
+		margin-left: 0;
+		margin-right: 10px;
+	}
+}
+
+.folder-container {
+	display: flex;
+
+	.icon {
+		color: @text-color;
+		margin-right: 5px;
+	}
 }
 
 .popover {

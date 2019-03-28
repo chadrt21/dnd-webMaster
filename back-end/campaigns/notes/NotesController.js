@@ -76,13 +76,14 @@ export const getAllNotes = async (path, query, user, connection) => {
 		filepath: '/',
 		folderName: '',
 		noteFolderID: null,
+		parentID: null,
 	};
 
 	if (folderID) {
 		const filepathQueryResults = await promiseQuery(
 			connection,
 			`
-				SELECT folderName, noteFolderID, filepath
+				SELECT folderName, noteFolderID, filepath, parentID
 				FROM
 					notefolder
 				WHERE
