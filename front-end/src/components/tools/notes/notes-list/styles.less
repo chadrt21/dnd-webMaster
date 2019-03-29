@@ -5,48 +5,10 @@
 	padding: 10px;
 }
 
-.button-container {
-	display: inline-block;
-
-	.button {
-		margin-left: 10px;
-	}
-}
-
 .button {
-	.with-button-styles(@text-color) !important;
-
-	&.left {
-		margin-left: 0;
-		margin-right: 10px;
-	}
-}
-
-.list-item-container {
-	display: flex;
-	align-items: center;
-
-	.folder-container {
-		display: flex;
+	margin-left: 10px;
 	
-		.icon {
-			color: @text-color;
-			margin-right: 5px;
-		}
-	}
-
-	.spacer {
-		flex-grow: 1;
-	}
-
-	.action-buttons {
-		visibility: hidden;
-		display: inline-block
-	}
-
-	&:hover .action-buttons {
-		visibility: visible;
-	}
+	.with-button-styles(@text-color) !important;
 }
 
 .popover {
