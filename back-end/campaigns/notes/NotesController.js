@@ -35,22 +35,107 @@ const sanitizeOptions = {
  */
 export const getAllNotes = async (path, query, user, connection) => {
 	const { campaignID } = path;
+	const { folderID } = query;
 
-	const results = await promiseQuery(
+	const folderSection = folderID ? 'folderID = :folderID' : 'folderID IS NULL';
+	const folderParentSection = folderID ? 'parentID = :folderID' : 'parentID IS NULL';
+
+	const notes = await promiseQuery(
 		connection,
 		`
-			SELECT noteTitle, note.noteID
+			SELECT noteTitle, noteID
 			FROM
-				notelist
-					JOIN
-				note ON notelist.noteID = note.noteID
+				note
 			WHERE
 				campaignID = :campaignID
+					AND
+				isDeleted = 0
+					AND
+				${folderSection}
 		`,
-		{ campaignID }
+		{ campaignID, folderID }
 	);
 
-	return results;
+	const folders = await promiseQuery(
+		connection,
+		`
+			SELECT folderName, noteFolderID, filepath
+			FROM
+				notefolder
+			WHERE
+				campaignID = :campaignID
+					AND
+				NOT isDeleted = 1
+					AND
+				${folderParentSection}
+		`,
+		{ campaignID, folderID }
+	);
+
+	let currentFolder = {
+		filepath: '/',
+		folderName: '',
+		noteFolderID: null,
+		parentID: null,
+	};
+
+	if (folderID) {
+		const filepathQueryResults = await promiseQuery(
+			connection,
+			`
+				SELECT folderName, noteFolderID, filepath, parentID
+				FROM
+					notefolder
+				WHERE
+					noteFolderID = :folderID
+						AND
+					campaignID = :campaignID
+						AND
+					isDeleted = 0
+			`,
+			{ folderID, campaignID }
+		);
+		
+		if (filepathQueryResults.length !== 1) {
+			throw new Error('The folder you are looking for does not exist');
+		}
+
+		currentFolder = filepathQueryResults[0];
+	}
+
+	return {
+		folders,
+		notes,
+		currentFolder,
+	};
+};
+
+/**
+ * @description Creates a new folder on a campaign with an optional parent folder
+ */
+export const createNewFolder = async (path, query, user, connection, body) => {
+	const { campaignID } = path;
+	const {
+		title,
+		parentID,
+	} = body;
+
+	const parentIDSQLValue = parentID ? ':parentID' : 'NULL';
+
+	const insertedFolder = await promiseQuery(
+		connection,
+		`
+			INSERT INTO notefolder
+				(parentID, folderName, campaignID)
+			VALUES
+				(${parentIDSQLValue}, :title, ${campaignID})
+		`,
+		{ title: title || '', parentID, campaignID }
+	);
+
+	return {
+		created: insertedFolder.insertId > 0,
+	};
 };
 
 /**
@@ -58,32 +143,173 @@ export const getAllNotes = async (path, query, user, connection) => {
  */
 export const createNewNote = async (path, query, user, connection, body) => {
 	const { campaignID } = path;
-	const { title } = body;
+	const {
+		title,
+		folderID,
+	} = body;
+
+	const folderIDSQLValue = folderID ? ':folderID' : 'NULL';
 
 	const insertedNote = await promiseQuery(
 		connection,
 		`
 			INSERT INTO note
-			(noteContent, noteTitle)
+			(noteContent, noteTitle, campaignID, folderID)
 			VALUES
-			('', :title)
+			('', :title, :campaignID, ${folderIDSQLValue})
 		`,
-		{ title: title || '' }
-	);
-
-	const insertedNoteList = await promiseQuery(
-		connection,
-		`
-			INSERT INTO notelist
-			(campaignID, noteID)
-			VALUES
-			(:campaignID, :noteID)
-		`,
-		{ campaignID, noteID: insertedNote.insertId }
+		{ title: title || '', campaignID, folderID }
 	);
 
 	return {
-		created: insertedNoteList.insertId > 0,
+		created: insertedNote.insertId > 0,
+	};
+};
+
+/**
+ * @description Move a note or folder into a destination folder
+ */
+export const moveIntoFolder = async (path, query, user, connection, body) => {
+	const { campaignID, destFolderID } = path;
+	const { sourceNoteID, sourceFolderID } = body;
+
+	if (destFolderID !== 'null' && destFolderID !== '0') {
+		const hasFolderCheck = await promiseQuery(
+			connection,
+			`
+				SELECT noteFolderID
+				FROM
+					notefolder
+				WHERE
+					campaignID = :campaignID
+						AND
+					noteFolderID = :destFolderID
+						AND
+					isDeleted = 0
+			`,
+			{ campaignID, destFolderID }
+		);
+
+		if (hasFolderCheck.length !== 1) {
+			throw new Error('You do not have access to this folder');
+		}
+	}
+
+	let result = {};
+	if (sourceNoteID) {
+		result = await promiseQuery(
+			connection,
+			`
+				UPDATE note
+				SET folderID = :destFolderID
+				WHERE
+					noteID = :sourceNoteID
+						AND
+					campaignID = :campaignID
+						AND
+					isDeleted = 0
+			`,
+			{
+				sourceNoteID,
+				campaignID,
+				destFolderID: destFolderID !== 'null' && destFolderID !== '0' ? destFolderID : null,
+			}
+		);
+	} else if (sourceFolderID) {
+		result = await promiseQuery(
+			connection,
+			`
+				UPDATE notefolder
+				SET parentID = :destFolderID
+				WHERE
+					noteFolderID = :sourceFolderID
+						AND
+					campaignID = :campaignID
+						AND
+					isDeleted = 0
+			`,
+			{
+				sourceFolderID,
+				campaignID,
+				destFolderID: destFolderID !== 'null' && destFolderID !== '0' ? destFolderID : null,
+			}
+		);
+	}
+
+	return {
+		moved: result.changedRows > 0,
+	};
+};
+
+export const renameFolder = async (path, query, user, connection, body) => {
+	const { campaignID, folderID } = path;
+	const { title } = body;
+
+	const result = await promiseQuery(
+		connection,
+		`
+			UPDATE notefolder
+			SET folderName = :title
+			WHERE
+				campaignID = :campaignID
+					AND
+				noteFolderID = :folderID
+					AND
+				isDeleted = 0
+		`,
+		{ campaignID, title, folderID }
+	);
+
+	return {
+		changed: result.changedRows > 0,
+	};
+};
+
+/**
+ * @description Delete a note
+ */
+export const deleteNote = async (path, query, user, connection) => {
+	const { noteID, campaignID } = path;
+
+	const result = await promiseQuery(
+		connection,
+		`
+			UPDATE note
+			SET isDeleted = 1
+			WHERE
+				noteID = :noteID
+					AND
+				campaignID = :campaignID
+		`,
+		{ noteID, campaignID }
+	);
+
+	return {
+		deleted: result.changedRows > 0,
+	};
+};
+
+/**
+ * @description Delete a folder
+ */
+export const deleteFolder = async (path, query, user, connection) => {
+	const { folderID, campaignID } = path;
+
+	const result = await promiseQuery(
+		connection,
+		`
+			UPDATE notefolder
+			SET isDeleted = 1
+			WHERE
+				noteFolderID = :folderID
+					AND
+				campaignID = :campaignID
+		`,
+		{ folderID, campaignID }
+	);
+
+	return {
+		deleted: result.changedRows > 0,
 	};
 };
 
@@ -101,9 +327,9 @@ export const getNote = async (path, query, user, connection) => {
 			WHERE
 				noteID = :noteID
 					AND
-				noteID IN (
-					SELECT noteID FROM notelist WHERE campaignID = :campaignID
-				)
+				campaignID = :campaignID
+					AND
+				isDeleted = 0
 		`,
 		{ campaignID, noteID }
 	);
@@ -137,9 +363,9 @@ export const updateNote = async (path, query, user, connection, body) => {
 			WHERE
 				noteID = :noteID
 					AND
-				noteID IN (
-					SELECT noteID FROM notelist WHERE campaignID = :campaignID
-				)
+				campaignID = :campaignID
+					AND
+				isDeleted = 0
 		`,
 		{ campaignID, value, field, noteID }
 	);

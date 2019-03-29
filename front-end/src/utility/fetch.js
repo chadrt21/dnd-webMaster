@@ -8,6 +8,16 @@ export const get = path => (
 		})
 );
 
+export const httpDelete = path => (
+	fetch(path, { credentials: 'include', method: 'DELETE' })
+		.then(response => {
+			if (response.status !== 200) {
+				throw new Error(response.statusText);
+			}
+			return response.json();
+		})
+);
+
 export const post = (path, body) => (
 	fetch(
 		path,
