@@ -38,8 +38,14 @@ export const authenticateSpotify = async (request, response) => {
 
 	// If we can't refresh it (i.e. this is a first time authentication for this browser),
 	// Redirect user back to the redirect url given in the query string
+	const scopes = encodeURIComponent([
+		'streaming',
+		'user-read-birthdate',
+		'user-read-email',
+		'user-read-private',
+	].join(' '));
 	return response.redirect(
-		`${ACCOUNTS_SPOTIFY_URL}/authorize?redirect_uri=${REDIRECT_URL}&client_id=${clientInfo.client_id}&response_type=code&state=${redirectUrl}`
+		`${ACCOUNTS_SPOTIFY_URL}/authorize?redirect_uri=${REDIRECT_URL}&client_id=${clientInfo.client_id}&response_type=code&state=${redirectUrl}&scope=${scopes}`
 	);
 };
 
