@@ -43,6 +43,11 @@ export const authenticateSpotify = async (request, response) => {
 		'user-read-birthdate',
 		'user-read-email',
 		'user-read-private',
+		'user-modify-playback-state',
+		'user-read-playback-state',
+		'user-read-currently-playing',
+		'playlist-read-private',
+		'playlist-read-collaborative',
 	].join(' '));
 	return response.redirect(
 		`${ACCOUNTS_SPOTIFY_URL}/authorize?redirect_uri=${REDIRECT_URL}&client_id=${clientInfo.client_id}&response_type=code&state=${redirectUrl}&scope=${scopes}`
