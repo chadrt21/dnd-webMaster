@@ -32,7 +32,7 @@ export const authenticateSpotify = async (request, response) => {
 
 	// If it isn't value, check if we can refresh it
 	if (spotifyRefreshToken) {
-		await refreshAccessToken(spotifyRefreshToken);
+		await refreshAccessToken(spotifyRefreshToken, request);
 		return response.redirect(redirectUrl);
 	}
 
@@ -91,7 +91,7 @@ export const getAccessToken = async (request, response) => {
 	const isTokenValid = await isAccessTokenValid(spotifyAccessToken);
 
 	if (!isTokenValid) {
-		const newToken = await refreshAccessToken(spotifyRefreshToken);
+		const newToken = await refreshAccessToken(spotifyRefreshToken, request);
 		return response.json({
 			token: newToken,
 		});
@@ -100,6 +100,18 @@ export const getAccessToken = async (request, response) => {
 	return response.json({
 		token: spotifyAccessToken,
 	});
+};
+
+/**
+ * @description Clears a users spotify tokens in the database
+ */
+export const clearTokens = async (request, response) => {
+	try {
+		await setTokens(request, '', '');
+		return response.status(STATUS_CODES.OK).end();
+	} catch (err) {
+		return response.status(STATUS_CODES.INTERNAL_SERVER_ERROR).end();
+	}
 };
 
 /**
@@ -123,8 +135,7 @@ const isAccessTokenValid = async accessToken => {
 /**
  * @description Refreshes a given access token
  */
-const refreshAccessToken = async request => {
-	const { spotifyRefreshToken } = await getTokens(request);
+const refreshAccessToken = async (spotifyRefreshToken, request) => {
 	const refreshedTokenResponse = await fetch(
 		`${ACCOUNTS_SPOTIFY_URL}/api/token`,
 		{
@@ -204,14 +215,14 @@ const setTokens = async (request, accessToken, refreshToken) => {
 				UPDATE dm
 				SET
 					spotifyAccessToken = :accessToken
-					${refreshToken && refreshToken !== '' ? ', spotifyRefreshToken = :refreshToken' : ''}
+					${refreshToken !== undefined ? ', spotifyRefreshToken = :refreshToken' : ''}
 				WHERE
 					dmID = :id
 			`,
 			{
 				id,
-				accessToken: cryptr.encrypt(accessToken || ''),
-				refreshToken: cryptr.encrypt(refreshToken || ''),
+				accessToken: accessToken ? cryptr.encrypt(accessToken) : '',
+				refreshToken: refreshToken ? cryptr.encrypt(refreshToken) : '',
 			}
 		);
 		connection.release();

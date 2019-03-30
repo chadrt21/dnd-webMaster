@@ -9,4 +9,7 @@ export default app => {
 
 	app.route('/api/spotify/access-token')
 		.get(spotifyRoutes.getAccessToken);
+
+	app.route('/api/spotify/clear-tokens')
+		.get(spotifyRoutes.clearTokens);
 };
