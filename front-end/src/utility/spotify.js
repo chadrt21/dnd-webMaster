@@ -1,5 +1,43 @@
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
 import * as STATUS_CODES from 'http-status-codes';
 let token;
+let player;
+
+/**
+ * @description When the Spotify SDK is ready, lets check if we have our token
+ */
+window.onSpotifyWebPlaybackSDKReady = () => {
+	player = new Spotify.Player({
+		name: 'Campaign Buddy Music Tool',
+		getOAuthToken: async callback => {
+			token = await getToken();
+			callback(token);
+		},
+	});
+
+	// Error handling
+	player.addListener('initialization_error', ({ message }) => { console.error(message); });
+	player.addListener('authentication_error', ({ message }) => { console.error(message); });
+	player.addListener('account_error', ({ message }) => { console.error(message); });
+	player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+	// Playback status updates
+	player.addListener('player_state_changed', state => { console.log(state); });
+
+	// Ready
+	player.addListener('ready', ({ device_id }) => {
+		console.log('Ready with Device ID', device_id);
+	});
+
+	// Not Ready
+	player.addListener('not_ready', ({ device_id }) => {
+		console.log('Device ID has gone offline', device_id);
+	});
+
+	// Connect to the player!
+	player.connect();
+};
 
 /**
  * @description Makes an request to https://api.spotify.com/v1/{uri}
