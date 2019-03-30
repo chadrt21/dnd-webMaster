@@ -34,7 +34,7 @@ export const makeRequest = async (uri, options) => {
  * @description Returns true if the user has authorized CB to use their spotify account
  */
 export const hasSpotifyAccess = async () => {
-	if (token) {
+	if (!token) {
 		token = await getToken();
 		if (!token) {
 			return false;
