@@ -2,15 +2,17 @@ import React from 'react';
 import ToolBase from '../ToolBase';
 
 import SignInScreen from './sign-in-screen';
+import MusicControl from './music-control';
 
 import {
 	hasSpotifyAccess,
+	spotifyGet,
 } from 'Utility/spotify';
-import { AnchorButton } from '@blueprintjs/core';
 
 export default class MusicTool extends ToolBase {
 	state = {
 		hasAccess: false,
+		playlists: [],
 	}
 	
 	async componentDidMount() {
@@ -20,9 +22,26 @@ export default class MusicTool extends ToolBase {
 			hasAccess,
 		});
 	}
+
+	componentDidUpdate(prevProps, prevState) {
+		const {
+			hasAccess,
+		} = this.state;
+
+		if (hasAccess && !prevState.hasAccess) {
+			this.loadPlaylists();
+		}
+	}
+
+	loadPlaylists = async () => {
+		const playlists = await spotifyGet('/me/playlists').then(response => response.json());
+		this.setState({
+			playlists: playlists.items.map(({ name, uri }) => ({ name, uri })),
+		});
+	}
 	
 	render() {
-		const { hasAccess } = this.state;
+		const { hasAccess, playlists } = this.state;
 
 		if (!hasAccess) {
 			return (
@@ -31,12 +50,9 @@ export default class MusicTool extends ToolBase {
 		}
 
 		return (
-			<div>
-				<p>You are authenticated with spotify!</p>
-				<AnchorButton href="/api/spotify/clear-tokens">
-					Sign out
-				</AnchorButton>
-			</div>
+			<MusicControl
+				playlists={playlists}
+			/>
 		);
 	}
 }
