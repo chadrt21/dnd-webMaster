@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {
+	Button,
+} from '@blueprintjs/core';
+
 import Title from '../../../title';
-import List from '../../../list';
 import CurrentTrackControls from '../current-track-controls';
+import LinkedPlaylistList from '../linked-playlist-list';
+import LinkPlaylistModal from '../link-playlist-modal';
 
 import {
 	playPlaylist,
@@ -21,10 +26,12 @@ export default class MusicControl extends React.Component {
 	static propTypes = {
 		playlists: PropTypes.array.isRequired,
 		loadPlaylists: PropTypes.func.isRequired,
+		onLinkPlaylists: PropTypes.func.isRequired,
 	}
 
 	state = {
 		playerState: {},
+		linkPlaylistModalOpen: false,
 	}
 
 	async componentDidMount() {
@@ -52,9 +59,10 @@ export default class MusicControl extends React.Component {
 	render() {
 		const {
 			playlists,
+			onLinkPlaylists,
 		} = this.props;
 
-		const { playerState } = this.state;
+		const { playerState, linkPlaylistModalOpen } = this.state;
 
 		return (
 			<div className={styles.root}>
@@ -88,12 +96,37 @@ export default class MusicControl extends React.Component {
 				<Title
 					fontSize={18}
 					className={styles.title}
+					rightComponent={
+						<Button
+							className={styles.button}
+							minimal
+							icon="cog"
+							onClick={() => this.setState({ linkPlaylistModalOpen: true })}
+						/>
+					}
 				>
 					Playlists
 				</Title>
-				<List
-					items={playlists}
-					onItemSelected={item => playPlaylist(item.uri)}
+				<LinkedPlaylistList
+					playlists={playlists}
+					onItemSelected={item => playPlaylist(item.spotifyUri)}
+					isPlaying={playerState.paused === false}
+					onTogglePlay={togglePlay}
+					onHotKeyChanged={(spotifyUri, hotkey) => console.log(spotifyUri, hotkey)}
+					currentlyPlayingContextUri={
+						playerState.context &&
+						playerState.context.uri
+					}
+					onOpenLinkPlaylistModal={() => this.setState({ linkPlaylistModalOpen: true })}
+				/>
+				<LinkPlaylistModal
+					open={linkPlaylistModalOpen}
+					onClose={() => this.setState({ linkPlaylistModalOpen: false })}
+					onLinkPlaylists={async playlists => {
+						await onLinkPlaylists(playlists);
+						this.setState({ linkPlaylistModalOpen: false });
+					}}
+					defaultSelected={playlists}
 				/>
 			</div>
 		);

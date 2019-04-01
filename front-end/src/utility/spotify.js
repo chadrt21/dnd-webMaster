@@ -143,6 +143,14 @@ export const spotifyGet = uri => makeRequest(uri, {
 	headers: {
 		'Authorization': `Bearer ${token}`,
 	},
+}).then(response => {
+	if (response.status === STATUS_CODES.NO_CONTENT) {
+		return true;
+	} else if (response.status <= 299) {
+		return response.json();
+	} else if (response.status > 299) {
+		throw new Error(`CODE ${response.status}: ${response.statusText}`);
+	}
 });
 
 /**

@@ -1,7 +1,20 @@
+@import '../../../../styles/mixins.less';
+@import '../../../../styles/colors.less';
+
 .root {
 	padding: 15px;
 
 	.title {
 		margin-top: 24px;
+		display: flex;
+		align-items: center;
+
+		.button {
+			margin-left: 10px;
+		}
+	}
+
+	.button {
+		.with-button-styles(@text-color);
 	}
 }

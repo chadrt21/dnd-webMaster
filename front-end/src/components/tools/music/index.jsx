@@ -3,11 +3,15 @@ import ToolBase from '../ToolBase';
 
 import SignInScreen from './sign-in-screen';
 import MusicControl from './music-control';
+import { displayError } from '../../toast';
 
 import {
 	hasSpotifyAccess,
-	spotifyGet,
 } from 'Utility/spotify';
+import {
+	get,
+	post,
+} from 'Utility/fetch';
 
 export default class MusicTool extends ToolBase {
 	state = {
@@ -34,10 +38,24 @@ export default class MusicTool extends ToolBase {
 	}
 
 	loadPlaylists = async () => {
-		const playlists = await spotifyGet('/me/playlists').then(response => response.json());
+		const { campaignID } = this.props;
+		const playlists = await get(`/api/campaigns/${campaignID}/playlists`);
 		this.setState({
-			playlists: playlists.items.map(({ name, uri }) => ({ name, uri })),
+			playlists,
 		});
+	}
+
+	linkPlaylists = async items => {
+		const { campaignID } = this.props;
+		try {
+			await post(
+				`/api/campaigns/${campaignID}/playlists`,
+				{ items }
+			);
+			await this.loadPlaylists();
+		} catch (err) {
+			displayError('Could not link playlists');
+		}
 	}
 	
 	render() {
@@ -52,6 +70,7 @@ export default class MusicTool extends ToolBase {
 		return (
 			<MusicControl
 				playlists={playlists}
+				onLinkPlaylists={this.linkPlaylists}
 			/>
 		);
 	}

@@ -1,0 +1,23 @@
+@import '../../../../styles/colors.less';
+@import '../../../../styles/mixins.less';
+
+.list-item {
+	color: @text-color;
+
+	.checkbox {
+		margin: 0;
+	}
+}
+
+.button-container {
+	margin-top: 4px;
+	display: flex;
+	
+	.spacer {
+		flex-grow: 1;
+	}
+
+	.button {
+		.with-button-styles(@text-color);
+	}
+}

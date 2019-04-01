@@ -22,6 +22,14 @@
 	:global(.bp3-icon) {
 		color: @color !important;
 	}
+
+	&:global(.bp3-disabled), &:global(.bp3-disabled .bp3-icon) {
+		color: fadeout(@color, 50%) !important;
+	}
+
+	&:global(.bp3-disabled):hover, &:global(.bp3-disabled):active {
+		background-color: rgba(0, 0, 0, 0);
+	}
 }
 
 .with-popover-styles() {
