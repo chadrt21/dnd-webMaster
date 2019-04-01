@@ -25,7 +25,7 @@ import styles from './styles.less';
 export default class MusicControl extends React.Component {
 	static propTypes = {
 		playlists: PropTypes.array.isRequired,
-		loadPlaylists: PropTypes.func.isRequired,
+		onHotKeyChanged: PropTypes.func.isRequired,
 		onLinkPlaylists: PropTypes.func.isRequired,
 	}
 
@@ -60,6 +60,7 @@ export default class MusicControl extends React.Component {
 		const {
 			playlists,
 			onLinkPlaylists,
+			onHotKeyChanged,
 		} = this.props;
 
 		const { playerState, linkPlaylistModalOpen } = this.state;
@@ -112,7 +113,7 @@ export default class MusicControl extends React.Component {
 					onItemSelected={item => playPlaylist(item.spotifyUri)}
 					isPlaying={playerState.paused === false}
 					onTogglePlay={togglePlay}
-					onHotKeyChanged={(spotifyUri, hotkey) => console.log(spotifyUri, hotkey)}
+					onHotKeyChanged={onHotKeyChanged}
 					currentlyPlayingContextUri={
 						playerState.context &&
 						playerState.context.uri

@@ -1,16 +1,20 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 import * as STATUS_CODES from 'http-status-codes';
+import keyboard from 'keyboardjs';
+import { get } from './fetch';
+
 let token;
 let player;
 let deviceID;
+let linkedPlaylists = [];
 const stateHooksToRegister = [];
 const stateHooksToUnregister = [];
 
 /**
  * @description When the Spotify SDK is ready, lets check if we have our token
  */
-window.onSpotifyWebPlaybackSDKReady = () => {
+window.onSpotifyWebPlaybackSDKReady = async () => {
 	player = new Spotify.Player({
 		name: 'Campaign Buddy Music Tool',
 		getOAuthToken: async callback => {
@@ -46,6 +50,40 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
 	// Connect to the player!
 	player.connect();
+
+	const campaignID = window.location.pathname.split('/')[2];
+	const playlists = await get(`/api/campaigns/${campaignID}/playlists`);
+	setLinkedPlaylists(playlists);
+};
+
+/**
+ * @description Link playlist hotkeys to keyboard
+ */
+export const setLinkedPlaylists = playlists => {
+	linkedPlaylists.forEach(
+		linkedPlaylist => {
+			if (linkedPlaylist.hotkey) {
+				keyboard.unbind(linkedPlaylist.hotkey, linkedPlaylist.play);
+			}
+		}
+	);
+
+	linkedPlaylists = playlists.map(
+		linkedPlaylist => ({
+			...linkedPlaylist,
+			play: () => {
+				playPlaylist(linkedPlaylist.spotifyUri);
+			},
+		})
+	);
+
+	linkedPlaylists.forEach(
+		linkedPlaylist => {
+			if (linkedPlaylist.hotkey) {
+				keyboard.bind(linkedPlaylist.hotkey, linkedPlaylist.play);
+			}
+		}
+	);
 };
 
 /**

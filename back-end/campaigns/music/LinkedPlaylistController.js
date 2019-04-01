@@ -16,6 +16,7 @@ export const getLinkedPlaylists = async (path, query, user, connection) => {
 				campaignhasspotifyplaylist
 			WHERE
 				campaignID = :campaignID
+			ORDER BY playlistName
 		`,
 		{ campaignID }
 	);

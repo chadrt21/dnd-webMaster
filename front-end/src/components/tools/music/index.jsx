@@ -7,6 +7,7 @@ import { displayError } from '../../toast';
 
 import {
 	hasSpotifyAccess,
+	setLinkedPlaylists,
 } from 'Utility/spotify';
 import {
 	get,
@@ -42,6 +43,9 @@ export default class MusicTool extends ToolBase {
 		const playlists = await get(`/api/campaigns/${campaignID}/playlists`);
 		this.setState({
 			playlists,
+		}, () => {
+			const { playlists } = this.state;
+			setLinkedPlaylists(playlists);
 		});
 	}
 
@@ -55,6 +59,19 @@ export default class MusicTool extends ToolBase {
 			await this.loadPlaylists();
 		} catch (err) {
 			displayError('Could not link playlists');
+		}
+	}
+
+	changeHotkey = async (spotifyUri, hotkey) => {
+		const { campaignID } = this.props;
+		try {
+			await post(
+				`/api/campaigns/${campaignID}/playlists/hotkey`,
+				{ spotifyUri, hotkey }
+			);
+			this.loadPlaylists();
+		} catch (err) {
+			displayError('Could not set hotkey');
 		}
 	}
 	
@@ -71,6 +88,7 @@ export default class MusicTool extends ToolBase {
 			<MusicControl
 				playlists={playlists}
 				onLinkPlaylists={this.linkPlaylists}
+				onHotKeyChanged={this.changeHotkey}
 			/>
 		);
 	}
