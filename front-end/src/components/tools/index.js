@@ -36,7 +36,7 @@ export default [
 	{
 		name: 'search',
 		displayName: 'Search Tool',
-		defaultLabel: 'Search',
+		defaultLabel: 'Spells Search',
 		component: SearchTool,
 	},
 	{

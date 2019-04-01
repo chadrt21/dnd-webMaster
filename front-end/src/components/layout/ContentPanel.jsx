@@ -3,7 +3,12 @@ displaying the active tab and allowing user to switch between tabs */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ResizeSensor } from '@blueprintjs/core';
+import {
+	ResizeSensor,
+	Menu,
+	MenuItem,
+	ContextMenu,
+} from '@blueprintjs/core';
 
 import Tab from './DraggableTab';
 import DropTargetOverlay from './DropTargetOverlay';
@@ -19,6 +24,7 @@ export default class ContentPanel extends React.Component {
 		tools: PropTypes.array.isRequired,
 		moveTabs: PropTypes.func.isRequired,
 		panelId: PropTypes.number.isRequired,
+		insertPaneIntoPanel: PropTypes.func.isRequired,
 		panes: PropTypes.array,
 		dropPaneIntoPanel: PropTypes.func,
 		movePane: PropTypes.func,
@@ -110,6 +116,44 @@ export default class ContentPanel extends React.Component {
 		});
 	}
 
+	mapToolMenuItem = tool => {
+		const { insertPaneIntoPanel } = this.props;
+
+		return (
+			<MenuItem
+				text={tool.displayName}
+				onClick={() => insertPaneIntoPanel(tool.name)}
+			/>
+		);
+	}
+
+	renderContextMenu = event => {
+		const { tools } = this.props;
+
+		ContextMenu.show(
+			<Menu>
+				<MenuItem text="Add New Tool">
+					{tools.map(this.mapToolMenuItem)}
+				</MenuItem>
+				<MenuItem
+					text="Duplicate Active Tab"
+					onClick={() => {
+						const { insertPaneIntoPanel, panes } = this.props;
+						const { currentTab } = this.state;
+						const currentPane = panes[currentTab];
+
+						insertPaneIntoPanel(
+							currentPane.type,
+							currentPane.state,
+							currentPane.tabName,
+						);
+					}}
+				/>
+			</Menu>,
+			{ left: event.clientX, top: event.clientY }
+		);
+	}
+
 	render() {
 		const { panes, dropPaneIntoPanel, movePane, renderContent, panelId } = this.props;
 		const { currentTab, width, height } = this.state;
@@ -125,6 +169,7 @@ export default class ContentPanel extends React.Component {
 								});
 							}}
 							panelId={panelId}
+							renderContextMenu={this.renderContextMenu}
 						>
 							{panes && panes.map(this.mapTabs)}
 						</TabContainer>

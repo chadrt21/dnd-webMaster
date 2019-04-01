@@ -1,3 +1,4 @@
+ALTER TABLE spell AUTO_INCREMENT = 1;
 INSERT INTO spell
 (spellName, spellDesc, spellHigherLevelDesc, spellRange, spellMaterial, ritual, duration, concentration, castingTime, schoolID, componentV, componentS, componentM)
 VALUES

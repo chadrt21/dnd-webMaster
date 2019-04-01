@@ -1,24 +1,24 @@
 # Database Insert Script Log
 
 - **Static Data Insert Script ToDo List (In 5eAPI Alphabetical Order)**
-  - [X] Ability Scores
-  - [X] Classes
+  - [X] Ability Scores (insert-abilityscore.sql)
+  - [X] Classes (insert-klass.sql)
   - [ ] Conditions
-  - [X] Damage Types
+  - [X] Damage Types (insert-damagetypes.sql)
   - [ ] Equipment Categories
-  - [X] Equipment
-  - [X] Features
+  - [X] Equipment (insert-equipment.sql)
+  - [X] Features (insert-feat.sql)
   - [ ] Languages
   - [ ] Levels
-  - [X] Magic Schools
+  - [X] Magic Schools (insert-spellschool.sql)
   - [ ] Monsters
-  - [X] Proficiencies
-  - [X] Races
-  - [X] Skills
-  - [X] Spellcasting
-  - [X] Spells
+  - [X] Proficiencies (insert-proficiency.sql)
+  - [X] Races (insert-race.sql)
+  - [X] Skills (insert-skill.sql)
+  - [ ] Spellcasting
+  - [X] Spells (insert-spell.sql)
   - [ ] StartingEquipment
   - [ ] Subclasses
   - [ ] Subraces
   - [ ] Traits
-  - [X] Weapon Properties
+  - [X] Weapon Properties (insert-weaponproperty.sql)

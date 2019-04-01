@@ -10,6 +10,7 @@ export default class PaneComponent extends React.Component {
 	}
 	
 	state = {}
+	getPreservedState = null // Takes in current state and returns a state object to be preserved
 
 	componentDidMount() {
 		const { pane } = this.props;
@@ -23,7 +24,7 @@ export default class PaneComponent extends React.Component {
 	componentWillUnmount() {
 		const { pane } = this.props;
 		if (!pane) return;
-		pane.setState(this.state);
+		pane.setState(this.state, this.getPreservedState);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -44,7 +45,7 @@ export default class PaneComponent extends React.Component {
 				callback();
 			}
 			if (!pane) return;
-			pane.setState(this.state);
+			pane.setState(this.state, this.getPreservedState);
 		});
 	}
 }

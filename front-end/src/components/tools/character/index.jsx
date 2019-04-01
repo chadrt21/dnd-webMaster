@@ -78,6 +78,28 @@ export default class CharacterTool extends ToolBase {
 			equipment: '',
 			klassFeatures: '',
 		},
+		defaultCharacterID: null,
+	}
+
+	getPreservedState = state => ({
+		defaultCharacterID: state.view === 'display' && state.character && state.character.characterID,
+		view: state.view,
+		toolSettings: state.toolSettings,
+	})
+
+	componentDidUpdate = () => {
+		const { defaultCharacterID } = this.state;
+
+		if (defaultCharacterID) {
+			this.setState({
+				defaultCharacterID: null,
+			}, () => {
+				const { view } = this.state;
+				if (view === 'display') {
+					this.loadCharacter(defaultCharacterID);
+				}
+			});
+		}
 	}
 
 	async componentDidMount() {
