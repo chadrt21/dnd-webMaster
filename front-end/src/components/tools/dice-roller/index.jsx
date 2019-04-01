@@ -5,11 +5,6 @@
 
 import React from 'react';
 import ToolBase from '../ToolBase';
-<<<<<<< HEAD
-//import Button from '@blueprintjs/core';
-//import styles from './styles.less';
-
-=======
 import styles from './styles.less';
 //<Component className={styles.yourClassName} />
 
@@ -21,7 +16,6 @@ import {
 
 
  
->>>>>>> stylizing the buttons using blueprint js
 export default class diceroller extends ToolBase{
 	constructor(props){
 		super(props);
@@ -51,20 +45,6 @@ export default class diceroller extends ToolBase{
 	render() {
 		return(
 			<div className = "diceRoller"> 
-<<<<<<< HEAD
-				<h1> Dice Roller </h1>
-				<div id = "outputContainer"> 
-					<p id="rNum">{ this.state.number }</p>
-				</div> 
-				<div id = "buttonClick">
-					<button id="generate" onClick={ this.changeNumber }>
-						Roll a d6
-					</button>
-					<button id="generate20" onClick={ this.generateNumber }>
-						Roll a d20
-					</button>
-				</div>
-=======
 				<h1 className={styles.h1}> Dice Roller </h1>
 				<div className="dice-button-group">
 					<button type="button" className="rollButton" onClick={ () => this.maxChange(4) }>
@@ -77,7 +57,6 @@ export default class diceroller extends ToolBase{
 				<div className={styles.dice} id = "outputContainer"> 
 					<p id="rNum">{ this.state.number }</p>
 				</div> 
->>>>>>> stylizing the buttons using blueprint js
 			</div>
 		);
 	}
