@@ -48,13 +48,24 @@ export const linkSpotifyPlaylists = async (path, query, user, connection, body) 
 	await promiseQuery(
 		connection,
 		`
-			INSERT INTO campaignhasspotifyplaylist
-				(campaignID, spotifyUri, type, hotkey, playlistName)
-			VALUES
-				${insertStatements.join(', ')}
+			DELETE FROM campaignhasspotifyplaylist
+			WHERE campaignID = :campaignID
 		`,
-		{ campaignID, ...insertStatementObject }
+		{ campaignID }
 	);
+
+	if (insertStatements.length > 0) {
+		await promiseQuery(
+			connection,
+			`
+				INSERT INTO campaignhasspotifyplaylist
+					(campaignID, spotifyUri, type, hotkey, playlistName)
+				VALUES
+					${insertStatements.join(', ')}
+			`,
+			{ campaignID, ...insertStatementObject }
+		);
+	}
 
 	return {
 		added: true,
