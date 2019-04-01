@@ -54,6 +54,14 @@ window.onSpotifyWebPlaybackSDKReady = async () => {
 	const campaignID = window.location.pathname.split('/')[2];
 	const playlists = await get(`/api/campaigns/${campaignID}/playlists`);
 	setLinkedPlaylists(playlists);
+	keyboard.bind('ctrl + alt + p', event => {
+		event.preventDefault();
+		togglePlay();
+	});
+	keyboard.bind('ctrl + shift + p', event => {
+		event.preventDefault();
+		togglePlay();
+	});
 };
 
 /**
@@ -71,7 +79,8 @@ export const setLinkedPlaylists = playlists => {
 	linkedPlaylists = playlists.map(
 		linkedPlaylist => ({
 			...linkedPlaylist,
-			play: () => {
+			play: event => {
+				event.preventDefault();
 				playPlaylist(linkedPlaylist.spotifyUri);
 			},
 		})

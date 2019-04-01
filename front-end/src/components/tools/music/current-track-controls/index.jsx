@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {
 	Button,
 	Icon,
+	Tooltip,
 } from '@blueprintjs/core';
 
 import styles from './styles.less';
@@ -61,13 +62,17 @@ export default class CurrentTrackControls extends React.Component {
 							className={styles.button}
 							small
 						/>
-						<Button
-							onClick={onTogglePlay}
-							icon={isPlaying ? 'pause' : 'play'}
-							minimal
-							className={styles.button}
-							small
-						/>
+						<Tooltip
+							content="ctrl + shift + p"
+						>
+							<Button
+								onClick={onTogglePlay}
+								icon={isPlaying ? 'pause' : 'play'}
+								minimal
+								className={styles.button}
+								small
+							/>
+						</Tooltip>
 						<Button
 							disabled={!canSkip}
 							onClick={onSkip}
