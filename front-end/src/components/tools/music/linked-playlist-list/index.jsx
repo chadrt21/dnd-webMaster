@@ -42,6 +42,7 @@ export default class LinkedPlaylistList extends React.Component {
 			currentlyPlayingContextUri,
 			isPlaying,
 			onTogglePlay,
+			onHotKeyChanged,
 		} = this.props;
 
 		return (
@@ -76,6 +77,10 @@ export default class LinkedPlaylistList extends React.Component {
 							{playlist.hotkey || <em>No Hotkey</em>}
 						</Button>
 						<Menu>
+							<MenuItem
+								onClick={() => onHotKeyChanged(playlist.spotifyUri, '')}
+								text={<em>No Hotkey</em>}
+							/>
 							{possibleHotkeys.map(this.renderMenuItem(playlist.spotifyUri))}
 						</Menu>
 					</Popover>
