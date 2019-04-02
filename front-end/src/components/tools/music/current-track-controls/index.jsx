@@ -63,7 +63,7 @@ export default class CurrentTrackControls extends React.Component {
 							small
 						/>
 						<Tooltip
-							content="ctrl + shift + p"
+							content="ctrl + alt + p"
 						>
 							<Button
 								onClick={onTogglePlay}
