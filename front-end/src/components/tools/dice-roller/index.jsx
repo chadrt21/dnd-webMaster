@@ -14,8 +14,6 @@ import {
 	InputGroup,
 	Popover,	
 } from '@blueprintjs/core';
-
-
  
 export default class diceroller extends ToolBase{
 	constructor(props){
@@ -25,7 +23,7 @@ export default class diceroller extends ToolBase{
 			max: 20,
 			number: 1,
 			timesRolled: 1,
-			textInputValue: '',
+			textInputValue: '1d20',
 		};
 	} 
 
@@ -33,15 +31,7 @@ export default class diceroller extends ToolBase{
 		this.generateNumber();
 	
 	}
-	/* max Change */
-	maxChange = (n) => { 
-		this.setState({ 
-			max: n,
-		},
-		this.generateNumber(), 
-		);	
-	}
-
+	
 	/*generate the number*/ 
 	generateNumber = () => this.setState(
 		previousState => {
@@ -59,11 +49,15 @@ export default class diceroller extends ToolBase{
 	onTextInputChange = (event) => 	
 	{ 
 		const splitText = event.target.value.split('d'); //splits into number of times rolled and max number
-		
-		this.setState({ textInputValue: event.target.value, 
-			timesRolled: splitText[0],
-			max: splitText[1], 
-		});
+		const times =  parseInt(splitText[0]);
+		const maxNum = parseInt(splitText[1]);
+		if(isNaN(times) == false && isNaN(maxNum) == false)
+		{		
+			this.setState({ textInputValue: event.target.value, 
+				timesRolled: times,
+				max: maxNum, 
+			});
+		}		
 	};
 		
 
@@ -73,22 +67,27 @@ export default class diceroller extends ToolBase{
 		} = this.state;
 
 		return(
-			<div className = "diceRoller"> 
+			<div> 
 				<h1 className={styles.h1}> Dice Roller </h1>
 				<div className={styles.dice} id = "outputContainer"> 
-					<p id="rNum">{ this.state.number }</p>
+					<p>{ this.state.number }</p>
 				</div> 
-				<ButtonGroup>
-					<Button intent="primary" onClick={this.generateNumber}>
+				<ButtonGroup alignment="center">
+					<Button intent="primary" textAlignment="center" onClick={this.generateNumber}>
 						Roll
 					</Button>
 					
 					<Popover modifiers={{ arrow: false }}>
 						<Button icon="caret-down" intent="primary"/>
-						<InputGroup placeholder="ex: 2d8" value={textInputValue} pattern="d1" onChange={this.onTextInputChange}/> 
+						<InputGroup 
+							placeholder="ex: 2d8" 
+							value={textInputValue} 
+							pattern="d1" 
+							onChange={this.onTextInputChange}
+							autofocus
+						/> 
 					</Popover>
 				</ButtonGroup>
-				
 			</div>
 		);
 	}
