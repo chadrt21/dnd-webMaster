@@ -3,6 +3,7 @@ import Character from './character';
 import SearchTool from './search';
 import Notes from './notes';
 import Music from './music';
+import DiceRoller from './dice-roller';
 
 /**
  * Add an object to the array below in the following format:
@@ -44,5 +45,11 @@ export default [
 		displayName: 'Music Tool',
 		defaultLabel: 'Music',
 		component: Music,
+	},
+	{
+		name: 'diceRoller',
+		displayName: 'Dice Roll Tool',
+		defaultLabel: 'Dice Roller',
+		component: DiceRoller,
 	},
 ];
