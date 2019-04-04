@@ -22,7 +22,7 @@ export default class diceroller extends ToolBase{
 		super(props);
 		this.state = {
 			min: 1,
-			max: 20,
+			max: 6,
 			number: 1,
 			timesRolled: 1,
 			textInputValue: '',
