@@ -29,11 +29,6 @@ export default class HomePage extends React.Component {
 		window.location.href = `/app/${id}`;
 	}
 
-	navigateToCharacter = id => {
-		/* eslint-disable-next-line */
-		console.log(id);
-	}
-
 	/*
 		When a user creates a new campaign, we want to show the loading indicator
 		for new campaigns, make the post request, if it is successful, hide the
@@ -87,7 +82,6 @@ export default class HomePage extends React.Component {
 				/>
 				<Content
 					navigateToCampaign={this.navigateToCampaign}
-					navigateToCharacter={this.navigateToCharacter}
 					campaigns={campaigns}
 				/>
 			</div>

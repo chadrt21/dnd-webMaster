@@ -1,5 +1,4 @@
 // Import your component here
-import ExampleTool from './example';
 import Character from './character';
 import SearchTool from './search';
 import Notes from './notes';
@@ -22,12 +21,6 @@ import Music from './music';
  * 	]
  */
 export default [
-	{
-		name: 'example',
-		displayName: 'Example Tool',
-		defaultLabel: 'Example',
-		component: ExampleTool,
-	},
 	{
 		name: 'character',
 		displayName: 'Character Tool',
