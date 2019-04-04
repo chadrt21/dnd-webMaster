@@ -2,3 +2,4 @@ bundle.js
 server.bundle.js
 __tests__
 __mocks__
+database/generate-scripts/5edatabase
