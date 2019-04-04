@@ -1,26 +1,37 @@
 # dnd-webMaster
-Web Interface for D&amp;D resources and character management for dungen masters 
+Web Interface for D&amp;D resources and character management for dungen masters
 
 ## To-Do
 
 - **Documentation**
-  - [X] Project Management Plan
-  - [X] Software System Requirements document
-  - [X] Product Backlog
-  - [X] Software Design Description
-  - [X] Add programming standards document (for commenting, naming, misc syntax perferences)
-  - [X] Add guide for server-side programming
+  - [x] Project Management Plan
+  - [x] Software System Requirements document
+  - [x] Product Backlog
+  - [x] Software Design Description
+  - [x] Add programming standards document (for commenting, naming, misc syntax perferences)
+  - [x] Add guide for server-side programming
 - **Prototyping/Modeling**
-  - [X] Initial rough paper prototypes
-  - [X] Initial database conceptual ER model
-  - [X] Digital prototypes of Software Product Features detailed in SRS (In progress: Jill & Ashley)
+  - [x] Initial rough paper prototypes
+  - [x] Initial database conceptual ER model
+  - [x] Digital prototypes of Software Product Features detailed in SRS (In progress: Jill & Ashley)
   - [ ] Full physical ER database model (In progress: Zach & Chad)
 - **Programming**
-  - [X] Layout manager proof of concept
-  - [X] Implement BlueprintJS in Layout PoC
-  - [X] Set up ESLint to enforce programming standards
-  - [ ] Sprint 1 (In progress: Everyone)
-  - [ ] Make tabs rearrangable in a panel
+  - [x] Layout manager proof of concept
+  - [x] Implement BlueprintJS in Layout PoC
+  - [x] Set up ESLint to enforce programming standards
+  - [x] Sprint 1
+    - [x] Make tabs rearrangable in a panel
+  - [x] Sprint 2 (due March 25)
+    - [x] Dice Roller
+    - [ ] Notes
+    - [ ] Global Search
+  - [ ] Sprint 3 (due April 5th)
+    - [ ] Automated Rolls
+    - [ ] Note Folers
+    - [ ] Tutoral
+    - [x] Spotify Integration
+- **Technical Presentation**
+  - [ ] Google Slide
 
 ## Colaborators
 Chad Ross: chad.ross@biola.edu
@@ -80,6 +91,14 @@ Shared Roles: Developers, Testers
 ## How to build the front-end
 * Navigate to root project folder
 * Run `npm run build`
+
+## How to build and run MYSQL database locally
+* Open `mysql workbench`
+* Open `wampserver`
+* Open a connection on `mysql workbench`
+* Open and run `loadMaster.sql` in `mysql workbench` to set up the tables
+* Open and run all sql stripts in `insert-scripts` folder
+  - Run the scripts with list in its name last
 
 ## How to start the server
 * Navigate to root project folder

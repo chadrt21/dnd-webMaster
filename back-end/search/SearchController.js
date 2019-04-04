@@ -89,22 +89,35 @@ export const globalSearch = async (path, query, user, connection) => {
 	})(path, query, user, connection);
 
 	const raceResult = await search({
-		tableName: 'races',
+		tableName: 'race',
 		idColumn: 'raceID',
 		nameColumn: 'raceName',
 	})(path, query, user, connection);
 
-	const characterResult = await search({
-		tableName: 'Chacacter',
-		idColumn: 'characterID',
-		nameColumn: 'characterName',
-	})(path, query, user, connection);
+	const characterResult = await promiseQuery(
+		connection,
+		`
+		SELECT dungeonbuddiesdb.character.characterName, dungeonbuddiesdb.character.characterID
+ 		FROM characterlist JOIN character ON characterlist.characterID = dungeonbuddiesdb.character.characterID
+ 		WHERE
+		campaignID = :campaignID AND
+		dungeonbuddiesdb.character.characterName LIKE :query
+		`,
+		{ campaignID, query: `%${query}%`}
+	);
 
-	const plotResult = await search({
-		tableName: 'PlotPoint',
-		idColumn: 'plotPointID',
-		nameColumn: 'plotPointTitle',
-	})(path, query, user, connection);
+	const noteResult = await promiseQuery(
+		connection,
+		`
+		SELECT dungeonbuddiesdb.note.noteTitle, dungeonbuddiesdb.note.noteID
+		FROM Note
+		WHERE
+		campaignID = :campaignID AND
+		dungeonbuddiesdb.note.noteTitle LIKE :query
+		`,
+		{ campaignID, query: `%${query}%`}
+	);
+
 
 	const klassResult = await search({
 		tableName: 'Klass',
@@ -124,12 +137,13 @@ export const globalSearch = async (path, query, user, connection) => {
 		nameColumn: 'featName',
 	})(path, query, user, connection);
 
+	// TODO change return to an item list and is sorted and returns only <count> integer retuslts
 	return {
 		equipment: equipmentResults,
 		spell: spellResults,
 		race: raceResult,
 		character: characterResult,
-		plot: plotResult,
+		note: noteResult,
 		klass: klassResult,
 		subklass: subklassResult,
 		feat: featResult,
