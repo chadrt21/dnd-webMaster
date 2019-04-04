@@ -12,10 +12,12 @@ import registerExampleRoutes from './example';
 import registerCampaignRoutes from './campaigns';
 import registerSearchRoutes from './search';
 import registerUserRoutes from './user';
+import registerSpotifyRoutes from './spotify-connector';
 
 export default app => {
 	registerExampleRoutes(app);
 	registerCampaignRoutes(app);
 	registerSearchRoutes(app);
 	registerUserRoutes(app);
+	registerSpotifyRoutes(app);
 };

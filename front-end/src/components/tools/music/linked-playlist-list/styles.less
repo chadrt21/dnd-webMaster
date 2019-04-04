@@ -1,0 +1,29 @@
+@import '../../../../styles/colors.less';
+@import '../../../../styles/mixins.less';
+
+.list-item {
+	display: flex;
+	color: @text-color;
+	align-items: center;
+
+	.button {
+		.with-button-styles(@text-color) !important;
+	}
+
+	.spacer {
+		flex-grow: 1;
+	}
+}
+
+.no-results {
+	color: @text-color;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 25px;
+
+	.description {
+		font-style: italic;
+		margin-bottom: 4px;
+	}
+}

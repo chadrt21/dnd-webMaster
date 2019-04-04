@@ -5,10 +5,31 @@ import {
 import * as campaignRoutes from './CampaignsController';
 import * as characterRoutes from './characters/CharacterController';
 import * as notesRoutes from './notes/NotesController';
+import * as linkedPlaylistRoutes from './music/LinkedPlaylistController';
 
 export default app => {
 	app.route('/api/campaigns/:campaignID/exists')
 		.get(asRouteFunction(campaignRoutes.checkIfCampaignExists, true));
+
+	app.route('/api/campaigns/:campaignID/playlists')
+		.get(
+			asRouteFunction(linkedPlaylistRoutes.getLinkedPlaylists, true)
+		);
+
+	app.route('/api/campaigns/:campaignID/playlists')
+		.post(
+			asRouteFunction(linkedPlaylistRoutes.linkSpotifyPlaylists, true)
+		);
+
+	app.route('/api/campaigns/:campaignID/playlists/:spotifyUris')
+		.delete(
+			asRouteFunction(linkedPlaylistRoutes.unlinkSpotifyPlaylists, true)
+		);
+
+	app.route('/api/campaigns/:campaignID/playlists/hotkey')
+		.post(
+			asRouteFunction(linkedPlaylistRoutes.changePlaylistHotkey, true)
+		);
 
 	app.route('/api/campaigns/:campaignID/characters/:characterID')
 		.get(

@@ -10,14 +10,14 @@
 		font-family: @body-font;
 		color: @text-color;
 		
-		&:hover {
+		&.selectable:hover {
 			background-color: darken(@background-color, 5%);
 		}
 
 		&:nth-child(even) {
 			background-color: darken(@background-color, 10%);
 
-			&:hover {
+			&.selectable:hover {
 				background-color: darken(@background-color, 15%);
 			}
 		}

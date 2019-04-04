@@ -6,6 +6,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import classNames from 'Utility/classNames';
+
 import styles from './styles.less';
 
 export default class List extends React.Component {
@@ -20,7 +22,14 @@ export default class List extends React.Component {
 	mapListItem = (item, index) => {
 		const { onItemSelected, leftComponent, renderItem } = this.props;
 		return (
-			<div key={index} className={styles.listRow} onClick={() => onItemSelected(item)}>
+			<div
+				key={index}
+				className={classNames(
+					styles.listRow,
+					onItemSelected ? styles.selectable : null
+				)}
+				onClick={onItemSelected ? () => onItemSelected(item) : null}
+			>
 				{leftComponent || null}
 				{renderItem ? renderItem(item) : item.name}
 			</div>
