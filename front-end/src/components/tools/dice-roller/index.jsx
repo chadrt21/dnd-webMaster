@@ -26,6 +26,10 @@ export default class diceroller extends ToolBase{
 			textInputValue: '1d20',
 		};
 	} 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6998f00c3ee81915bc37a3e7ba7065ba59b5729c
 	componentDidMount() { /*setting the generated number each time*/
 		super.componentDidMount();
 		this.generateNumber();
