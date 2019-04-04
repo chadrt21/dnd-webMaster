@@ -53,13 +53,18 @@ export default class diceroller extends ToolBase{
 		const times =  parseInt(splitText[0]);
 		const maxNum = parseInt(splitText[1]);
 		
-		if(isNaN(times) == false && isNaN(maxNum) == false)
+		if(!isNaN(times) && !isNaN(maxNum))
 		{		
 			this.setState({ textInputValue: event.target.value, 
 				timesRolled: times,
 				max: maxNum, 
 			});
-		}		
+		}
+		else
+		{
+			this.setState({ textInputValue: event.target.value });
+		}
+				
 	};
 		
 
@@ -85,7 +90,7 @@ export default class diceroller extends ToolBase{
 								value={textInputValue} 
 								pattern="d1" 
 								onChange={this.onTextInputChange}
-								autofocus
+								autoFocus
 							/> 
 						</Popover>
 					</ButtonGroup>
