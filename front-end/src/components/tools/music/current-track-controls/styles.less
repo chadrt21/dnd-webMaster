@@ -1,0 +1,54 @@
+@import '../../../../styles/colors.less';
+@import '../../../../styles/mixins.less';
+
+.root {
+	display: flex;
+	color: @text-color;
+
+	.image {
+		margin-right: 8px;
+	}
+
+	.no-song-container {
+		width: 60px;
+		height: 60px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.icon {
+			color: @text-color;
+		}
+	}
+
+	.info-and-controls {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		.artist-and-title {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+	
+			.title {
+				font-weight: bold;
+				font-size: 14px;
+				margin: 0;
+			}
+	
+			.artist {
+				font-size: 12px;
+				margin: 0;
+			}
+		}
+	
+		.button-controls {
+			display: flex;
+	
+			.button {
+				.with-button-styles(@text-color);
+			}
+		}
+	}
+}

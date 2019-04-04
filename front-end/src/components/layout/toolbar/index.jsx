@@ -198,12 +198,6 @@ export default class Toolbar extends React.Component {
 						/>
 					</Menu>
 				</Popover>
-				<Button
-					minimal
-					className={styles.toolbarButton}
-				>
-					Settings
-				</Button>
 				<div className={styles.spacer} />
 				<Popover minimal>
 					<Button

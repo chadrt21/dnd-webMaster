@@ -85,40 +85,6 @@ export default class Sidebar extends React.Component {
 						/>
 					</div>
 				</Popover>
-				<Popover popoverClassName={styles.popover} className={styles.buttonContainer}>
-					<Button
-						rightIcon="plus"
-						intent={Intent.PRIMARY}
-						large
-						className={styles.button}
-						fill
-					>
-						New Character
-					</Button>
-					<div className={styles.popoverContent}>
-						<p className={styles.popoverContentTitle}>Character Name</p>
-						<InputGroup
-							autoFocus
-						/>
-					</div>
-				</Popover>
-				<Popover popoverClassName={styles.popover} className={styles.buttonContainer}>
-					<Button
-						rightIcon="plus"
-						intent={Intent.PRIMARY}
-						large
-						className={styles.button}
-						fill
-					>
-						New Location
-					</Button>
-					<div className={styles.popoverContent}>
-						<p className={styles.popoverContentTitle}>Location Name</p>
-						<InputGroup
-							autoFocus
-						/>
-					</div>
-				</Popover>
 				<div className={styles.spacing} />
 			</div>
 		);
