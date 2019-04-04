@@ -28,6 +28,7 @@ export default class diceroller extends ToolBase{
 	} 
 
 	componentDidMount() { /*setting the generated number each time*/
+		super.componentDidMount();
 		this.generateNumber();
 	
 	}
@@ -48,9 +49,10 @@ export default class diceroller extends ToolBase{
 	
 	onTextInputChange = (event) => 	
 	{ 
-		const splitText = event.target.value.split('d'); //splits into number of times rolled and max number
+		const splitText = event.target.value.split(/d/i); //splits into number of times rolled and max number
 		const times =  parseInt(splitText[0]);
 		const maxNum = parseInt(splitText[1]);
+		
 		if(isNaN(times) == false && isNaN(maxNum) == false)
 		{		
 			this.setState({ textInputValue: event.target.value, 
@@ -68,26 +70,26 @@ export default class diceroller extends ToolBase{
 
 		return(
 			<div> 
-				<h1 className={styles.h1}> Dice Roller </h1>
-				<div className={styles.dice} id = "outputContainer"> 
+				<div className={styles.dice} id = "dice"> 
 					<p>{ this.state.number }</p>
 				</div> 
-				<ButtonGroup alignment="center">
-					<Button intent="primary" textAlignment="center" onClick={this.generateNumber}>
-						Roll
-					</Button>
-					
-					<Popover modifiers={{ arrow: false }}>
-						<Button icon="caret-down" intent="primary"/>
-						<InputGroup 
-							placeholder="ex: 2d8" 
-							value={textInputValue} 
-							pattern="d1" 
-							onChange={this.onTextInputChange}
-							autofocus
-						/> 
-					</Popover>
-				</ButtonGroup>
+				<div className={styles.centered} id="centered">
+					<ButtonGroup align="center">
+						<Button align="center" intent="primary" textAlignment="center" onClick={this.generateNumber}>
+						Roll {this.state.timesRolled}d{this.state.max}
+						</Button>
+						<Popover modifiers={{ arrow: false }}>
+							<Button icon="caret-down" intent="primary"/>
+							<InputGroup 
+								placeholder="ex: 2d8" 
+								value={textInputValue} 
+								pattern="d1" 
+								onChange={this.onTextInputChange}
+								autofocus
+							/> 
+						</Popover>
+					</ButtonGroup>
+				</div>
 			</div>
 		);
 	}
