@@ -13,15 +13,21 @@
     "@blueprintjs/select": "^3.6.1",
     "babel": "^6.23.0",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.7.1",
     "babel-loader": "^8.0.5",
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.3",
     "cryptr": "^4.0.2",
     "css-loader": "^2.1.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.2",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "happycalculator": "^1.3.6",
     "http-status-codes": "^1.3.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.7.1",
+    "jest-cli": "^24.7.1",
     "keyboardjs": "^2.5.1",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
@@ -38,6 +44,7 @@
     "react-panelgroup": "^1.0.7",
     "react-quill": "^1.3.3",
     "react-router-dom": "^4.3.1",
+    "react-test-renderer": "^16.8.6",
     "sanitize-html": "^1.20.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.0"
@@ -48,11 +55,17 @@
     "webpack-cli": "^3.2.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "webpack --mode=development",
     "server": "webpack --mode=development --config=webpack.server.js && node server.bundle.js",
     "lint": "eslint .",
     "lint:autofix": "eslint . --fix"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "identity-obj-proxy"
+	}
   },
   "repository": {
     "type": "git",
