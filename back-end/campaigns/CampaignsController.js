@@ -30,7 +30,7 @@ export const getAllCampaigns = async (path, query, user, connection) => {
 	const results = await promiseQuery(
 		connection,
 		`
-			SELECT 
+			SELECT
 				campaign.campaignID,
 				campaignTitle
 			FROM
@@ -91,7 +91,7 @@ export const checkIfCampaignExists = async (path, query, user, connection) => {
 	const result = await promiseQuery(
 		connection,
 		`
-		SELECT 
+		SELECT
 			COUNT(campaign.campaignID) as result
 		FROM
 			campaignlist

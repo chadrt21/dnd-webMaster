@@ -3,6 +3,8 @@ import {
 } from '../utility';
 
 import * as searchController from './SearchController';
+import * as campaignRoutes from '../campaigns/CampaignsController';
+import * as characterRoutes from '../campaings/characters/CharacterController';
 
 export default app => {
 	app.route('/api/search/spells')
@@ -55,9 +57,12 @@ export default app => {
 			true
 		));
 
-	app.route('/api/search/global')
-		.get(asRouteFunction(
-			searchController.globalSearch,
-			true
-		));
+	app.route('/api/search/:campaignID/global')
+		.get(
+			campaignRoutes.userCanAccessCampaign,
+			characterRoutes.characterBelongsToCampaign,
+			asRouteFunction(
+				searchController.globalSearch,
+				true
+			));
 };

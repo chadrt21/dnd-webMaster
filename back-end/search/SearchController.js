@@ -75,7 +75,13 @@ export const search = ({
 	return results;
 };
 
+/**
+ * @description Search database for
+ */
 export const globalSearch = async (path, query, user, connection) => {
+	const { searchValue } = query.query;
+	const { campaignID } = path;
+
 	const equipmentResults = await search({
 		tableName: 'equipment',
 		idColumn: 'equipmentID',
@@ -103,7 +109,7 @@ export const globalSearch = async (path, query, user, connection) => {
 		campaignID = :campaignID AND
 		dungeonbuddiesdb.character.characterName LIKE :query
 		`,
-		{ campaignID, query: `%${query}%`}
+		{ campaignID, query: `%${searchValue}%`}
 	);
 
 	const noteResult = await promiseQuery(
@@ -115,9 +121,8 @@ export const globalSearch = async (path, query, user, connection) => {
 		campaignID = :campaignID AND
 		dungeonbuddiesdb.note.noteTitle LIKE :query
 		`,
-		{ campaignID, query: `%${query}%`}
+		{ campaignID, query: `%${searchValue}%`}
 	);
-
 
 	const klassResult = await search({
 		tableName: 'Klass',

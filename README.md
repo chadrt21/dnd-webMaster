@@ -27,8 +27,8 @@ Web Interface for D&amp;D resources and character management for dungen masters
     - [ ] Global Search
   - [ ] Sprint 3 (due April 5th)
     - [ ] Automated Rolls
-    - [ ] Note Folers
-    - [ ] Tutoral
+    - [x] Note Folders
+    - [ ] Tutorial
     - [x] Spotify Integration
 - **Technical Presentation**
   - [ ] Google Slide
