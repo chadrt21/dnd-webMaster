@@ -59,7 +59,8 @@
     "build": "webpack --mode=development",
     "server": "webpack --mode=development --config=webpack.server.js && node server.bundle.js",
     "lint": "eslint .",
-    "lint:autofix": "eslint . --fix"
+	"lint:autofix": "eslint . --fix",
+	"build:database": "node database/bundle-sql.js"
   },
   "jest": {
     "moduleNameMapper": {
