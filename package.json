@@ -35,6 +35,7 @@
     "node-fetch": "^2.3.0",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
+    "passport-mock-strategy": "^1.1.1",
     "prop-types": "^15.7.1",
     "react": "^16.7.0",
     "react-dnd": "^7.0.2",
@@ -47,6 +48,7 @@
     "react-test-renderer": "^16.8.6",
     "sanitize-html": "^1.20.0",
     "style-loader": "^0.23.1",
+    "supertest": "^4.0.2",
     "webpack": "^4.29.0"
   },
   "devDependencies": {
@@ -55,21 +57,42 @@
     "webpack-cli": "^3.2.3"
   },
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest",
     "build": "webpack --mode=development",
     "server": "webpack --mode=development --config=webpack.server.js && node server.bundle.js",
     "lint": "eslint .",
-	"lint:autofix": "eslint . --fix",
-	"build:database": "node database/bundle-sql.js"
+    "lint:autofix": "eslint . --fix",
+    "build:database": "node database/bundle-sql.js"
   },
   "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "identity-obj-proxy"
-	},
-	"setupFiles": [
-	  "<rootDir>/setup-tests.js"
-	]
+    "projects": [
+      {
+        "displayName": "client",
+        "setupFilesAfterEnv": [
+          "<rootDir>/testing/setup-tests-client.js"
+        ],
+        "roots": [
+          "<rootDir>/front-end"
+        ],
+        "moduleNameMapper": {
+          "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/testing/__mocks__/fileMock.js",
+          "\\.(css|less)$": "identity-obj-proxy"
+        }
+      },
+      {
+        "displayName": "server",
+        "setupFilesAfterEnv": [
+          "<rootDir>/testing/setup-tests-server.js"
+        ],
+        "roots": [
+          "<rootDir>/back-end"
+        ],
+        "testEnvironment": "node",
+        "moduleNameMapper": {
+          "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/testing/__mocks__/fileMock.js"
+        }
+      }
+    ]
   },
   "repository": {
     "type": "git",

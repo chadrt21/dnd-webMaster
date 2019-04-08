@@ -9,6 +9,8 @@
 
 import User from './User';
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
+import MockStrategy from 'passport-mock-strategy';
+import testUser from '../../testing/test-user-object';
 
 import {
 	getSQLConnection,
@@ -17,17 +19,37 @@ import {
 
 import googleConfig from './client-secret.json';
 
+const Strategy = process.env.NODE_ENV === 'test' ? MockStrategy : GoogleStrategy;
+const name =  process.env.NODE_ENV === 'test' ? 'google' : undefined;
+const user = process.env.NODE_ENV === 'test' ? testUser : undefined;
+
 export default passport => {
 
 	passport.serializeUser((user, done) => done(null, user));
 	passport.deserializeUser((user, done) => done(null, user));
 
-	passport.use(new GoogleStrategy({
+	passport.use(new Strategy({
 		clientID: googleConfig.web.client_id,
 		clientSecret: googleConfig.web.client_secret,
 		callbackURL: 'http://localhost:8085/api/auth/login/callback',
+		name,
+		user,
 	},
 	async (accessToken, refreshToken, profile, done) => {
+		// If we are in a test environment, the user is the first parameter and the done function is the second
+		// so we need to swap them out
+		if (process.env.NODE_ENV === 'test') {
+			done = refreshToken;
+			profile = {
+				displayName: accessToken.name,
+				emails: [
+					{
+						value: accessToken.email,
+					},
+				],
+			};
+		}
+
 		try {
 			// Obtain database connection
 			const connection = await getSQLConnection();
@@ -79,6 +101,7 @@ export default passport => {
 
 			done(null, new User(profile.displayName, profile.emails[0].value, user));
 		} catch (err) {
+			console.log(err);
 			return done(err, false);
 		}
 	}));
