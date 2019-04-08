@@ -61,7 +61,9 @@ export default class CalculatorInput extends React.Component {
 			this.setState({
 				value: numberValue,
 			}, () => {
-				onChange(numberValue);
+				if (onChange) {
+					onChange(numberValue);
+				}
 			});
 		}
 

@@ -4,3 +4,4 @@ package-lock.json
 bundle.js
 server.bundle.js
 bundle.sql
+coverage/
