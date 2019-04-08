@@ -46,8 +46,4 @@ app.route('*').get((request, response) => {
 	response.sendFile('front-end/dist/main.html', { root: __dirname });
 });
 
-// Start the server on port 8085
-app.listen(8085);
-
-// Inform the user that the server is started at port 8085
-console.log('Server listening on port 8085');
+export default app;

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = {
-	entry: path.resolve(__dirname, 'back-end/server.js'),
+	entry: path.resolve(__dirname, 'back-end/run-server.js'),
 
 	output: {
 		path: __dirname,
