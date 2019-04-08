@@ -57,7 +57,7 @@
     "webpack-cli": "^3.2.3"
   },
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest",
     "build": "webpack --mode=development",
     "server": "webpack --mode=development --config=webpack.server.js && node server.bundle.js",
     "lint": "eslint .",
