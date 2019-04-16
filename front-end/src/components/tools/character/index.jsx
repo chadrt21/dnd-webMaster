@@ -93,10 +93,10 @@ export default class CharacterTool extends ToolBase {
 		if (defaultCharacterID) {
 			this.setState({
 				defaultCharacterID: null,
-			}, () => {
+			}, async () => {
 				const { view } = this.state;
 				if (view === 'display') {
-					this.loadCharacter(defaultCharacterID);
+					await this.loadCharacter(defaultCharacterID);
 				}
 			});
 		}

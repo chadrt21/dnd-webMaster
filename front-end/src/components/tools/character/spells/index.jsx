@@ -17,7 +17,7 @@ import styles from './styles.less';
 export default class Spells extends React.Component {
 	static propTypes = {
 		onSearchChange: PropTypes.func.isRequired,
-		spells: PropTypes.array,
+		spells: PropTypes.array.isRequired,
 		sortingDirection: PropTypes.string,
 		sortingColumn: PropTypes.string,
 		handleSortingChange: PropTypes.func,

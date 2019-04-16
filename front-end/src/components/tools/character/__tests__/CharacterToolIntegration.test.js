@@ -300,4 +300,33 @@ describe('CharacterTool', () => {
 		// 12) Expect that the tool settings is not found in the component
 		expect(component.find(ToolSettings).length).toBe(0);
 	});
+
+	it('will load a character by default', async () => {
+		// 1) Set the pane object with stored component state
+		const pane = new Pane({
+			type: 'character',
+			state: {
+				defaultCharacterID: 1,
+				view: 'display',
+				toolSettings: presetToolSettings,
+			}
+		});
+
+		// 2) Mount the component with the custom pane object
+		const component = mount(
+			<CharacterTool
+				{...TOOL_PROPS}
+				pane={pane}
+			/>
+		);
+
+		// 3) Wait for the character to be loaded
+		await waitForState(component, state => !!state.character.characterID);
+
+		// 4) Update the component so that it's render matches the state
+		component.update();
+
+		// 5) Expect that the character display is rendered
+		expect(component.find(CharacterDisplay).length).toBe(1);
+	});
 });

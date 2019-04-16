@@ -82,7 +82,7 @@ export default class CharacterDisplay extends React.Component {
 					key={section}
 				>
 					<Proficiencies
-						proficiencies={character.proficiencies}
+						proficiencies={character.proficiencies || []}
 						onRemove={this.handleProficiencyRemove}
 						onNew={this.handleProficiencyNew}
 					/>
@@ -98,7 +98,7 @@ export default class CharacterDisplay extends React.Component {
 					key={section}
 				>
 					<KlassFeatures
-						features={character.klassFeatures}
+						features={character.klassFeatures || []}
 						sortingColumn={sortings.klassFeatures.column}
 						sortingDirection={sortings.klassFeatures.direction}
 						handleSortingChange={handleSortingChange('klassFeatures')}
@@ -117,7 +117,7 @@ export default class CharacterDisplay extends React.Component {
 					key={section}
 				>
 					<Spells
-						spells={character.spells}
+						spells={character.spells || []}
 						sortingColumn={sortings.spells.column}
 						sortingDirection={sortings.spells.direction}
 						handleSortingChange={handleSortingChange('spells')}
@@ -137,7 +137,7 @@ export default class CharacterDisplay extends React.Component {
 					key={section}
 				>
 					<Equipment
-						equipment={character.equipment}
+						equipment={character.equipment || []}
 						sortingColumn={sortings.equipment.column}
 						sortingDirection={sortings.equipment.direction}
 						handleSortingChange={handleSortingChange('equipment')}
