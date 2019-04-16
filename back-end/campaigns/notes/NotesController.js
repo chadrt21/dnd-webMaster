@@ -59,7 +59,7 @@ export const getAllNotes = async (path, query, user, connection) => {
 	const folders = await promiseQuery(
 		connection,
 		`
-			SELECT folderName, noteFolderID, filepath
+			SELECT folderName, noteFolderID
 			FROM
 				notefolder
 			WHERE
@@ -73,17 +73,16 @@ export const getAllNotes = async (path, query, user, connection) => {
 	);
 
 	let currentFolder = {
-		filepath: '/',
 		folderName: '',
 		noteFolderID: null,
 		parentID: null,
 	};
 
 	if (folderID) {
-		const filepathQueryResults = await promiseQuery(
+		const currentFolderQueryResults = await promiseQuery(
 			connection,
 			`
-				SELECT folderName, noteFolderID, filepath, parentID
+				SELECT folderName, noteFolderID, parentID
 				FROM
 					notefolder
 				WHERE
@@ -96,11 +95,11 @@ export const getAllNotes = async (path, query, user, connection) => {
 			{ folderID, campaignID }
 		);
 		
-		if (filepathQueryResults.length !== 1) {
+		if (currentFolderQueryResults.length !== 1) {
 			throw new Error('The folder you are looking for does not exist');
 		}
 
-		currentFolder = filepathQueryResults[0];
+		currentFolder = currentFolderQueryResults[0];
 	}
 
 	return {
