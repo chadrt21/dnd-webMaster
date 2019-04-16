@@ -39,6 +39,7 @@
     "passport-mock-strategy": "^1.1.1",
     "prop-types": "^15.7.1",
     "react": "^16.7.0",
+    "react-addons-test-utils": "^15.6.2",
     "react-dnd": "^7.0.2",
     "react-dnd-html5-backend": "^7.0.2",
     "react-dom": "^16.7.0",

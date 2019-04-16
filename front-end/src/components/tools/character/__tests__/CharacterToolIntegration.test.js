@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, configure } from 'enzyme';
+import { mount, configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { mockFetch, unmockFetch } from 'FetchMock';
 import characters from '../../../../dummy-data/characters';
@@ -15,6 +15,7 @@ import List from '../../../list';
 import Pane from '../../../layout/model/LayoutPane';
 
 jest.mock('../../../toast');
+global.console.error = jest.fn();
 
 configure({ adapter: new Adapter() });
 
@@ -74,6 +75,13 @@ let setToolSettings = jest.fn(obj => {
 // Define our mock API client requests
 const fetchMockObject = [
 	{
+		url: '/api/campaigns/(\\d)/characters/(\\d)',
+		GET: {
+			status: 200,
+			responseBody: characters[0]
+		}
+	},
+	{
 		// Define our GET /api/campaigns/:campaignID/characters route to return the 'saved characters'
 		url: '/api/campaigns/(\\d)+/characters',
 		GET: {
@@ -123,6 +131,10 @@ afterAll(() => {
 // Before each test, clear all of the mocks
 beforeEach(() => {
 	window.fetch.mockClear();
+});
+
+afterEach(() => {
+	expect(console.error).not.toHaveBeenCalled();
 });
 
 describe('CharacterTool', () => {
@@ -262,7 +274,30 @@ describe('CharacterTool', () => {
 
 		// 4) Get the PC list
 		const pcList = characterList.find(List).at(0);
+		
+		// 5) Wrap the list in a shallow render so we can actually see it's children (because
+		// for whatever reason, enzyme doesn't render them)
+		const wrappedPcList = shallow(pcList.instance().render());
 
-		console.log(pcList.render().children());
+		// 6) Find the first list item
+		const listRow = wrappedPcList.find('.listRow').at(0);
+
+		// 7) Simulate a click on the list item
+		listRow.simulate('click');
+
+		// 8) Wait for the component to switch to the display view
+		await waitForState(component, state => state.view === 'display');
+
+		// 9) Update the component after the state change
+		component.update();
+
+		// 10) Expect that the character list is not found in the component
+		expect(component.find(CharacterList).length).toBe(0);
+
+		// 11) Expect that the character display is found in the component
+		expect(component.find(CharacterDisplay).length).toBe(1);
+
+		// 12) Expect that the tool settings is not found in the component
+		expect(component.find(ToolSettings).length).toBe(0);
 	});
 });
