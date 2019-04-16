@@ -1,6 +1,6 @@
 export default [
 	{
-		id: 0,
+		characterID: 0,
 		name: 'Barry Jazz',
 		avatarUrl: 'https://m.media-amazon.com/images/M/MV5BNzg5NDE3ODYyOV5BMl5BanBnXkFtZTcwODAzMDUzMw@@._V1_SY1000_CR0,0,890,1000_AL_.jpg',
 		level: 3,
@@ -51,7 +51,7 @@ export default [
 		backstory: '',
 	},
 	{
-		id: 1,
+		characterID: 1,
 		name: 'Ruach',
 		level: 3,
 		className: 'Bard',
@@ -101,7 +101,7 @@ export default [
 		backstory: '',
 	},
 	{
-		id: 2,
+		characterID: 2,
 		name: 'Lesys',
 		level: 3,
 		className: 'Bard',
@@ -151,7 +151,7 @@ export default [
 		backstory: '',
 	},
 	{
-		id: 3,
+		characterID: 3,
 		name: 'Lizard Man',
 		level: 3,
 		className: 'Bard',
@@ -168,7 +168,7 @@ export default [
 		maxHp: 32,
 		speed: 13,
 		baseAc: 13,
-		isNpc: true,
+		isNPC: true,
 		proficiencies: [
 			{
 				name: 'Deception',
