@@ -1,4 +1,4 @@
-export default (mockFn, timeout) => new Promise((resolve, reject) => {
+export default (mockFn, timeout) => new Promise(resolve => {
 	const intervalTime = 25;
 	let elapsed = 0;
 	
@@ -18,7 +18,7 @@ export default (mockFn, timeout) => new Promise((resolve, reject) => {
 		elapsed += intervalTime;
 		if (elapsed >= timeout) {
 			clearInterval(interval);
-			return reject(false);
+			return resolve(false);
 		}
 	}, intervalTime);
 });

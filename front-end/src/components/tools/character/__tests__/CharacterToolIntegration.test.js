@@ -12,6 +12,7 @@ import CharacterList from '../character-list';
 import CharacterDisplay from '../character-display';
 import ToolSettings from '../tool-settings';
 import List from '../../../list';
+import { EditableText } from '@blueprintjs/core';
 
 import Pane from '../../../layout/model/LayoutPane';
 
@@ -73,6 +74,9 @@ let setToolSettings = jest.fn(obj => {
 	toolSettings = obj;
 });
 
+// A mock POST update character server controller function
+let updateCharacter = jest.fn();
+
 // Define our mock API client requests
 const fetchMockObject = [
 	{
@@ -80,7 +84,7 @@ const fetchMockObject = [
 		GET: {
 			status: 200,
 			responseBody: [],
-		}
+		},
 	},
 	{
 		url: '/api/campaigns/(\\d)/characters/(\\d)',
@@ -88,6 +92,13 @@ const fetchMockObject = [
 			status: 200,
 			getResponseBody: (url, options, matches) => {
 				return characters[matches[2]];
+			}
+		},
+		POST: {
+			status: 200,
+			responseBody: {},
+			callback: (url, options) => {
+				updateCharacter(JSON.parse(options.body));
 			}
 		}
 	},
@@ -401,5 +412,53 @@ describe('CharacterTool', () => {
 
 		// 16) Expect that the component is back at the character list view
 		expect(component.find(CharacterList).length).toBe(1);
+	});
+
+	// Then make sure that the user can edit the character data
+	it('will let the user edit character data', async () => {
+		// 1) Set the pane object with stored component state (to begin with the character panel)
+		const newPane = new Pane({
+			type: 'character',
+			state: {
+				defaultCharacterID: 1,
+				view: 'display',
+				toolSettings: presetToolSettings,
+			}
+		});
+
+		// 2) Mount the component with the custom pane object
+		const component = mount(
+			<CharacterTool
+				{...TOOL_PROPS}
+				pane={newPane}
+			/>
+		);
+
+		// 3) Wait for the character to be loaded
+		await waitForState(component, state => !!state.character.characterID);
+
+		// 4) Find the blueprint editable text component
+		const editableTextComponent = component.find('HeaderRow .topRow').find(EditableText);
+
+		// 5) Find the div that needs to be focused
+		const editableTextDiv = editableTextComponent.find('.bp3-editable-text');
+
+		// 6) Simulate the focus event on the div
+		editableTextDiv.simulate('focus');
+		
+		// 7) Get the input of the rendered editable text component
+		const editableTextInput = shallow(editableTextComponent.instance().render()).find('input');
+
+		// 8) Simulate an change event on the input element
+		editableTextInput.simulate('change', { target: { value: 'New Value' }});
+		
+		// 9) Wait for the 'server controller' function to be called or timeout
+		const updateCharacterCalled = await waitForMock(updateCharacter);
+
+		// 10) Expect that the function was called
+		expect(updateCharacterCalled).toBe(true);
+
+		// 11) Expect that the function was called with the updated value
+		expect(updateCharacter).toHaveBeenCalledWith({ field: 'characterName', value: 'New Value' });
 	});
 });
