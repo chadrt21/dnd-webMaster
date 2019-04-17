@@ -5,6 +5,7 @@ import { mockFetch, unmockFetch } from 'FetchMock';
 import characters from '../../../../dummy-data/characters';
 import { displayError } from '../../../toast';
 import { waitForState } from 'enzyme-async-helpers';
+import waitForMock from '../../../../../../testing/wait-for-mock';
 
 import CharacterTool from '../';
 import CharacterList from '../character-list';
@@ -75,10 +76,19 @@ let setToolSettings = jest.fn(obj => {
 // Define our mock API client requests
 const fetchMockObject = [
 	{
+		url: '/api/search/.+',
+		GET: {
+			status: 200,
+			responseBody: [],
+		}
+	},
+	{
 		url: '/api/campaigns/(\\d)/characters/(\\d)',
 		GET: {
 			status: 200,
-			responseBody: characters[0]
+			getResponseBody: (url, options, matches) => {
+				return characters[matches[2]];
+			}
 		}
 	},
 	{
@@ -128,9 +138,10 @@ afterAll(() => {
 	unmockFetch();
 });
 
-// Before each test, clear all of the mocks
+// Before each test, clear all of the mocks and reset the pane
 beforeEach(() => {
 	window.fetch.mockClear();
+	TOOL_PROPS.pane = new Pane({ type: 'character' });
 });
 
 afterEach(() => {
@@ -219,6 +230,7 @@ describe('CharacterTool', () => {
 		expect(setToolSettings).toHaveBeenCalled();
 	});
 
+	// Then make sure that there are two lists being rendered
 	it('Expect that two lists are rendered (one for npcs and one for pcs)', () => {
 		// 1) Mount the component into the DOM
 		const component = mount(
@@ -231,6 +243,7 @@ describe('CharacterTool', () => {
 		expect(component.find(List).length).toBe(2);
 	});
 
+	// Then make sure that those lists are rendering the correct things
 	it('renders three PC characters rendered and one NPC rendered in the list view', async () => {
 		// 1) Mount the component into the DOM
 		const component = mount(
@@ -258,6 +271,7 @@ describe('CharacterTool', () => {
 		expect(npcList.render().children().length).toBe(1);
 	});
 
+	// Then make sure that we can click on the list items
 	it('changes to the character display when a character is clicked', async () => {
 		// 1) Mount the component into the DOM
 		const component = mount(
@@ -301,9 +315,10 @@ describe('CharacterTool', () => {
 		expect(component.find(ToolSettings).length).toBe(0);
 	});
 
+	// Then make sure that we can load in a character by default
 	it('will load a character by default', async () => {
 		// 1) Set the pane object with stored component state
-		const pane = new Pane({
+		const newPane = new Pane({
 			type: 'character',
 			state: {
 				defaultCharacterID: 1,
@@ -316,7 +331,7 @@ describe('CharacterTool', () => {
 		const component = mount(
 			<CharacterTool
 				{...TOOL_PROPS}
-				pane={pane}
+				pane={newPane}
 			/>
 		);
 
@@ -328,5 +343,63 @@ describe('CharacterTool', () => {
 
 		// 5) Expect that the character display is rendered
 		expect(component.find(CharacterDisplay).length).toBe(1);
+	});
+
+	// Then make sure that the user can navigate to the settings page, edit settings, and return to the list view
+	it('will go to settings page and edit settings properly and return to list view', async () => {
+		// 1) Mount the component
+		const component = mount(
+			<CharacterTool
+				{...TOOL_PROPS}
+			/>
+		);
+
+		// 2) Find the button that navigates to settings
+		const navigateToSettingsButton = component.find('Title.title.header button');
+
+		// 3) Wait for the component to load the tool settings
+		await waitForState(component, state => !!state.toolSettings.orderings);
+
+		// 4) Click the settings button
+		navigateToSettingsButton.simulate('click');
+
+		// 5) Update the component
+		component.update();
+
+		// 6) Expect that the component is showing the settings view
+		expect(component.find(ToolSettings).length).toBe(1);
+
+		// 7) Clear the mock for the 'server controller' function that updates tool settings
+		setToolSettings.mockClear();
+
+		// 8) Simulate an event where the user swaps orderings zero and one
+		// Note: We do not need to simulate the drag and drop interaction because
+		// it is handled by the sortable item component which is it's own unit
+		// and should be tested separately
+		component.find(ToolSettings).instance().moveItem(0, 1);
+
+		// 9) Wait for the 'server controller' function to be called
+		const routeWasCalled = await waitForMock(setToolSettings);
+
+		// 10) Expect that it was called
+		expect(routeWasCalled).toBe(true);
+
+		// 11) Expect that the first section in the updated orderings array is 'classInfo'
+		expect(toolSettings.orderings[0].name).toBe('classInfo');
+
+		// 12) Expect that the second section in the updated orderings array is 'proficiencies'
+		expect(toolSettings.orderings[1].name).toBe('proficiencies');
+
+		// 13) Find the button that navigates back to the character list
+		const navBackButton = component.find('ToolSettings .header button');
+
+		// 14) Click it
+		navBackButton.simulate('click');
+
+		// 15) Update the component to reflect the change in state
+		component.update();
+
+		// 16) Expect that the component is back at the character list view
+		expect(component.find(CharacterList).length).toBe(1);
 	});
 });

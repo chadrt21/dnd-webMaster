@@ -25,6 +25,10 @@ export const mockFetch = urls => {
 
 			if (!mockedResponseObject || !mockedResponseObject[method]) {
 				console.error(`${method} ${url} mock fetch request not handled`);
+				return Promise.resolve({
+					status: 500,
+					json: () => Promise.resolve({})
+				});
 			}
 
 			const matches = new RegExp(mockedResponseObject.url).exec(url);
