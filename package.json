@@ -51,7 +51,8 @@
     "sanitize-html": "^1.20.0",
     "style-loader": "^0.23.1",
     "supertest": "^4.0.2",
-    "webpack": "^4.29.0"
+    "webpack": "^4.29.0",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "eslint": "^5.13.0",
@@ -81,7 +82,8 @@
           "\\.(css|less)$": "identity-obj-proxy",
           "Utility/(.+)$": "<rootDir>/front-end/src/utility/$1",
           "FetchMock": "<rootDir>/__mocks__/fetchMock"
-        }
+        },
+        "testURL": "http://localhost:8086"
       },
       {
         "displayName": "server",
