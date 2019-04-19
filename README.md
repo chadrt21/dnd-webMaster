@@ -19,8 +19,23 @@ Web Interface for D&amp;D resources and character management for dungen masters
   - [X] Layout manager proof of concept
   - [X] Implement BlueprintJS in Layout PoC
   - [X] Set up ESLint to enforce programming standards
-  - [ ] Sprint 1 (In progress: Everyone)
-  - [ ] Make tabs rearrangable in a panel
+  - [x] Sprint 1 (Done: Everyone)
+    - [x] Make tabs rearrangable in a panel
+  - [x] Sprint 2 (Done: Everyone)
+    - [x] Dice Roller
+    - [x] Notes
+    - [ ] ~~Global Search~~
+  - [x] Sprint 3 (Done: Everyone)
+    - [ ] ~~Automated Rolls~~
+    - [x] Note Folders
+    - [ ] Tutorial
+    - [x] Spotify Integration
+ - **Testing (In Progress: Everyone)**
+   - [ ] [Unit Testing](https://docs.google.com/document/d/15AFLHOb4xy9iG-qlz0TzjlZtE97YU2XOEgKo05-fgHA/edit) (Chad, Jill, Zach, Ashely)
+   - [ ] Integration Testing (Joseph)
+   - [ ] [SUSTD](https://github.com/cross21/dnd-webMaster/blob/master/docs/sustd.md) (due on Monday April, 22)
+ - **Technical Presentation**
+  - [ ] [Google Slide](https://docs.google.com/presentation/d/1wWQkm94xIWWnuzm0mNO73OEhW8BNdIGIw7I1DhInYB4/edit#slide=id.p) (Due on Tuesday April, 30; Present on Thursday May, 2)
 
 ## Colaborators
 Chad Ross: chad.ross@biola.edu
