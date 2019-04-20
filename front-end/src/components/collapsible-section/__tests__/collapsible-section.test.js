@@ -13,13 +13,12 @@ const CHANGE_EXPANDED = jest.fn();
 
 describe(
     'CollapsibleSectionComponent',
-    () => 
-    {
+    () => {
         //We are first checking to make sure the component renders
         //Let's check that!
-       it('should render the component',() => {
-			// 1) Mount the component
-			const component = mount(
+        it('should render the component', () => {
+            // 1) Mount the component
+            const component = mount(
                 <CollapsibleSection
                     title={TITLE}
                     expanded={true}
@@ -30,21 +29,21 @@ describe(
                 </CollapsibleSection>
             );
             // 2) Expect that the component matches the snapshot we have of it
-			expect(component).toMatchSnapshot();
+            expect(component).toMatchSnapshot();
         });
         it('should call change_expanded when the caret is pressed', () => {
             //1) mount it
             const component = mount(
-            <CollapsibleSection
-            title={TITLE}
-            expanded={true}
-            changeExpanded={CHANGE_EXPANDED}
-            >
-                {CONTENT}
-            
-            </CollapsibleSection>
+                <CollapsibleSection
+                    title={TITLE}
+                    expanded={true}
+                    changeExpanded={CHANGE_EXPANDED}
+                >
+                    {CONTENT}
+
+                </CollapsibleSection>
             );
-            
+
             //2) find the button
             const button = component.find('button');
             //3) click the button and simulate it
@@ -53,50 +52,50 @@ describe(
             expect(CHANGE_EXPANDED).toHaveBeenCalled();
         });
 
-        it('should expand', () =>{
+        it('should expand', () => {
             //1) mount it
             const component = mount(
                 <CollapsibleSection
-                title={TITLE}
-                expanded={false}
-                changeExpanded={CHANGE_EXPANDED}
+                    title={TITLE}
+                    expanded={false}
+                    changeExpanded={CHANGE_EXPANDED}
                 >
-                    <span id = "kontent">{CONTENT} </span>
-                
-                </CollapsibleSection>
-                );
-            //2) check to make sure the content should not be rendered since expanded is set to false
-                expect(component.find('#kontent').length).toBe(0); 
-            //3) change expanded prop change the expanded to true
-                component.setProps({
-                    expanded: true,
-                })
-            //4) make sure it expands + content should be rended
-                expect(component.find('#kontent').length).toBe(1);            
-        
-        }
-    );
-    
-        it('should collapse', () =>{
-            //1) mount
-            const component = mount(
-                <CollapsibleSection
-                title={TITLE}
-                expanded={true}
-                changeExpanded={CHANGE_EXPANDED}
-                >
-                    <span id = "kontent">{CONTENT} </span>
-                
+                    <span id="kontent">{CONTENT} </span>
+
                 </CollapsibleSection>
             );
             //2) check to make sure the content should not be rendered since expanded is set to false
-            expect(component.find('#kontent').length).toBe(1); 
+            expect(component.find('#kontent').length).toBe(0);
             //3) change expanded prop change the expanded to true
-                component.setProps({
-                    expanded: false,
-                })
+            component.setProps({
+                expanded: true,
+            })
             //4) make sure it expands + content should be rended
-                expect(component.find('#kontent').length).toBe(0);            
+            expect(component.find('#kontent').length).toBe(1);
+
+        }
+        );
+
+        it('should collapse', () => {
+            //1) mount
+            const component = mount(
+                <CollapsibleSection
+                    title={TITLE}
+                    expanded={true}
+                    changeExpanded={CHANGE_EXPANDED}
+                >
+                    <span id="kontent">{CONTENT} </span>
+
+                </CollapsibleSection>
+            );
+            //2) check to make sure the content should not be rendered since expanded is set to false
+            expect(component.find('#kontent').length).toBe(1);
+            //3) change expanded prop change the expanded to true
+            component.setProps({
+                expanded: false,
+            })
+            //4) make sure it expands + content should be rended
+            expect(component.find('#kontent').length).toBe(0);
         });
     }
 );
