@@ -32,9 +32,8 @@ describe(
             // 2) Expect that the component matches the snapshot we have of it
 			expect(component).toMatchSnapshot();
         });
-        //As the user: I want this unit to be able to call change_expanded when the caret is pressed
         it('should call change_expanded when the caret is pressed', () => {
-            //mount it
+            //1) mount it
             const component = mount(
             <CollapsibleSection
             title={TITLE}
@@ -46,19 +45,16 @@ describe(
             </CollapsibleSection>
             );
             
-            //this component has a button in it --> get button
+            //2) find the button
             const button = component.find('button');
-            //click the button and simulate it
+            //3) click the button and simulate it
             button.simulate('click');
-            //check CHANGE_EPANDED to make sure it has been called
+            //4) check CHANGE_EXPANDED to make sure it has been called
             expect(CHANGE_EXPANDED).toHaveBeenCalled();
         });
 
-        //As the user: I want this unit to be able to expand so let's check that
         it('should expand', () =>{
-            //controlled input = visual state not determined by component's state but external props
-            //mount it
-            //mount it
+            //1) mount it
             const component = mount(
                 <CollapsibleSection
                 title={TITLE}
@@ -69,21 +65,20 @@ describe(
                 
                 </CollapsibleSection>
                 );
-            //check to make sure the content should not be rendered since expanded is set to false
+            //2) check to make sure the content should not be rendered since expanded is set to false
                 expect(component.find('#kontent').length).toBe(0); 
-            //change expanded prop change the expanded to true
+            //3) change expanded prop change the expanded to true
                 component.setProps({
                     expanded: true,
                 })
-            //make sure it expands + content should be rended
+            //4) make sure it expands + content should be rended
                 expect(component.find('#kontent').length).toBe(1);            
         
-            }
-            
-            
-            );
-    //As the user: I want this unit to be able to collapse
+        }
+    );
+    
         it('should collapse', () =>{
+            //1) mount
             const component = mount(
                 <CollapsibleSection
                 title={TITLE}
@@ -94,13 +89,13 @@ describe(
                 
                 </CollapsibleSection>
             );
-            //check to make sure the content should not be rendered since expanded is set to false
+            //2) check to make sure the content should not be rendered since expanded is set to false
             expect(component.find('#kontent').length).toBe(1); 
-            //change expanded prop change the expanded to true
+            //3) change expanded prop change the expanded to true
                 component.setProps({
                     expanded: false,
                 })
-            //make sure it expands + content should be rended
+            //4) make sure it expands + content should be rended
                 expect(component.find('#kontent').length).toBe(0);            
         });
     }
