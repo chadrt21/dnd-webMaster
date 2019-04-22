@@ -152,9 +152,9 @@ export const teardown = async () => {
 	const campaignIDs = (await promiseQuery(
 		connection,
 		`
-			SELECT campaignID FROM campaignlist WHERE dmID = :dmID
+			SELECT campaignID FROM campaignlist WHERE dmUserName = :email
 		`,
-		{ dmID: global.userID }
+		{ email: testUser.email }
 	)).map(result => result.campaignID);
 
 	if (campaignIDs.length > 0) {
@@ -213,9 +213,9 @@ export const teardown = async () => {
 		await promiseQuery(
 			connection,
 			`
-			DELETE FROM campaignlist WHERE dmID = :dmID
+			DELETE FROM campaignlist WHERE campaignID IN (:campaignIDs)
 		`,
-			{ dmID: global.userID }
+			{ campaignIDs }
 		);
 		await promiseQuery(
 			connection,
@@ -229,9 +229,9 @@ export const teardown = async () => {
 	await promiseQuery(
 		connection,
 		`
-			DELETE FROM dm WHERE dmID = :dmID
+			DELETE FROM dm WHERE dmUserName = :email
 		`,
-		{ dmID: global.userID }
+		{ email: testUser.email }
 	);
 	connection.release();
 

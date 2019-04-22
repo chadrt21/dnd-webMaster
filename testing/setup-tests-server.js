@@ -126,9 +126,9 @@ afterAll(async () => {
 	await promiseQuery(
 		connection,
 		`
-			DELETE FROM dm WHERE dmID = :dmID
+			DELETE FROM dm WHERE dmUserName = :email
 		`,
-		{ dmID: global.userID }
+		{ email: testUser.email }
 	);
 	connection.release();
 
