@@ -108,6 +108,8 @@ describe('CampaignBuddySystem', () => {
 
 		await waitForState(layoutComponent, state => state.validating === false);
 
-		expect(layoutComponent.instance().state.validating).toBe(false);
+		layoutComponent.update();
+
+		expect(layoutComponent.render().find('.bp3-non-ideal-state').length).toBe(1);
 	});
 });
