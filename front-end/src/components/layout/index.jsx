@@ -218,10 +218,11 @@ export default class Grid extends React.Component {
 		window.location.href = '/';
 	}
 
-	mapToolMenuItem = tool => (
+	mapToolMenuItem = (tool, index) => (
 		<MenuItem
 			text={tool.displayName}
 			onClick={() => this.addPane(tool.name)}
+			key={index}
 		/>
 	)
 

@@ -8,19 +8,23 @@ import React from 'react';
 import { mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { wait, fireEvent } from 'dom-testing-library';
+import { waitForState } from 'enzyme-async-helpers';
 
 import { setup, teardown } from '../../../../testing/setup-tests-client';
+import waitForMock from '../../../../testing/wait-for-mock';
 
 import {
 	Button,
 	Keys,
 } from '@blueprintjs/core';
 
-import App from '../App';
+import App from '../TestApp';
 import HomePage from '../home-page';
 import HomePageSidebar from '../home-page/Sidebar';
+import Grid from '../layout';
 
-console.error = jest.fn();
+console.error = jest.fn(value => console.log('TEST ERR:', value));
+window.location.assign = jest.fn();
 
 configure({ adapter: new Adapter() });
 
@@ -54,7 +58,9 @@ describe('CampaignBuddySystem', () => {
 		document.body.appendChild(reactContainer);
 		
 		const component = mount(
-			<App />,
+			<App
+				href="/"
+			/>,
 			{
 				attachTo: reactContainer,
 			}
@@ -80,6 +86,28 @@ describe('CampaignBuddySystem', () => {
 		fireEvent.change(inputElement, { target: { value: 'Test Campaign' }});
 		fireEvent.keyDown(inputElement, { keyCode: Keys.ENTER });
 
-		await doSomeWaiting();
+		component.update();
+
+		await waitForMock(window.location.assign, 5000);
+
+		expect(window.location.assign).toHaveBeenCalledWith(expect.stringMatching(/^\/app\/(\d+)$/g));
+	});
+
+	it('will render the campaign homepage', async () => {
+		const campaigns = await fetch('/api/campaigns').then(response => response.json());
+		const campaignID = campaigns[0] && campaigns[0].campaignID;
+		
+		const component = mount(
+			<App
+				href={`/app/${campaignID}`}
+			/>
+		);
+
+		const layoutComponent = component.find(Grid);
+		expect(layoutComponent.length).toBe(1);
+
+		await waitForState(layoutComponent, state => state.validating === false);
+
+		expect(layoutComponent.instance().state.validating).toBe(false);
 	});
 });

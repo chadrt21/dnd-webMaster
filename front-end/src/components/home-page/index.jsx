@@ -26,7 +26,7 @@ export default class HomePage extends React.Component {
 	}
 	
 	navigateToCampaign = id => {
-		window.location.href = `/app/${id}`;
+		window.location.assign(`/app/${id}`);
 	}
 
 	/*

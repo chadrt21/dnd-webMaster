@@ -111,6 +111,13 @@ const promiseQuery = (connection, query, options) => new Promise((resolve, rejec
 });
 
 export const setup = async () => {
+	delete window.location;
+	window.location = new URL('http://localhost:8086');
+	window.location.assign = jest.fn(value => {
+		window.location.href = `http://localhost:8086${value}`;
+		window.history.replaceState(null, null, `http://localhost:8086${value}`);
+	});
+
 	if (global.document) {
 		document.createRange = () => ({
 			setStart: () => { },

@@ -31,7 +31,10 @@ export default class Toolbar extends React.Component {
 		addTool: PropTypes.func.isRequired,
 		goHome: PropTypes.func.isRequired,
 		tools: PropTypes.array.isRequired,
-		campaignID: PropTypes.number.isRequired,
+		campaignID: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.number,
+		]).isRequired,
 		currentLayout: PropTypes.object,
 	}
 
@@ -46,11 +49,11 @@ export default class Toolbar extends React.Component {
 		this.loadLayouts(nextProps);
 	}
 
-	mapTool = tool => {
+	mapTool = (tool, index) => {
 		const { addTool } = this.props;
 
 		return (
-			<MenuItem text={tool.displayName} onClick={() => addTool(tool.name)} />
+			<MenuItem key={index} text={tool.displayName} onClick={() => addTool(tool.name)} />
 		);
 	}
 

@@ -94,8 +94,14 @@ export default async connection => {
 		await promiseQuery(
 			connection,
 			`
-			DELETE FROM campaign WHERE campaignID IN (:campaignIDs)
-		`,
+				DELETE FROM campaign
+				WHERE
+					campaignID IN (:campaignIDs)
+					OR
+					campaignID NOT IN (
+						SELECT DISTINCT campaignID FROM campaignlist
+					)
+			`,
 			{ campaignIDs }
 		);
 	}
