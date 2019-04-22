@@ -39,20 +39,22 @@ export default async connection => {
 			{ campaignIDs }
 		)).map(result => result.characterID);
 
-		await promiseQuery(
-			connection,
-			`
-				DELETE FROM characterlist WHERE campaignID IN (:campaignIDs)
-			`,
-			{ campaignIDs }
-		);
-		await promiseQuery(
-			connection,
-			`
-				DELETE FROM \`character\` WHERE characterID IN (:characterIDs)
-			`,
-			{ characterIDs }
-		);
+		if (characterIDs.length > 0) {
+			await promiseQuery(
+				connection,
+				`
+					DELETE FROM characterlist WHERE campaignID IN (:campaignIDs)
+				`,
+				{ campaignIDs }
+			);
+			await promiseQuery(
+				connection,
+				`
+					DELETE FROM \`character\` WHERE characterID IN (:characterIDs)
+				`,
+				{ characterIDs }
+			);
+		}
 
 		// Delete all of the linked playlists created by this campaign
 		await promiseQuery(

@@ -19,6 +19,7 @@
     "body-parser": "^1.18.3",
     "cryptr": "^4.0.2",
     "css-loader": "^2.1.0",
+    "dom-testing-library": "^3.19.3",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
     "enzyme-async-helpers": "^0.9.1",

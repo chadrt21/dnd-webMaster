@@ -111,6 +111,17 @@ const promiseQuery = (connection, query, options) => new Promise((resolve, rejec
 });
 
 export const setup = async () => {
+	if (global.document) {
+		document.createRange = () => ({
+			setStart: () => { },
+			setEnd: () => { },
+			commonAncestorContainer: {
+				nodeName: 'BODY',
+				ownerDocument: document,
+			},
+		});
+	}
+
 	pool = mysql.createPool({
 		password: databaseCredentials.pass,
 		user: databaseCredentials.user,
