@@ -2,6 +2,7 @@
 import 'babel-polyfill';
 import mysql from 'mysql';
 import testUser from './test-user-object';
+import cleanDatabase from './clean-database';
 
 let pool;
 let databaseCredentials;
@@ -98,6 +99,8 @@ beforeAll(async () => {
 	});
 	const connection = await getConnection(pool);
 
+	await cleanDatabase(connection);
+
 	// Insert user into the database and store their user id
 	const result = await promiseQuery(
 		connection,
@@ -123,13 +126,7 @@ beforeAll(async () => {
 afterAll(async () => {
 	const connection = await getConnection(pool);
 
-	await promiseQuery(
-		connection,
-		`
-			DELETE FROM dm WHERE dmUserName = :email
-		`,
-		{ email: testUser.email }
-	);
+	await cleanDatabase(connection);
 	connection.release();
 
 	closePool(pool);
