@@ -72,11 +72,11 @@ Our target audience are Dungeon Masters (DMs) and D&D players that vary from beg
 
 # 1. Introduction
 
-## 1.1 Product Overview [[Back to Top](#table-of-contents)]
+## 1.1 Product Overview
 
 Campaign Buddy is an online interactive toolbox to assist Dungeon Masters and players to run Dungeons and Dragons (D&D) campaigns (storytelling based, roleplaying adventures played on a tabletop run by a Dungeon Master, or DM). Campaign Buddy’s purpose is to make the process of setting up, planning, and executing these campaigns simple, painless, and efficient. It is a interface that uses a collection of tools that target different aspects of running a campaign such as creating and managing players, creating maps, planning stories, keeping track of spells, items, and lore, and so on. While different implementations of these tools exist individually in various places, this tool seeks to integrate them into one convenient and customizable panel-based layout. This is important because DMs are often using multiple tools at the same time and need to be able to reference resources.
 
-## 1.2 Test Approach [[Back to Top](#table-of-contents)]
+## 1.2 Test Approach
 
 Because our architecture is component based (ReactJS and ExpressJS), we naturally opted for a component based testing approach. We decided to break down our project into different levels and test components at each level. In a sense, our testing approach is as if we took a magnifying glass to our system and examined it at the smallest point possible, then zoomed out repeatedly examining the increasingly bigger picture. We conducted testing at five levels:
 
@@ -90,7 +90,7 @@ The back-end route level focuses on HTTP API and the various server side functio
 
 # 2. Test Plan
 
-## 2.1 Features to be tested [[Back to Top](#table-of-contents)]
+## 2.1 Features to be tested
 
 This document lays out testing procedures for the following components
 
@@ -109,7 +109,7 @@ This document lays out testing procedures for the following components
 
 Heuristic user acceptance testing was also performed.
 
-## 2.2 Features not to be tested [[Back to Top](#table-of-contents)]
+## 2.2 Features not to be tested
 
 Most of the features that were not tested were not tested because they were mostly comprised of implementations of well documented and well tested third party libraries (such as BlueprintJS and ReactDnD) or they were mostly comprised of components that already had unit tests written for them. Components falling under this category are as follows:
 
@@ -153,7 +153,7 @@ In a perfect world with unlimited, these components would have tests written for
 	* `/campaigns/notes`
 		* API endpoints for getting and setting note data
 
-## 2.3 Testing Tools and Environment [[Back to Top](#table-of-contents)]
+## 2.3 Testing Tools and Environment
 
 Our testing relies on three main testing tools ran in a NodeJS environment. These three tools are:
 
@@ -452,13 +452,15 @@ Tests(4 total):
         3. Set expanded prop to false
 	4. Make sure the component collapses and the content should not render
 
-## 3.4 Character Tool Integration Test
+## 3.4 User Routes Unit Test
 
-### 3.4.1 Purpose
+## 3.5 Character Tool Integration Test
+
+### 3.5.1 Purpose
 
 This test suite ensures that the user is able to edit and retrieve character information given that 
 
-### 3.4.2 Inputs
+### 3.5.2 Inputs
 
 The component must be passed the following props
 
@@ -473,11 +475,11 @@ The component must be passed the following props
 }
 ```
 
-### 3.4.3 Expected Outputs & Pass/Fail Criteria
+### 3.5.3 Expected Outputs & Pass/Fail Criteria
 
 The character tool is expected to be able to allow the user to view and mutate character data. The test shall fail if any error arises while performing expected actions.
 
-### 3.4.4 Test Procedure
+### 3.5.4 Test Procedure
 
 Initial Setup:
 
@@ -621,8 +623,204 @@ Tests (9 total):
 	10. Expect that the function was called
 	11. Expect that the function was called with the updated value
 
+## 3.6 System Integration Testing
+
+### 3.6.1 Purpose
+
+The system integration test ensures that the user can interact with the entire system without unexpected errors being thrown. Errors from spotify are to be expected and we have no control over those.
+
+### 3.6.2 Inputs
+
+_None_
+
+### 3.6.3 Expected Outputs & Pass/Fail Criteria
+
+The system should be able to handle user interaction without throwing an error. This test should fail if any error is thrown during simulated user action
+
+### 3.6.4 Test Procedure
+
+Setup:
+
+Before all tests, insert a fake user into the database and remove the user when finished
+
+Tests (4 total):
+
+1. The component renders the app correctly
+	1. Mount the component
+	2. Expect that the component matches the snapshot
+2. The component will start on the homepage
+	1. Mount the component
+	2. Expect that we can find the HomePage component
+3. The component will allow the user to create a new campaign from the home screen
+	1. Mount the component
+	2. Find the new campaign button
+	3. Simulate a click event on the new campaign button
+	4. Find the input element where the user writes the name of the campaign
+	5. If we can't find it, wait for it
+	7. Simulate an event where the user presses enter
+	8. Force the component to re-render
+	9. Wait for the component to navigate
+	10. Expect that window.location.assign was called navigating the user to /app/:campaignID
+4. The component will render the campaign homepage
+	1. Make a fetch request to get the campaigns from the server
+	2. Get the campaignID from the response
+	4. Find the layout component
+	5. Expect that there is exactly one layout
+	6. Wait for the component to validate the campaignID
+	7. Force the component to re-render
+	8. Expect to find the non-ideal-state component used to give a hint to the user
+
+## 3.7 Create Campaigns User Acceptance Test
+
+### 3.7.1 Purpose
+
+To determine if the Campaign Creation process is easy to follow and understand
+
+### 3.7.2 Inputs
+
+The user will be prompted to create a new campaign using the question "Can you create a new campaign?" and no more to determine if the process is easy to understand with no guidance. After they have created a new campaign, they will then be asked "Can you find and access an old campaign?" once again with no guidance.
+
+### 3.7.3 Expected Outputs & Pass/Fail Criteria
+
+The expected output is that users easily create a new campaign.
+The pass criterion is that the user can create a new campaign without assistance.
+The fail criterion is that the user needs to ask for help to figure out how to create a new campaign.
+
+### 3.7.4 Test Procedure
+
+Once the user has reached the home page, the facilitator shall ask the user to create a new campaign and access that campaign after it has been created to verify it has been created and test if it is easy for the user to open an old campaign. 
+
+## 3.8 Create Characters User Acceptance Test
+
+### 3.8.1 Purpose
+
+The purpose of this test is to verify that the character tool is easy to use both in the creation and management of characters during play.
+
+### 3.8.2 Inputs
+
+The user will be prompted with the question "Can you create a new PC?" and "Can you create a new NPC?". Once they have completed that, they will be prompted with "Can you view the PC profile you just created?" and prompted to change each of the fields listed in the Character Panel. These include the name, the level, the class, the race, the concentration, the dexterity, the intelligence, the wisdom, the charisma, the strength, the health, the speed, the armor class, the proficiencies, the spells, the equipment, the appearance (including age, height, weight, hair color, skin color, and physical description), and the backstory. Each of these questions shall be given without explanation to determine if the user can edit these items without assistance.
+
+### 3.8.3 Expected Outputs & Pass/Fail Criteria
+
+The expected output is that the users can easily edit the character.
+The pass criterion is that the user can complete each of the questions without assistance.
+The fail criterion is that the user must ask for help to complete the question.
+
+### 3.8.4 Test Procedure
+
+Once the user has opened the Character Tool, the facilitator will begin asking the user to complete each of the questions without elaboration and verify that the user can complete the task without assistance.
+
+## 3.9 Notes Tool User Acceptance Test
+
+
+### 3.9.1 Purpose
+
+The purpose of this testing is to verify that the notes tool functions and is easy for the user to use.
+
+### 3.9.2 Inputs
+
+The user will be asked a series of questions to verify that they can easily create both new notes and new files, as well as manipulate the notes themselves. This will be determined by a series of questions including "Can you create a new note?", "Can you create a new folder?", "Can you open the note?", "Can you change the title?", "Can you add text to the note?", "Can you open the file?", and "Can you add a note to this file?". No further elaboration will be given to verify that the user can utilize the notes tool without assistance.
+
+### 3.9.3 Expected Outputs & Pass/Fail Criteria
+
+The expected outputs of this test is that the user will be able to easily traverse the notes menus as well as easily create and edit new notes and files.
+The pass criteria for this test is if the user can create and edit both the files and the notes using the menu without assistance.
+The fail criteria for this test is if the user needs to ask for assistance to create or edit the files or notes.
+
+### 3.9.4 Test Procedure
+
+Once the user has opened the Notes Tool, the facilitator will begin asking the user to complete each of the questions without elaboration and verify that the user can complete the task without assistance.
+
+## 3.10 Dice Roller User Acceptance Test
+
+
+### 3.10.1 Purpose
+
+The purpose of this testing is to verify that the dice roller tool functions and is easy for the user to manipulate and use.
+
+### 3.10.2 Inputs
+
+The user will be asked a series of questions to verify that they can easily manipulate the dice roller tool. These questions will include "Can you roll 1d20 die?", "Can you roll 2d20 dice?", and "Can you roll 1d10 die?". No elaboration shall be given on this to verify that the user can manipulate the quantity and the sides of the dice without assistance.
+
+### 3.10.3 Expected Outputs & Pass/Fail Criteria
+
+The expected output is for the user to easily change the type and quantity of dice as well as roll the dice.
+The pass criterion for this testing is that the user can change both the quantity and type of dice as well as roll without assistance.
+The fail criterion for this testing is that the user requests assistance in changing the quantity or type of dice or rolling the dice.
+
+### 3.10.4 Test Procedure
+
+Once the user has opened the Dice Roller Tool, the facilitator will begin asking the user to complete each of the questions without elaboration and verify that the user can complete the task without assistance.
+
+## 3.11 Search Tool User Acceptance Test
+
+
+### 3.11.1 Purpose
+
+The purpose of this testing is to verify that the search tool functions and is easy for the user to manipulate and use.
+
+### 3.11.2 Inputs
+
+The user will be asked a series of questions to verify that they can easily search for what they may be looking for using the search tool. These questions will include "Can you search for Animate Objects?", "Can you search for an object that has a Material Component but no Verbal Component for the Bard class?", "Can you search for equipment?", "Can you search for a Backpack?", "Can you search for Armor Category with the Subcategory Light?", "Can you search for a class feature?", and "Can you search for Ability Score Improvement I?". No elaboration shall be given on this to verify that the user can search for something specific without assistance.
+
+### 3.11.3 Expected Outputs & Pass/Fail Criteria
+
+The expected output is for the user to be able to search for these specific requirements, objects, spells, and class feature without assistance.
+The pass criteria is that the user can find these items without assistance.
+The fail criteria is that the user must ask for assistance to find these items.
+
+### 3.11.4 Test Procedure
+
+Once the user has opened the Search Tool, the facilitator will begin asking the user to complete each of the questions without elaboration and verify that the user can complete the task without assistance. No assistance shall be given to verify that the user can complete the task without assistance.
+
+## 3.12 Music Tool User Acceptance Test
+
+
+### 3.12.1 Purpose
+
+The purpose of this testing is to verify that the music tool functions and is easy for the user to manipulate and use.
+
+### 3.12.2 Inputs
+
+The user will be asked a series of questions to determine if the music tool is functioning and easy to use. These questions consist of "Can you link one of your playlists?", "Can you add a hotkey to your playlist?", and "Can you use the hotkey when the music tool is closed?". No elaboration shall be given on this to verify that the user can search for something specific without assistance.
+
+
+### 3.12.3 Expected Outputs & Pass/Fail Criteria
+
+The expected output is for the user to be able to link their Spotify playlists to Campaign Buddy and make use of the keyboard shortcuts.
+The pass criteria for this test is for the user to be able to add the playlists they desire and play the music using the keyboard shortcuts.
+The fail criteria for this test is for the user to request assistance in order to be able to link the playlists or utilize the keyboard shortcuts.
+
+### 3.12.4 Test Procedure
+
+Once the user has opened the Search Tool, the facilitator will begin asking the user to complete each of the questions without elaboration and verify that the user can complete the task without assistance. No assistance shall be given to verify that the user can complete the task without assistance.
+
+## 3.13 Layouts User Acceptance Test
+
+
+### 3.13.1 Purpose
+
+The purpose of this testing is to verify that the layout system is easy to use and functionable for the user.
+
+### 3.13.2 Inputs
+
+The user will be asked a series of questions to determine if the layout system is functioning and easy to use. These questions will consist of "Can you create a new layout?", "Can you open a previous layout?", and "Can you edit the current layout?". No elaboration shall be given on this to verify that the user can search for something specific without assistance.
+
+### 3.13.3 Expected Outputs & Pass/Fail Criteria
+
+The expected output for this test is for the user to be able to create a layout, save a layout, and open a saved layout without assistance. 
+The pass criteria for this test is for the user to be able to create, save, and open a layout without assistance. 
+The fail criteria for this test is for the user to request assistance to create, save, or open a layout.
+
+### 3.13.4 Test Procedure
+
+Once the user has opened the Campaign Buddy workspace, the facilitator will begin asking the user to complete each of the questions without elaboration and verify that the user can complete the task without assistance. No assistance shall be given to verify that the user can complete the task without assistance.
+
+
 # 4. Addicational Material
 
-## 4.1 Apendix A. Test technologies [[Back to Top](#table-of-contents)]
+### 4.1 Test Results
 
-### 4.1.1 Test Results
+All Jest tests passing
+
+See attached PDFs for user acceptance tests
