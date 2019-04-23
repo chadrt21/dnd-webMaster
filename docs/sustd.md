@@ -104,8 +104,6 @@ This document lays out testing procedures for the following components
 	* `/tools/character`
 		* Tool that allows the user to maintain character sheets for players and for NPCs
 * `/back-end`
-	* `/campaigns`
-		* API routes for getting and creating campaigns
 	* `/user`
 		* API routes for getting and setting user profile information
 
@@ -131,6 +129,8 @@ Most of the features that were not tested were not tested because they were most
 		* Code used to authenticate the user with Google
 	* `/spotify-connector` (handled by Spotify)
 		* Code used to authenticate the user with Spotify
+	* `/campaigns`
+		* API routes for getting and creating campaigns
 
 In a perfect world with unlimited, these components would have tests written for them. But given the time constraints and the nature of their documentation, we felt comfortable not planning on testing these specific components. However, there were some components that we did want to write tests for, but were not able to do so in time. Components falling under that category are as follows:
 
@@ -163,6 +163,103 @@ Our testing relies on three main testing tools ran in a NodeJS environment. Thes
 	1. Enzyme is a testing library that provides a way to mount, render, and interact React components in a Node environment.
 3. Supertest: [https://github.com/visionmedia/supertest](https://github.com/visionmedia/supertest)
 	1. Supertest is an ExpressJS HTTP testing library that provides a way to test our server function by calling API endpoints.
+
+## 2.4 User Acceptance Test Plan
+
+Our plan for user acceptance testing is to lead the user through a series of questions designed to test the usability of the system. The user will only be asked to complete a simple task and given no instruction on how to complete the task. After they have completed the series of leading questions, they will be given a Google Quiz to determine how successful they were in completing the questions, systematically ask for any comments on additions or problems in the software, and determine usability.
+
+User Acceptance Test Questions:
+* Log-in Page
+	* Can you log in using your google account?
+* Home Page
+	* Can you create a new campaign?
+	* Can you find and access an old campaign?
+	* Can you find the profile page and how to log out?
+* Profile Page
+	* Can you navigate to the profile page?
+	* Can you add a short bio to your profile?
+* Tools
+	* Can you add a new tool to your layout?
+	* When there is no tool opened yet?
+	* When there is already a tool open?
+	* Dice Roller
+		* Can you open the dice tool?
+		* Can you roll 1d20 die?
+		* Can you roll 2d20 dice?
+		* Can you roll 1d10 dice?
+	* Character
+		* Can you open the character tool?
+		* Can you create a new PC?
+		* Can you create a new NPC?
+		* Can you view the PC character profile you just created?
+		* Can you change the name of this character?
+		* Can you change the stats of this character?
+			* level
+			* class
+			* race
+			* concentration
+			* dexterity
+			* intelligence
+			* wisdom
+			* charisma
+			* strength
+			* health
+			* speed
+			* AC
+		* Can you view the proficiencies of this character?
+		* Can you add a proficiency for this character?
+		* Can you view the class features for this character?
+		* Can you view the spells for this character?
+		* Can you add a spell for this character?
+		* Can you view the spells for this character?
+		* Can you add a piece of equipment for this character?
+		* Can you view the appearance of this character?
+		* Can you change the appearance of this character?
+			* age
+			* height
+			* weight
+			* hair
+			* skin
+			* physical description
+		* Can you view the backstory 
+		* Can you change the backstory of your character?
+		* Can you go back to the character menu?
+		* Can you view the NPC that you have created?
+		* Can you go back to the character menu?
+		* Can you find the settings?
+		* Can you change the order that the character information is displayed?
+	* Notes 
+		* Can you open the notes tool?
+		* Can you create a new note?
+		* Can you create a new folder?
+		* Can you open the note?
+		* Can you change the title?
+		* Can you add text to the note?
+		* Can you go back to the main note menu?
+		* Can you open the file?
+		* Can you add a note to the file?
+	* Search
+		* Can you open the search tool?
+		* Can you search for Animate Objects?
+		* Can you search for an object that has a Material Component but no Verbal Component for the Bard class?
+		* Can you search for equipment?
+		* Can you search for a Backpack?
+		* Can you search for Armor Category with the Subcategory Light?
+		* Can you search for a class feature?
+		* Can you search for Ability Score Improvement I?
+	* Music
+		* Can you open the music tool?
+		* Do you have a Spotify account?
+		* Can you log into your Spotify account?
+		* Can you link one of your playlists?
+		* Can you add a hotkey to your playlist?
+		* Can you close the Music tool?
+* Keyboard Shortcuts
+	* Can you use the hotkey that you added to your playlist to control the music playing?
+* Layouts
+	* Can you create a new layout?
+	* Can you open a previous layout?
+	* Can you edit the current layouts?
 
 # 3. Test cases
 
@@ -263,20 +360,75 @@ Tests (12 total):
 	4. Simulate an event in which the input blurs with a value of '2 + 2'
 	5. Expect the on change function to be called with the computed value of 4 and render the value in the input
 
-## 3.2 Collapsible Section Unit Test
+## 3.2 Title Component Unit Test
 
 ### 3.2.1 Purpose
+
+This test suite ensures that the Title component can be used to display headings with the option to have components displayed on either side.
+
+### 3.2.2 Inputs
+
+* The content of the title (String), passed in as a child to the component
+* The left component (React Node), passed in as a prop
+* The right component (React Node), passed in as a prop
+
+### 3.2.3 Expected Outputs & Pass/Fail Criteria
+
+This component is expected to render the content passed in as a child and the left and right component when given. The component fails the test if the content is not rendered properly or if the left or right component is not rendered correctly.
+
+### 3.2.4 Test Procedure
+
+Tests (6 total)
+
+1. The component should render the component
+	1. Mount the component
+	2. Expect that the component matches the snapshot we have of it
+2. The component should render the correct text
+	1. Mount the component
+	2. Expect the component to have exactly one non-null child
+	3. Expect that the component text matches the one we pass down through children
+3. The component should render the left hand component
+	1. Declare the left hand component to be passed down through the props
+	2. Mount the Title component with the left hand component
+	3. Expect that the title has exactly two non-null children (the text and the left hand component)
+	4. Expect that the first non-null component is the leftComponent (to ensure that the left hand component is rendered on the left side)
+	5. Expect that the second non-null child is the title text
+	6. Expect that the left hand component is actually rendering properly to the user
+4. The component should render the right hand component
+	1. Declare the right hand component to be passed through the props
+	2. Mount the title component and pass in the right hand component
+	3. Expect the title component to have exactly two non-null children
+	4. Expect that the first non-null child is the title text
+	5. Expect that the second non-null child is the right hand component
+	6. Expect that the right hand component is rendering it's children properly
+5. The component should render both right hand and left hand component
+	1. Declare the right hand component to be passed in to the Title
+	2. Declare the left hand component to be passed in to the Title
+	3. Mount the Title component with the left and right hand components passed in through the props
+	4. Expect that the component has exactly three non-null children
+	5. Expect the first non-null child is the left hand component
+	6. Expect that the second non-null child is the title text
+	7. Expect the third non-null child is the right hand component
+	8. Expect the right hand component to render it's children
+	9. Expect the left hand component to render it's children
+6. The component inherits className from props
+	1. Mount the component and pass in the className
+	2. Expect the root node to have the className passed to the Title component
+
+## 3.3 Collapsible Section Unit Test
+
+### 3.3.1 Purpose
 This test suite ensures that the user can expand and collapse sections while the content remains seen and hidden respectively. 
 
-### 3.1.2 Inputs
+### 3.3.2 Inputs
 
 _None_
 
-### 3.1.3 Expected Outputs & Pass/Fail Criteria
+### 3.3.3 Expected Outputs & Pass/Fail Criteria
 
 The component is expected to expand and collapse content specific to each section. The component should fail if a section is expanded and no content appears, or if the content fails to collapse after the user attempts to collapse the section. 
 
-### 3.1.4 Test Procedure
+### 3.3.4 Test Procedure
 
 Tests(4 total):
 
@@ -299,32 +451,178 @@ Tests(4 total):
 	2. Check to make sure the content should not be rendered since expanded is set to false
         3. Set expanded prop to false
 	4. Make sure the component collapses and the content should not render
-        
 
-## 3.1 Create Campaigns [[Back to Top](#table-of-contents)]
+## 3.4 Character Tool Integration Test
 
-### 3.1.1 Purpose
+### 3.4.1 Purpose
 
-### 3.1.2 Inputs
+This test suite ensures that the user is able to edit and retrieve character information given that 
 
-### 3.1.3 Expected Outpus & Pass/Fail Criteria
+### 3.4.2 Inputs
 
-### 3.1.4 Test Procedure
+The component must be passed the following props
 
-## 3.2 Create Characters [[Back to Top](#table-of-contents)]
+```js
+{
+	campaignID: 1,
+	setTabName: jest.fn(),
+	insertPaneIntoPanel: jest.fn(),
+	width: 600,
+	height: 600,
+	pane: new Pane({ type: 'character' })
+}
+```
 
-### 3.2.1 Purpose
+### 3.4.3 Expected Outputs & Pass/Fail Criteria
 
-### 3.2.2 Inputs
+The character tool is expected to be able to allow the user to view and mutate character data. The test shall fail if any error arises while performing expected actions.
 
-### 3.2.3 Expected Outpus & Pass/Fail Criteria
+### 3.4.4 Test Procedure
 
-### 3.2.4 Test Procedure
+Initial Setup:
+
+The global window.fetch (used to make HTTP requests) must be mocked to return deterministic 'api' results with the following configuration:
+
+```js
+[
+	{
+		url: '/api/search/.+',
+		GET: {
+			status: 200,
+			responseBody: [],
+		},
+	},
+	{
+		url: '/api/campaigns/(\\d)/characters/(\\d)',
+		GET: {
+			status: 200,
+			getResponseBody: (url, options, matches) => {
+				return characters[matches[2]];
+			}
+		},
+		POST: {
+			status: 200,
+			responseBody: {},
+			callback: (url, options) => {
+				updateCharacter(JSON.parse(options.body));
+			}
+		}
+	},
+	{
+		// Define our GET /api/campaigns/:campaignID/characters route to return the 'saved characters'
+		url: '/api/campaigns/(\\d)+/characters',
+		GET: {
+			status: 200,
+			responseBody: characters,
+		}
+	},
+	{
+		// Define our GET and POST routes for /api/campaigns/:campaignID/tool-settings/characterTool
+		// To return and set the character tool's settings. If the campaign id is 1, then return
+		// the constant tool settings object, if not, return whatever is stored in tool settings
+		// The post request sets the cached tool settings
+		url: '/api/campaigns/(\\d)+/tool-settings/characterTool',
+		GET: {
+			status: 200,
+			getResponseBody: (url, options, matches) => {
+				if (matches[1] === '1') {
+					return presetToolSettings;
+				} else {
+					return toolSettings;
+				}
+			},
+		},
+		POST: {
+			status: 200,
+			callback: (url, options) => {
+				const { value } = JSON.parse(options.body);
+				setToolSettings(value);
+			},
+			responseBody: {}
+		}
+	}
+];
+```
+
+Tests (9 total):
+
+1. The component should render the component
+	1. Mount the component
+	2. Expect the component to match the saved snapshot
+2. The component should render the list view first
+	1. Mount the component
+	2. Expect that no errors have been raised
+	3. Expect that the character list is found
+	4. Expect that the character display is not found
+	5. Expect that the tool settings is not found
+3. The component should retrieve the tool settings when the component mounts or post the default character tools
+	1. Mount the component but we don't need to store it
+	2. Wait for the tool orderings to set in the state of the component
+	3. Expect that the GET request was made to the tool requests route
+	4. Expect that no POST request was made (because campaign 1 has saved tool settings for character tool)
+	5. Clear all of the mock data for window.fetch so we aren't getting calls from the first mount
+	6. Mount another campaign (id = 2) with no saved tool requests
+	7. Wait for the tool orderings to set in the state of the component
+	8. Expect that the 'server controller' method was called to save the new tool settings
+4. The component Expect that two lists are rendered (one for npcs and one for pcs)
+	1. Mount the component into the DOM
+	2. Expect that there are two Lists
+5. The component renders three PC characters rendered and one NPC rendered in the list view
+	1. Mount the component into the DOM
+	2. Find the character list component
+	3. Wait for the characters to be loaded
+	4. Get the PC list (it's the first list rendered)
+	5. Get the NPC list (it's the second list rendered)
+	6. Expect that the PC list renders three children
+	7. Expect that the NPC list renders one child
+6. The component changes to the character display when a character is clicked
+	1. Mount the component into the DOM
+	2. Get the character list component
+	3. Wait for the characters to be loaded from the API
+	4. Get the PC list
+	6. Find the first list item
+	7. Simulate a click on the list item
+	8. Wait for the component to switch to the display view
+	9. Update the component after the state change
+	10. Expect that the character list is not found in the component
+	11. Expect that the character display is found in the component
+	12. Expect that the tool settings is not found in the component
+7. The component will load a character by default
+	1. Set the pane object with stored component state
+	2. Mount the component with the custom pane object
+	3. Wait for the character to be loaded
+	4. Update the component so that it's render matches the state
+	5. Expect that the character display is rendered
+8. The component will go to settings page and edit settings properly and return to list view
+	1. Mount the component
+	2. Find the button that navigates to settings
+	3. Wait for the component to load the tool settings
+	4. Click the settings button
+	5. Update the component
+	6. Expect that the component is showing the settings view
+	7. Clear the mock for the 'server controller' function that updates tool settings
+	8. Simulate an event where the user swaps orderings zero and one Note: We do not need to simulate the drag and drop interaction because it is handled by the sortable item component which is it's own unit and should be tested separately
+	9. Wait for the 'server controller' function to be called
+	10. Expect that it was called
+	11. Expect that the first section in the updated orderings array is 'classInfo'
+	12. Expect that the second section in the updated orderings array is 'proficiencies'
+	13. Find the button that navigates back to the character list
+	14. Click it
+	15. Update the component to reflect the change in state
+	16. Expect that the component is back at the character list view
+9. The component will let the user edit character data
+	1. Set the pane object with stored component state (to begin with the character panel)
+	2. Mount the component with the custom pane object
+	3. Wait for the character to be loaded
+	4. Find the blueprint editable text component
+	5. Find the div that needs to be focused
+	6. Simulate the focus event on the div
+	8. Simulate an change event on the input element
+	10. Expect that the function was called
+	11. Expect that the function was called with the updated value
 
 # 4. Addicational Material
 
 ## 4.1 Apendix A. Test technologies [[Back to Top](#table-of-contents)]
 
 ### 4.1.1 Test Results
-
-### 4.1.2 Incident Report
