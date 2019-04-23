@@ -166,6 +166,104 @@ Our testing relies on three main testing tools ran in a NodeJS environment. Thes
 
 # 3. Test cases
 
+## 3.1 Calculator Input Component Unit Test
+
+### 3.1.1 Purpose
+
+This test suite ensures that the user can use the calculator input and enter in correct mathematical expressions and get the result.
+
+### 3.1.2 Inputs
+
+_None_
+
+### 3.1.3 Expected Outputs & Pass/Fail Criteria
+
+The component is expected to render whatever the user types into it but only call the on change hook for valid numeric input. The component is expected to compute mathematical input when the enter key is pressed and then call the on change hook. The component should fail if it calls on change for invalid (i.e. non-numerical) input values, if it does not call on change for valid input values, or if it does not compute mathematical expressions.
+
+### 3.1.4 Test Procedure
+
+Tests (12 total):
+
+1. Run snapshot test
+	1. Mount the component
+	2. Expect the component to match the last snapshot (if this test fails, then the component was probably updated and snapshot probably needs to be deleted)
+2. The component should render the correct uncontrolled default value
+	1. Mount the component with no props
+	2. Find the actual HTML input component
+	3. Expect the rendered value of the input to be the default of 0
+3. The component can be rendered with default value when uncontrolled
+	1. Mount the component and pass in 9 as the value
+	2. Find the actual HTML input component
+	3. Expect the rendered value of the input to be the given value of 9
+4. The component can run in an uncontrolled environment
+	1. Mount the component with no props
+	2. Find the actual HTML input component
+	3. Expect the value to be the default of 0
+	4. Simulate an event in which the user sets the text to a non numeric value
+	5. Expect that the input renders that non numeric text
+5. The component will call the on change method
+	1. Create the mock function to monitor the on change function
+	2. Mount the component and pass in the mock as the onChange function
+	3. Find the actual HTML input component
+	4. Simulate an event in which the user changes the input value to the number 20
+	5. Expect that the on change function was called and the value of the input was passed into it
+6. The component wont call the on change method when non-numeric text is entered
+	1. Create the mock function to monitor the on change function
+	2. Mount the component and pass in the mock as the onChange function
+	3. Find the actual input component
+	4. Simulate an event in which the user changes the text to a non numeric value
+	5. Expect that the on change function was not called
+7. The component will not call the on change function if the input blurs with an invalid value
+	1. Create the mock function to monitor the on change function
+	2. Mount the component and pass in the on change function
+	3. Find the actual input component
+	4. Simulate an on blur event in which the value of the input is non numeric
+	5. Expect that the on change function wasn't called
+8. The component will call the on change function if the input blurs with a valid numeric value
+	1. Create the mock function to monitor the on change function
+	2. Mount the component and pass in the mock function
+	3. Find the actual input component
+	4. Simulate a blur event in which the input blurs with a value of 20
+	5. Expect that the onChange function was called
+9. The component will set the input back to zero when the user presses enter with a non mathematical value
+	1. Create the mock function to monitor the on change function
+	2. Mount the component
+	3. Find the actual input component
+	4. Simulate an event in which the user changes the input to non numeric text
+	5. Expect the input to be rendered with a value of the non numeric text
+	6. Simulate an event in which the user presses the enter key
+	7. Expect that the rendered value of the input is falsy
+10. The component wont call the on change function if the input has a valid mathematical expression
+	1. Create the mock function to monitor the on change function
+	2. Mount the component
+	3. Find the actual input component
+	4. Simulate an event in which the user changes the input to '2 + 2'
+	5. Expect that the on change function was not called
+	6. Expect that the input renders the text '2 + 2'
+11. The component will calculate the given mathematical expression when enter is pressed
+	1. Create the mock function to monitor the on change function
+	2. Mount the component
+	3. Find the actual input component
+	4. Simulate an event in which the user changes the input to '2 + 2' and then presses the enter key
+	5. Expect the on change function to be called with the computed value of 4 and render the value in the input
+	6. Simulate an event in which the user changes the input to '2+ 2' and then presses the enter key (this is to ensure that the parsing of the numbers do not rely on whitespace and this test only needs to be done once)
+	7. Expect the on change function to be called with the computed value of 4 and render the value in the input
+	8. Simulate an event in which the user changes the input to '2+2' and then presses the enter key (again, this is to ensure that the parsing of the numbers do not rely on whitespace)
+	9. Expect the on change function to be called with the computed value of 4 and render the value in the input
+	10. Simulate an event in which the user changes the input to '2 * 2' and then presses the enter key
+	11. Expect the on change function to be called with the computed value of 4 and render the value in the input
+	12. Simulate an event in which the user changes the input to '2 / 2' and then presses the enter key
+	13. Expect the on change function to be called with the computed value of 1 and render the value in the input
+	14. Simulate an event in which the user changes the input to '3 - 2' and then presses the enter key
+	15. Expect the on change function to be called with the computed value of 1 and render the value in the input
+12. The component will calculate the given mathematical expression when the input blurs
+	1. Create the mock function to monitor the on change function
+	2. Mount the component
+	3. Find the actual input component
+	4. Simulate an event in which the input blurs with a value of '2 + 2'
+	5. Expect the on change function to be called with the computed value of 4 and render the value in the input
+
+
 ## 3.1 Create Campaigns [[Back to Top](#table-of-contents)]
 
 ### 3.1.1 Purpose
