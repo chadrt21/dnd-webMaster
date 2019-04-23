@@ -88,7 +88,7 @@ const promiseQuery = (connection, query, options) => new Promise((resolve, rejec
 	connection.query(query, ...params);
 });
 
-beforeAll(async () => {
+beforeAll(async done => {
 	pool = mysql.createPool({
 		password: databaseCredentials.pass,
 		user: databaseCredentials.user,
@@ -121,13 +121,17 @@ beforeAll(async () => {
 
 	// Store the user in a global object
 	global.userID = result.insertId;
+
+	done();
 });
 
-afterAll(async () => {
+afterAll(async done => {
 	const connection = await getConnection(pool);
 
 	await cleanDatabase(connection);
 	connection.release();
 
 	closePool(pool);
+
+	done();
 });

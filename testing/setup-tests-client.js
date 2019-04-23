@@ -110,7 +110,7 @@ const promiseQuery = (connection, query, options) => new Promise((resolve, rejec
 	connection.query(query, ...params);
 });
 
-export const setup = async () => {
+export const setup = async done => {
 	delete window.location;
 	window.location = new URL('http://localhost:8086');
 	window.location.assign = jest.fn(value => {
@@ -164,9 +164,10 @@ export const setup = async () => {
 
 	serverInstance = server.listen(8086);
 	await fetch('/api/auth/login');
+	done();
 };
 
-export const teardown = async () => {
+export const teardown = async done => {
 	const connection = await getConnection(pool);
 
 	// Get all of the campaign ids created by this test users
@@ -176,4 +177,5 @@ export const teardown = async () => {
 
 	closePool(pool);
 	serverInstance.close();
+	done();
 };
