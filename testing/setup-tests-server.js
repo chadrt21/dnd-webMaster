@@ -2,6 +2,7 @@
 import 'babel-polyfill';
 import mysql from 'mysql';
 import testUser from './test-user-object';
+import cleanDatabase from './clean-database';
 
 let pool;
 let databaseCredentials;
@@ -87,7 +88,7 @@ const promiseQuery = (connection, query, options) => new Promise((resolve, rejec
 	connection.query(query, ...params);
 });
 
-beforeAll(async () => {
+beforeAll(async done => {
 	pool = mysql.createPool({
 		password: databaseCredentials.pass,
 		user: databaseCredentials.user,
@@ -97,6 +98,8 @@ beforeAll(async () => {
 		queryFormat,
 	});
 	const connection = await getConnection(pool);
+
+	await cleanDatabase(connection);
 
 	// Insert user into the database and store their user id
 	const result = await promiseQuery(
@@ -118,19 +121,17 @@ beforeAll(async () => {
 
 	// Store the user in a global object
 	global.userID = result.insertId;
+
+	done();
 });
 
-afterAll(async () => {
+afterAll(async done => {
 	const connection = await getConnection(pool);
 
-	await promiseQuery(
-		connection,
-		`
-			DELETE FROM dm WHERE dmID = :dmID
-		`,
-		{ dmID: global.userID }
-	);
+	await cleanDatabase(connection);
 	connection.release();
 
 	closePool(pool);
+
+	done();
 });

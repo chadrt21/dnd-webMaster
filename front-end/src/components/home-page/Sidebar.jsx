@@ -22,7 +22,7 @@ import styles from './styles.less';
 export default class Sidebar extends React.Component {
 	static propTypes = {
 		createNewCampaign: PropTypes.func.isRequired,
-		loadingCampaignCreation: PropTypes.bool.isRequired,
+		loadingCampaignCreation: PropTypes.bool,
 	}
 
 	state = {

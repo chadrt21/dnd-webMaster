@@ -93,10 +93,10 @@ export default class CharacterTool extends ToolBase {
 		if (defaultCharacterID) {
 			this.setState({
 				defaultCharacterID: null,
-			}, () => {
+			}, async () => {
 				const { view } = this.state;
 				if (view === 'display') {
-					this.loadCharacter(defaultCharacterID);
+					await this.loadCharacter(defaultCharacterID);
 				}
 			});
 		}
@@ -171,34 +171,32 @@ export default class CharacterTool extends ToolBase {
 			}
 
 			// Update the local state with the changes
-			this.setState({
-				character,
-			}, async () => {
-				// Make update in server
-				const { campaignID } = this.props;
-				const { character } = this.state;
-				if (character && character.characterID) {
-					try {
-						// Try and make post request to server with changes
-						const response = await post(
-							`/api/campaigns/${campaignID}/characters/${character.characterID}`,
-							{
-								field: identifier,
-								value: change,
-							}
-						);
-
-						// If the server tells us to reload, then reload, otherwise save a network call
-						if (response.reload) {
-							this.loadCharacter(character.characterID);
+			return { character };
+		}, async () => {
+			// Make update in server
+			const { campaignID } = this.props;
+			const { character } = this.state;
+			if (character && character.characterID) {
+				try {
+					// Try and make post request to server with changes
+					const response = await post(
+						`/api/campaigns/${campaignID}/characters/${character.characterID}`,
+						{
+							field: identifier,
+							value: change,
 						}
-					} catch (err) {
-						// Reload on error to ensure data synchronization
-						displayError(`There was an error updating "${character.characterName}"`);
+					);
+
+					// If the server tells us to reload, then reload, otherwise save a network call
+					if (response.reload) {
 						this.loadCharacter(character.characterID);
 					}
+				} catch (err) {
+					// Reload on error to ensure data synchronization
+					displayError(`There was an error updating "${character.characterName}"`);
+					this.loadCharacter(character.characterID);
 				}
-			});
+			}
 		});
 	}
 

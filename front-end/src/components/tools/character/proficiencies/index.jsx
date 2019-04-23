@@ -16,7 +16,7 @@ export default class Proficiencies extends React.Component {
 	static propTypes = {
 		onRemove: PropTypes.func.isRequired,
 		onNew: PropTypes.func.isRequired,
-		proficiencies: PropTypes.array,
+		proficiencies: PropTypes.array.isRequired,
 	}
 
 	mapTags = (prof, index) => {

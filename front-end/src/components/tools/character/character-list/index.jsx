@@ -40,13 +40,22 @@ export default class CharacterList extends React.Component {
 		characters: [],
 	}
 
+	cancelAsync = false;
+
 	componentDidMount() {
 		this.fetchCharacters();
+	}
+
+	componentWillUnmount() {
+		this.cancelAsync = true;
 	}
 
 	fetchCharacters = async () => {
 		const { campaignID } = this.props;
 		const characters = await get(`/api/campaigns/${campaignID}/characters`);
+
+		if (this.cancelAsync) return;
+		
 		this.setState({
 			characters: characters.map(character => ({
 				characterID: character.characterID,

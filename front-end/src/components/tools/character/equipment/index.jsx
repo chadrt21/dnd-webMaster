@@ -15,7 +15,7 @@ import styles from './styles.less';
 export default class Equipment extends React.Component {
 	static propTypes = {
 		onSearchChange: PropTypes.func.isRequired,
-		equipment: PropTypes.array,
+		equipment: PropTypes.array.isRequired,
 		sortingDirection: PropTypes.string,
 		sortingColumn: PropTypes.string,
 		handleSortingChange: PropTypes.func,
