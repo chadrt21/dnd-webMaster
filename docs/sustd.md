@@ -155,6 +155,15 @@ In a perfect world with unlimited, these components would have tests written for
 
 ## 2.3 Testing Tools and Environment [[Back to Top](#table-of-contents)]
 
+Our testing relies on three main testing tools ran in a NodeJS environment. These three tools are:
+
+1. Jest: [https://jestjs.io/](https://jestjs.io/)
+	1. Jest is a simple assertion-based JavaScript testing framework created by Facebook Open Source.
+2. Enzyme: [https://airbnb.io/enzyme/](https://airbnb.io/enzyme/)
+	1. Enzyme is a testing library that provides a way to mount, render, and interact React components in a Node environment.
+3. Supertest: [https://github.com/visionmedia/supertest](https://github.com/visionmedia/supertest)
+	1. Supertest is an ExpressJS HTTP testing library that provides a way to test our server function by calling API endpoints.
+
 # 3. Test cases
 
 ## 3.1 Create Campaigns [[Back to Top](#table-of-contents)]
