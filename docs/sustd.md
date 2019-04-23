@@ -44,28 +44,31 @@ Our target audience are Dungeon Masters (DMs) and D&D players that vary from beg
 
 # Table of Contents
 
-1. [Introduction](#1-introduction)
-   1. [Product Overview](#11-product-overview-back-to-top)
-   2. [Test Approach](#12-test-approch)
-2. [Test Plan](#2-test-plan)
-   1. [Components to be tested](#21-features-to-be-tested)
-   2. [Components not to be tested](#22-features-not-to-be-tested)
-   3. [Testing Tools and Environment](#23-testing-tools)
-3. [Test Cases](#3-test-cases)
-   1. [Create Campaigns](#31-create-campaigns)
-      1. [Purpose](#311-purpose)
-      2. [Inputs](#312-inputs)
-      3. [Expected Outputs & Pass/Fail Critera](#313-test-critera)
-      4. [Test Procedure](#314-test-procedure)
-   2. [Create Characters](#32-create-character)
-      1. [Purpose](#311-purpose)
-      2. [Inputs](#312-inputs)
-      3. [Expected Outputs & Pass/Fail Critera](#313-test-critera)
-      4. [Test Procedure](#314-test-procedure)
-4. [Addicational Material](#4-addicational)
-   1. [Appendix A. Test Logs](#41-appendix)
-      1. [Test Results](#411-test-results)
-      2. [Incident Report](#412-incident-report)
+1. Introduction
+   1. Product Overview
+   2. Test Approach
+2. Test Plan
+   1. Components to be tested
+   2. Components not to be tested
+   3. Testing Tools and Environment
+3. Test Cases
+   1. Calculator Input Component Unit Tests
+   2. Title Component Unit Tests
+   3. Collapsible Section Unit Tests
+   4. User Routes Unit Tests
+   5. Character Tool Integration Test
+   6. System Integration Test
+   7. Create Campaigns User Acceptance Test
+   8. Create Character User Acceptance Test
+   9. Notes Tool User Acceptance Test
+   10. Dice Roller User Acceptance Test
+   11. Search Tool User Acceptance Test
+   12. Music Tool User Acceptance Test
+   13. Layouts User Acceptance Test
+4. Addicational Material
+   1. Appendix A. Test Logs
+      1. Test Results
+      2. Incident Report
 
 
 <div style="page-break-after: always;"></div>
