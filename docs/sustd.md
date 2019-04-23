@@ -454,6 +454,53 @@ Tests(4 total):
 
 ## 3.4 User Routes Unit Test
 
+### 3.8.1 Purpose
+
+This test suite ensures that the user controller has the correct path ways and returns the appropriate information.  
+### 3.8.2 Inputs
+
+_None_
+
+### 3.8.3 Expected Outputs & Pass/Fail Criteria
+
+The route is expected to save and modify user information such as their name, Bio, and email. The route will check if user has access to legal data. If so then the user can modify the legal data such as user Bio.
+
+### 3.8.4 Test Procedure
+
+Setup:
+Insert a temporary user into the database before the tests and remove them after the tests
+
+Tests (3 total):
+
+1. Verify that the user has access to user profile
+	1. Request user profile info via  localhost:8085/api/user/profile
+	1. Expect the dmID returned to be the user id created by the test environment
+	1. Expect the dmUserName returned to match the test user
+	1. Expect the dmBio returned to match the test user
+1. Verify that the user can update valid user information
+	1. Request current user profile info via  localhost:8085/api/user/profile 
+	1. Expect the returned dmID to match the user id created by the test environment
+	1. Expect the returned dmBio to match the test user
+	1. Make the post request to update dmBio
+	1. Expect the response to indicate that a row has been changed
+	1. Expect the response to indicate that the browser need not be reloaded
+	1. Make a get request to check if the information was actually updated
+	1. Expect that the dmId is still the same
+	1. Expect that the returned dmBio matches the updated value we gave it in the post body
+1. Verify that the user can’t update illegal user information
+	1. Request current user profile info via  localhost:8085/api/user/profile 
+	1. Expect that the returned dmID is the user id set in the test environment
+	1. Expect that the returned dmUserName matches the test user email
+	1. Make the post request to try and change the dmID
+	1. Expect that the response indicates no rows have been changed
+	1. Expect that the response indicate the browser needs to be refreshed
+	1. Make the updated get request to ensure that the dmID has not been changed
+	1. Expect that the dmID is still the same
+	1. Make a post request to try and change the dmUserName (used to ID the user on login)
+	1. Expect that the response indicates no rows have been changed
+	1. Expect that the response indicate the browser needs to be refreshed
+	1. Expect that the dmUserName is still the same
+
 ## 3.5 Character Tool Integration Test
 
 ### 3.5.1 Purpose
