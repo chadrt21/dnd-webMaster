@@ -13,8 +13,8 @@ Web Interface for D&amp;D resources and character management for dungen masters
 - **Prototyping/Modeling**
   - [X] Initial rough paper prototypes
   - [X] Initial database conceptual ER model
-  - [X] Digital prototypes of Software Product Features detailed in SRS (In progress: Jill & Ashley)
-  - [ ] Full physical ER database model (In progress: Zach & Chad)
+  - [X] Digital prototypes of Software Product Features detailed in SRS (Done: Jill & Ashley)
+  - [x] Full physical ER database model (Done: Zach & Chad)
 - **Programming**
   - [X] Layout manager proof of concept
   - [X] Implement BlueprintJS in Layout PoC
@@ -28,7 +28,7 @@ Web Interface for D&amp;D resources and character management for dungen masters
   - [x] Sprint 3 (Done: Everyone)
     - [ ] ~~Automated Rolls~~
     - [x] Note Folders
-    - [ ] Tutorial
+    - [x] Tutorial
     - [x] Spotify Integration
  - **Testing (In Progress: Everyone)**
    - [x] [Unit Testing](https://docs.google.com/document/d/15AFLHOb4xy9iG-qlz0TzjlZtE97YU2XOEgKo05-fgHA/edit) (Chad, Jill, Zach, Ashely)
