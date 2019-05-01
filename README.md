@@ -38,7 +38,7 @@ Web Interface for D&amp;D resources and character management for dungen masters
   - [x] [Google Slide](https://docs.google.com/presentation/d/1wWQkm94xIWWnuzm0mNO73OEhW8BNdIGIw7I1DhInYB4/edit#slide=id.p) (Due on Tuesday April, 30; Present on Thursday May, 2)
 
 ## Colaborators
-Chad Ross: chad.ross@biola.edu
+Chad Ross
 * Project Master
 * Scrum Manager
 * Python Back End Developer
@@ -56,7 +56,7 @@ Zach
 * Database Developer
 * QA Manager
 
-Ashley Cheah: ashley.m.cheah@biola.edu
+Ashley Cheah
 * Product Owner
 * UI Architect
 
@@ -69,7 +69,7 @@ Shared Roles: Developers, Testers
 [dungeon-buddies.slack.com](dungeon-buddies.slack.com)
 
 ## Project Development Files
-* [Google Doc Folder](https://drive.google.com/open?id=1OAeJDv-UKCkhTApC6I0JAv16NSvbTEsB)
+* [Google Doc Folder (Closed)](https://drive.google.com/open?id=1OAeJDv-UKCkhTApC6I0JAv16NSvbTEsB)
 * [Coding Standards](./docs/coding-standards.md)
 
 ## Github Resources
